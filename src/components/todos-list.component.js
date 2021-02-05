@@ -5,29 +5,30 @@ import {
     setTodos,
     setSearchTitle,
     setCurrentIndex,
-    setCurrentTodo,
+    setCurrentTodo
 } from '../redux/actions';
+import {
+  selectTodos,
+  selectCurrentTodo,
+  selectCurrentIndex,
+  selectSearchTitle
+} from '../redux/selectors';
+
 import TodoDataService from '../redux/services/todo.service.js';
 import DatePicker from 'react-date-picker';
+
 
 const TodosList = () => {
   const dispatch = useDispatch();
   const datePicker = useRef({ isOpen: true });
-  const todos = useSelector(state => state.todos);
-  const currentTodo = useSelector(state => state.currentTodo);
-  const currentIndex = useSelector(state => state.currentIndex);
-  const searchTitle = useSelector(state => state.searchTitle);
-
-  // const retrieveTodos = useCallback (() => {
-  //   TodoDataService.getTodos()
-  //     .then(response => {
-  //       dispatch(setTodos(response.data));
-  //       // console.log(response.data);
-  //     })
-  //     .catch(e => {
-  //       console.log(e);
-  //     });
-  // });
+  // const todos = useSelector(state => state.todos);
+  // const currentTodo = useSelector(state => state.currentTodo);
+  // const currentIndex = useSelector(state => state.currentIndex);
+  // const searchTitle = useSelector(state => state.searchTitle);
+  const todos = useSelector(selectTodos);
+  const currentTodo = useSelector(selectCurrentTodo);
+  const currentIndex = useSelector(selectCurrentIndex);
+  const searchTitle = useSelector(selectSearchTitle);
 
   const retrieveTodos = () => {
     TodoDataService.getTodos()

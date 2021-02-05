@@ -5,15 +5,23 @@ import {
   setCurrentIndex,
   setMessage,
   updateTodo,
-  deleteTodo,
+  deleteTodo
 } from '../redux/actions';
+import {
+  selectCurrentTodo,
+  selectMessage
+} from '../redux/selectors';
+
 import TodoDataService from '../redux/services/todo.service.js';
 import DatePicker from 'react-date-picker';
 
+
 const Todo = props => {
   const dispatch = useDispatch();
-  const currentTodo = useSelector(state => state.currentTodo);
-  const message = useSelector(state => state.message);
+  // const currentTodo = useSelector(state => state.currentTodo);
+  // const message = useSelector(state => state.message);
+  const currentTodo = useSelector(selectCurrentTodo);
+  const message = useSelector(selectMessage);
   const [dateValue, onChange] = useState(new Date(currentTodo.dueDate));
 
   const handleInputChange = event => {

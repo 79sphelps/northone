@@ -1,13 +1,24 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCurrentTodo, setSubmitted } from '../redux/actions';
+import {
+  setCurrentTodo,
+  setSubmitted
+} from '../redux/actions';
+import {
+  selectCurrentTodo,
+  selectSubmitted
+} from '../redux/selectors';
+
 import TodoDataService from '../redux/services/todo.service.js';
 import DatePicker from 'react-date-picker';
 
+
 const AddTodo = () => {
   const dispatch = useDispatch();
-  const Todo = useSelector(state => state.currentTodo);
-  const submitted = useSelector(state => state.submitted);
+  // const Todo = useSelector(state => state.currentTodo);
+  // const submitted = useSelector(state => state.submitted);
+  const Todo = useSelector(selectCurrentTodo);
+  const submitted = useSelector(selectSubmitted);
   const [dateValue, onChange] = useState(new Date());
 
   const initialTodoState = {
