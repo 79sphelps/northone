@@ -2,7 +2,6 @@ import http from '../../http-common';
 
 class TodoDataService {
     getTodos() {
-        console.log('----> RETRIEVING TODOS');
         return http.get(`/api/todos`);
     }
 

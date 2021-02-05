@@ -31,8 +31,10 @@ const App = () => {
   return (
     <div>
       <nav className="navbar navbar-expand navbar-dark bg-dark">
-        <a href="/todos" className="navbar-brand">
-          sphelps
+        <a className="navbar-brand">
+          <Link to={"/todos"} className="nav-link">
+            NorthOne Todos
+          </Link>
         </a>
         <div className="navbar-nav mr-auto">
           <li className="nav-item">
