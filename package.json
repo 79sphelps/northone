@@ -26,7 +26,7 @@
   "scripts": {
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "server": "node server.js",
-    "client": "npm start",
+    "client": "npm start-local",
     "start": "cross-env NODE_ENV=production node server.js",
     "start-local": "react-scripts start",
     "build": "react-scripts build",
