@@ -16,6 +16,8 @@ import {
 
 import TodoDataService from '../redux/services/todo.service.js';
 import DatePicker from 'react-date-picker';
+import FullCalendar from '@fullcalendar/react'
+import dayGridPlugin from '@fullcalendar/daygrid'
 
 
 const TodosList = () => {
@@ -29,6 +31,30 @@ const TodosList = () => {
   const currentTodo = useSelector(selectCurrentTodo);
   const currentIndex = useSelector(selectCurrentIndex);
   const searchTitle = useSelector(selectSearchTitle);
+
+  const formatDate = (date) => {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2)
+        month = '0' + month;
+    if (day.length < 2)
+        day = '0' + day;
+
+    return [year, month, day].join('-');
+  }
+
+  const mapToPair = (arr = []) => {
+    const result = arr.map(obj => {
+      const res = {};
+      res['title'] = obj['title'];
+      res['date'] =  formatDate(obj['dueDate']);
+      return res;
+    });
+    return result;
+  };
 
   const retrieveTodos = () => {
     TodoDataService.getTodos()
@@ -175,6 +201,19 @@ const TodosList = () => {
             <br />
             <p>Please click on a Todo...</p>
           </div>
+        )}
+      </div>
+
+      <div className="col-md-6" id="calendar">
+        {todos ? (
+          <FullCalendar
+            plugins={[ dayGridPlugin ]}
+            initialView="dayGridMonth"
+            weekends={true}
+            events={ mapToPair(todos) }
+          />
+        ) : (
+          <div>No ToDo Events to Show</div>
         )}
       </div>
     </div>
