@@ -1,6 +1,4 @@
 import { createSelector } from 'reselect'
-import { formatDate } from '../utils';
-
 
 const selectTodos = createSelector(
   (state) => state,
