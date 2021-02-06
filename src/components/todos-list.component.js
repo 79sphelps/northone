@@ -172,7 +172,7 @@ const TodosList = () => {
             </div> */}
 
             <div className="form-group">
-              <label htmlFor="dueDate">Due Date</label>{' '}
+              <label htmlFor="dueDate"><strong>Due Date:</strong></label>{' '}
               <DatePicker isOpen={true} ref={datePicker} value={new Date(currentTodo.dueDate)} />
             </div>
 

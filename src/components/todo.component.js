@@ -84,7 +84,7 @@ const Todo = props => {
           <h4>To Do</h4>
           <form>
             <div className="form-group">
-              <label htmlFor="title">Title</label>
+              <label htmlFor="title"><strong>Title:</strong></label>
               <input
                 type="text"
                 className="form-control"
@@ -95,7 +95,7 @@ const Todo = props => {
               />
             </div>
             <div className="form-group">
-              <label htmlFor="description">Description</label>
+              <label htmlFor="description"><strong>Description:</strong></label>
               <input
                 type="text"
                 className="form-control"
@@ -108,13 +108,13 @@ const Todo = props => {
 
             <div className="form-group">
               <label>
-                <strong>Status:</strong>
+                <strong>Status:</strong>{' '}
               </label>
               {currentTodo.status ? "Done" : "Pending"}
             </div>
 
             <div className="form-group">
-              <label htmlFor="dueDate">Due Date</label>{' '}
+              <label htmlFor="dueDate"><strong>Due Date:</strong></label>{' '}
               <DatePicker onChange={onChange} value={dateValue} />
             </div>
 
