@@ -24,10 +24,6 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 const TodosList = () => {
   const dispatch = useDispatch();
   const datePicker = useRef({ isOpen: true });
-  // const todos = useSelector(state => state.todos);
-  // const currentTodo = useSelector(state => state.currentTodo);
-  // const currentIndex = useSelector(state => state.currentIndex);
-  // const searchTitle = useSelector(state => state.searchTitle);
   const todos = useSelector(selectTodos);
   const currentTodo = useSelector(selectCurrentTodo);
   const currentIndex = useSelector(selectCurrentIndex);
@@ -129,7 +125,7 @@ const TodosList = () => {
             todos.map((todo, index) => (
               <li
                 className={
-                  "list-group-item " + (index === currentIndex ? "active" : "")
+                  "list-group-item-action list-group-item " + (index === currentIndex ? "active" : "")
                 }
                 onClick={() => setActiveTodo(todo, index)}
                 key={index}
@@ -149,7 +145,7 @@ const TodosList = () => {
       <div className="col-md-6">
         {currentTodo ? (
           <div>
-            <h4>To Do</h4>
+            <h4>"To Do" Item</h4>
             <div>
               <label>
                 <strong>Title:</strong>
@@ -179,7 +175,7 @@ const TodosList = () => {
 
             <Link
               to={"/todos/" + currentTodo._id}
-              className="badge badge-warning"
+              className="btn btn-sm btn-warning"
             >
               Edit
             </Link>
@@ -187,7 +183,7 @@ const TodosList = () => {
         ) : (
           <div>
             <br />
-            <p>Please click on a "To Do" item...</p>
+            <p>Click on a "To Do" item to show detailed info</p>
           </div>
         )}
       </div>

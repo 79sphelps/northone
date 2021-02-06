@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import {
   setCurrentTodo,
   setCurrentIndex,
@@ -120,7 +119,6 @@ const Todo = props => {
 
           {currentTodo.status ? (
             <button
-              // className="badge badge-primary mr-2"
               className="btn btn-primary mr-2"
               onClick={() => updateStatus(false)}
             >
@@ -128,7 +126,6 @@ const Todo = props => {
             </button>
           ) : (
             <button
-              // className="badge badge-primary mr-2"
               className="btn btn-primary mr-2"
               onClick={() => updateStatus(true)}
             >
@@ -137,7 +134,6 @@ const Todo = props => {
           )}
 
           <button
-            // className="badge badge-danger mr-2"
             className="btn btn-danger mr-2"
             onClick={() => deleteTodoUnderEdit()}>
             Delete
@@ -145,7 +141,6 @@ const Todo = props => {
 
           <button
             type="submit"
-            // className="badge badge-success"
             className="btn btn-success mr-2"
             onClick={() => updateTodoUnderEdit()}
           >

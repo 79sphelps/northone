@@ -1,3 +1,10 @@
+.btn {
+  cursor: pointer;
+}
+
+ul li {
+  cursor: pointer;
+}
 
 /* .list {
   text-align: left;
