@@ -45,7 +45,6 @@ const getSearchTitle = payload => {
     return { type: GET_SEARCH_TITLE };
 }
 
-
 const setCurrentIndex = payload => {
     return { type: SET_CURRENT_INDEX, payload };
 }
@@ -69,7 +68,6 @@ const setSubmitted = payload => {
 const getSubmitted = payload => {
     return { type: GET_SUBMITTED };
 }
-
 
 const setTodos = payload => {
     return { type: SET_TODOS, payload };
