@@ -1,19 +1,11 @@
 import {
     SET_CURRENT_TODO,
-    GET_CURRENT_TODO,
     SET_TODO_TO_ADD,
-    GET_TODO_TO_ADD,
     SET_SEARCH_TITLE,
-    GET_SEARCH_TITLE,
     SET_CURRENT_INDEX,
-    GET_CURRENT_INDEX,
     SET_MESSAGE,
-    GET_MESSAGE,
     SET_SUBMITTED,
-    GET_SUBMITTED,
-    GET_TODOS,
     SET_TODOS,
-    GET_TODO,
     ADD_TODO,
     UPDATE_TODO,
     DELETE_TODO,
@@ -33,103 +25,59 @@ const initialState = {
 };
 
 function rootReducer(state = initialState, action) {
-    if (action.type === SET_CURRENT_TODO) {
-        return { ...state, currentTodo: action.payload };
-    }
+    let mappings = null;
 
-    if (action.type === GET_CURRENT_TODO) {
-        return state.currentTodo;
-    }
+    switch (action.type) {
+        case SET_CURRENT_TODO:
+            return { ...state, currentTodo: action.payload };
 
-    if (action.type === SET_TODO_TO_ADD) {
-        return { ...state, todoToAdd: action.payload };
-    }
+        case SET_TODO_TO_ADD:
+            return { ...state, todoToAdd: action.payload };
 
-    if (action.type === GET_TODO_TO_ADD) {
-        return state.todoToAdd;
-    }
+        case SET_SEARCH_TITLE:
+            return { ...state, searchTitle: action.payload };
 
-    if (action.type === SET_SEARCH_TITLE) {
-        return { ...state, searchTitle: action.payload };
-    }
+        case SET_CURRENT_INDEX:
+            return { ...state, currentIndex: action.payload };
 
-    if (action.type === GET_SEARCH_TITLE) {
-        return state.searchTitle;
-    }
+        case SET_MESSAGE:
+            return { ...state, message: action.payload };
 
-    if (action.type === SET_CURRENT_INDEX) {
-        return { ...state, currentIndex: action.payload };
-    }
+        case SET_SUBMITTED:
+            return { ...state, submitted: action.payload };
 
-    if (action.type === GET_CURRENT_INDEX) {
-        return state.currentIndex;
-    }
+        case SET_TODOS:
+            return { ...state, todos: action.payload };
 
-    if (action.type === SET_MESSAGE) {
-        return { ...state, message: action.payload };
-    }
+        case ADD_TODO:
+            return { ...state, todos: state.todos.concat(action.payload)};
 
-    if (action.type === GET_MESSAGE) {
-        return state.message;
-    }
+        case UPDATE_TODO:
+            // find the todo to update
+            mappings = state.todos;
+            const idx = state.todos.findIndex(t => t.id === action.payload.id);
+            if (mappings.todos) {
+                mappings.todos[idx] = action.payload.todo;
+            }
+            return { ...state, todos: mappings }
 
-    if (action.type === SET_SUBMITTED) {
-        return { ...state, submitted: action.payload };
-    }
+        case DELETE_TODO:
+            // find the todo to delete
+            mappings = state.todos.filter(t => t.id !== action.payload.id);
+            return { ...state, todos: mappings };
 
-    if (action.type === GET_SUBMITTED) {
-        return state.submitted;
-    }
+        case DELETE_TODOS:
+            return { ...state, todos: [] };
 
-    if (action.type === SET_TODOS) {
-        return { ...state, todos: action.payload };
-    }
+        case DATA_LOADED:
+            return state;
 
-    if (action.type === GET_TODOS) {
-        return state.todos;
-    }
+        case API_ERRORED:
+            return state;
 
-    if (action.type === GET_TODO) {
-        return state.todos.filter(t => t.id = action.payload);
+        default:
+            return state;
     }
-
-    if (action.type === ADD_TODO) {
-        // or with spread operator
-        return { ...state, todos: state.todos.concat(action.payload)};
-    }
-
-    if (action.type === UPDATE_TODO) {
-        // find the todo to update
-        let mappings = state.todos;
-        const idx = state.todos.findIndex(t => t.id === action.payload.id);
-        if (mappings.todos) {
-            mappings.todos[idx] = action.payload.todo;
-        }
-
-        return { ...state, todos: mappings }
-    }
-
-    if (action.type === DELETE_TODO) {
-        // find the todo to delete
-        let mappings = state.todos;
-        mappings = state.todos.filter(t => t.id !== action.payload.id);
-        return { ...state, todos: mappings };
-    }
-
-    if (action.type === DELETE_TODOS) {
-        // remove all todos from state
-        return { ...state, todos: [] };
-    }
-
-    if (action.type === DATA_LOADED) {
-        // or with spread operator
-        return { ...state, todos: state.todos.concat(action.payload)};
-    }
-
-    if (action.type === API_ERRORED) {
-        return state;
-    }
-    return state;
-};
+}
 
 export default rootReducer;

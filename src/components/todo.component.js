@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import {
   setCurrentTodo,
   setCurrentIndex,
@@ -18,8 +19,6 @@ import DatePicker from 'react-date-picker';
 
 const Todo = props => {
   const dispatch = useDispatch();
-  // const currentTodo = useSelector(state => state.currentTodo);
-  // const message = useSelector(state => state.message);
   const currentTodo = useSelector(selectCurrentTodo);
   const message = useSelector(selectMessage);
   const [dateValue, onChange] = useState(new Date(currentTodo.dueDate));
@@ -117,32 +116,37 @@ const Todo = props => {
               <label htmlFor="dueDate"><strong>Due Date:</strong></label>{' '}
               <DatePicker onChange={onChange} value={dateValue} />
             </div>
-
           </form>
 
           {currentTodo.status ? (
             <button
-              className="badge badge-primary mr-2"
+              // className="badge badge-primary mr-2"
+              className="btn btn-primary mr-2"
               onClick={() => updateStatus(false)}
             >
               Mark Pending
             </button>
           ) : (
             <button
-              className="badge badge-primary mr-2"
+              // className="badge badge-primary mr-2"
+              className="btn btn-primary mr-2"
               onClick={() => updateStatus(true)}
             >
               Mark Done
             </button>
           )}
 
-          <button className="badge badge-danger mr-2" onClick={() => deleteTodoUnderEdit()}>
+          <button
+            // className="badge badge-danger mr-2"
+            className="btn btn-danger mr-2"
+            onClick={() => deleteTodoUnderEdit()}>
             Delete
           </button>
 
           <button
             type="submit"
-            className="badge badge-success"
+            // className="badge badge-success"
+            className="btn btn-success mr-2"
             onClick={() => updateTodoUnderEdit()}
           >
             Update

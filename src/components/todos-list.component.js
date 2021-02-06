@@ -192,7 +192,7 @@ const TodosList = () => {
         )}
       </div>
 
-      <div className="col-md-6" id="calendar">
+      <div className="col-md-12" id="calendar">
         {todos ? (
           <FullCalendar
             plugins={[ dayGridPlugin ]}

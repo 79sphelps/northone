@@ -15,9 +15,6 @@ import DatePicker from 'react-date-picker';
 
 const AddTodo = () => {
   const dispatch = useDispatch();
-  // const Todo = useSelector(state => state.currentTodo);
-  // const submitted = useSelector(state => state.submitted);
-
   const TodoToAdd = useSelector(selectTodoToAdd);
   const submitted = useSelector(selectSubmitted);
   const [dateValue, onChange] = useState(new Date());
