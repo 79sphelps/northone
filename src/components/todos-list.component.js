@@ -13,6 +13,7 @@ import {
   selectCurrentIndex,
   selectSearchTitle
 } from '../redux/selectors';
+import { formatDate } from '../redux/utils';
 
 import TodoDataService from '../redux/services/todo.service.js';
 import DatePicker from 'react-date-picker';
@@ -31,20 +32,6 @@ const TodosList = () => {
   const currentTodo = useSelector(selectCurrentTodo);
   const currentIndex = useSelector(selectCurrentIndex);
   const searchTitle = useSelector(selectSearchTitle);
-
-  const formatDate = (date) => {
-    var d = new Date(date),
-        month = '' + (d.getMonth() + 1),
-        day = '' + d.getDate(),
-        year = d.getFullYear();
-
-    if (month.length < 2)
-        month = '0' + month;
-    if (day.length < 2)
-        day = '0' + day;
-
-    return [year, month, day].join('-');
-  }
 
   const mapToPair = (arr = []) => {
     const result = arr.map(obj => {
@@ -134,7 +121,7 @@ const TodosList = () => {
         </div>
       </div>
       <div className="col-md-6">
-        <h4>Todos List</h4>
+        <h4>To Do's List</h4>
 
         <ul className="list-group">
           {todos &&
@@ -161,7 +148,7 @@ const TodosList = () => {
       <div className="col-md-6">
         {currentTodo ? (
           <div>
-            <h4>Todo</h4>
+            <h4>To Do</h4>
             <div>
               <label>
                 <strong>Title:</strong>
@@ -199,7 +186,7 @@ const TodosList = () => {
         ) : (
           <div>
             <br />
-            <p>Please click on a Todo...</p>
+            <p>Please click on a "To Do" item...</p>
           </div>
         )}
       </div>
@@ -213,7 +200,7 @@ const TodosList = () => {
             events={ mapToPair(todos) }
           />
         ) : (
-          <div>No ToDo Events to Show</div>
+          <div>No "To Do" Events to Show</div>
         )}
       </div>
     </div>

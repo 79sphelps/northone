@@ -5,12 +5,14 @@ const path = require('path');
 
 const app = express();
 
-// let corsOptions = {
-//     origin: 'http://localhost:3000'
-// };
-
-// app.use(cors(corsOptions));
-app.use(cors());
+if (process.env.NODE_ENV !== "dev") {
+  app.use(cors());
+} else {
+  let corsOptions = {
+      origin: 'http://localhost:3000'
+  };
+  app.use(cors(corsOptions));
+}
 
 app.use(bodyParser.json());
 

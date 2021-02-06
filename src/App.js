@@ -8,6 +8,7 @@ import {
   setMessage,
 } from './redux/actions';
 
+import { formatDate } from './redux/utils';
 import AddTodo from './components/add-todo.component';
 import Todo from './components/todo.component';
 import TodosList from './components/todos-list.component';
@@ -21,7 +22,8 @@ const App = () => {
       id: null,
       title: "",
       description: "",
-      published: false
+      status: false,
+      dueDate: formatDate(new Date())
     }));
     dispatch(setSubmitted(false));
     dispatch(setMessage(''));
@@ -30,15 +32,13 @@ const App = () => {
   return (
     <div>
       <nav className="navbar navbar-expand navbar-dark bg-dark">
-        <a className="navbar-brand">
-          <Link to={"/"} className="nav-link">
-            NorthOne Todos
-          </Link>
+        <a href='/' className="navbar-brand">
+          NorthOne To Do's
         </a>
         <div className="navbar-nav mr-auto">
           <li className="nav-item">
             <Link to={"/"} className="nav-link">
-              Todos
+              To Do List
             </Link>
           </li>
           <li className="nav-item">

@@ -25,7 +25,8 @@ const AddTodo = () => {
     id: null,
     title: '',
     description: '',
-    published: false
+    status: false,
+    dueDate: ''
   };
 
   const handleInputChange = event => {
@@ -38,6 +39,7 @@ const AddTodo = () => {
     var data = {
       title: Todo.title,
       description: Todo.description,
+      status: false,
       dueDate: dateValue
     };
 

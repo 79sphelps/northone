@@ -81,7 +81,7 @@ const Todo = props => {
     <div>
       {currentTodo ? (
         <div className="edit-form">
-          <h4>Todo</h4>
+          <h4>To Do</h4>
           <form>
             <div className="form-group">
               <label htmlFor="title">Title</label>
@@ -152,7 +152,7 @@ const Todo = props => {
       ) : (
         <div>
           <br />
-          <p>Please click on a Todo...</p>
+          <p>Please click on a "To Do"...</p>
         </div>
       )}
     </div>

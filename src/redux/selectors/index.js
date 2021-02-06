@@ -1,4 +1,6 @@
 import { createSelector } from 'reselect'
+import { formatDate } from '../utils';
+
 
 const selectTodos = createSelector(
   (state) => state,
@@ -7,7 +9,13 @@ const selectTodos = createSelector(
 
 const selectCurrentTodo = createSelector(
     (state) => state,
-    (state) => state.currentTodo
+    (state) => state.currentTodo ? state.currentTodo : {
+        id: null,
+        title: '',
+        description: '',
+        status: false,
+        dueDate: formatDate(new Date())
+      }
 )
 
 const selectCurrentIndex = createSelector(
