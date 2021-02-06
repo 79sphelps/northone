@@ -47,7 +47,7 @@ const TodosList = () => {
     TodoDataService.getTodos()
       .then(response => {
         dispatch(setTodos(response.data));
-        console.log(response.data);
+        // console.log(response.data);
       })
       .catch(e => {
         console.log(e);
@@ -91,6 +91,7 @@ const TodosList = () => {
     TodoDataService.findByTitle(searchTitle)
       .then(response => {
         dispatch(setTodos(response.data));
+        dispatch(setCurrentTodo(null));
         // console.log(response.data);
       })
       .catch(e => {

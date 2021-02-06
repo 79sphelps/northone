@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  setCurrentTodo,
+  setTodoToAdd,
   setSubmitted
 } from '../redux/actions';
 import {
-  selectCurrentTodo,
+  selectTodoToAdd,
   selectSubmitted
 } from '../redux/selectors';
-
+import { formatDate } from '../redux/utils';
 import TodoDataService from '../redux/services/todo.service.js';
 import DatePicker from 'react-date-picker';
 
@@ -17,35 +17,36 @@ const AddTodo = () => {
   const dispatch = useDispatch();
   // const Todo = useSelector(state => state.currentTodo);
   // const submitted = useSelector(state => state.submitted);
-  const Todo = useSelector(selectCurrentTodo);
+
+  const TodoToAdd = useSelector(selectTodoToAdd);
   const submitted = useSelector(selectSubmitted);
   const [dateValue, onChange] = useState(new Date());
 
-  const initialTodoState = {
+  let initialTodoState = {
     id: null,
     title: '',
     description: '',
     status: false,
-    dueDate: ''
+    dueDate: formatDate(new Date())
   };
 
   const handleInputChange = event => {
     const { name, value } = event.target;
-    dispatch(setCurrentTodo({ ...Todo, [name]: value }))
+    dispatch(setTodoToAdd({ ...TodoToAdd, [name]: value }))
   };
 
   const saveTodo = () => {
     if (!dateValue) return;
     var data = {
-      title: Todo.title,
-      description: Todo.description,
+      title: TodoToAdd.title,
+      description: TodoToAdd.description,
       status: false,
       dueDate: dateValue
     };
 
     TodoDataService.addTodo(data)
       .then(response => {
-        dispatch(setCurrentTodo({
+        dispatch(setTodoToAdd({
           id: response.data.id,
           title: response.data.title,
           description: response.data.description,
@@ -62,7 +63,7 @@ const AddTodo = () => {
   };
 
   const newTodo = () => {
-    dispatch(setCurrentTodo(initialTodoState));
+    dispatch(setTodoToAdd(initialTodoState));
     dispatch(setSubmitted(false));
   };
 
@@ -84,7 +85,7 @@ const AddTodo = () => {
               className="form-control"
               id="title"
               required
-              value={Todo.title}
+              value={TodoToAdd.title}
               onChange={(event) => handleInputChange(event)}
               name="title"
             />
@@ -97,7 +98,7 @@ const AddTodo = () => {
               className="form-control"
               id="description"
               required
-              value={Todo.description}
+              value={TodoToAdd.description}
               onChange={(event) => handleInputChange(event)}
               name="description"
             />
@@ -108,7 +109,7 @@ const AddTodo = () => {
             <DatePicker onChange={onChange} value={dateValue} />
           </div>
 
-          <button onClick={() => saveTodo(Todo)} className="btn btn-success">
+          <button onClick={() => saveTodo(TodoToAdd)} className="btn btn-success">
             Submit
           </button>
         </div>

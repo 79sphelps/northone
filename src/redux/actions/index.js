@@ -1,6 +1,8 @@
 import {
     SET_CURRENT_TODO,
     GET_CURRENT_TODO,
+    SET_TODO_TO_ADD,
+    GET_TODO_TO_ADD,
     SET_SEARCH_TITLE,
     GET_SEARCH_TITLE,
     SET_CURRENT_INDEX,
@@ -25,6 +27,14 @@ const setCurrentTodo = payload => {
 
 const getCurrentTodo = payload => {
     return { type: GET_CURRENT_TODO };
+}
+
+const setTodoToAdd = payload => {
+    return { type: SET_TODO_TO_ADD, payload };
+}
+
+const getTodoToAdd = payload => {
+    return { type: GET_TODO_TO_ADD };
 }
 
 const setSearchTitle = payload => {
@@ -96,6 +106,8 @@ const apiErrored = payload => {
 export {
     setCurrentTodo,
     getCurrentTodo,
+    setTodoToAdd,
+    getTodoToAdd,
     setSearchTitle,
     getSearchTitle,
     setCurrentIndex,

@@ -9,13 +9,12 @@ const selectTodos = createSelector(
 
 const selectCurrentTodo = createSelector(
     (state) => state,
-    (state) => state.currentTodo ? state.currentTodo : {
-        id: null,
-        title: '',
-        description: '',
-        status: false,
-        dueDate: formatDate(new Date())
-      }
+    (state) => state.currentTodo
+)
+
+const selectTodoToAdd = createSelector(
+    (state) => state,
+    (state) => state.todoToAdd
 )
 
 const selectCurrentIndex = createSelector(
@@ -41,6 +40,7 @@ const selectSubmitted = createSelector(
 export {
     selectTodos,
     selectCurrentTodo,
+    selectTodoToAdd,
     selectCurrentIndex,
     selectSearchTitle,
     selectMessage,

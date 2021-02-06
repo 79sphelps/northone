@@ -1,6 +1,8 @@
 import {
     SET_CURRENT_TODO,
     GET_CURRENT_TODO,
+    SET_TODO_TO_ADD,
+    GET_TODO_TO_ADD,
     SET_SEARCH_TITLE,
     GET_SEARCH_TITLE,
     SET_CURRENT_INDEX,
@@ -23,6 +25,7 @@ import {
 const initialState = {
     todos: [],
     currentTodo: null,
+    todoToAdd: null,
     searchTitle: '',
     currentIndex: -1,
     message: '',
@@ -36,6 +39,14 @@ function rootReducer(state = initialState, action) {
 
     if (action.type === GET_CURRENT_TODO) {
         return state.currentTodo;
+    }
+
+    if (action.type === SET_TODO_TO_ADD) {
+        return { ...state, todoToAdd: action.payload };
+    }
+
+    if (action.type === GET_TODO_TO_ADD) {
+        return state.todoToAdd;
     }
 
     if (action.type === SET_SEARCH_TITLE) {

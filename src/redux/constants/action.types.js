@@ -1,6 +1,9 @@
 export const SET_CURRENT_TODO = 'SET_CURRENT_TODO';
 export const GET_CURRENT_TODO = 'GET_CURRENT_TODO';
 
+export const SET_TODO_TO_ADD = 'SET_TODO_TO_ADD';
+export const GET_TODO_TO_ADD = 'GET_TODO_TO_ADD';
+
 export const SET_SEARCH_TITLE = 'SET_SEARCH_TITLE';
 export const GET_SEARCH_TITLE = 'GET_SEARCH_TITLE';
 

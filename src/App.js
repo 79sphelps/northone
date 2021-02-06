@@ -3,12 +3,12 @@ import { useDispatch } from 'react-redux';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import {
-  setCurrentTodo,
+  setTodoToAdd,
   setSubmitted,
   setMessage,
 } from './redux/actions';
-
 import { formatDate } from './redux/utils';
+
 import AddTodo from './components/add-todo.component';
 import Todo from './components/todo.component';
 import TodosList from './components/todos-list.component';
@@ -17,8 +17,8 @@ import TodosList from './components/todos-list.component';
 const App = () => {
   const dispatch = useDispatch();
 
-  const initializeCurrentTodo = () => {
-    dispatch(setCurrentTodo({
+  const initializeTodoToAdd = () => {
+    dispatch(setTodoToAdd({
       id: null,
       title: "",
       description: "",
@@ -42,7 +42,7 @@ const App = () => {
             </Link>
           </li>
           <li className="nav-item">
-            <Link to={"/add"} className="nav-link" onClick={() => initializeCurrentTodo()}>
+            <Link to={"/add"} className="nav-link" onClick={() => initializeTodoToAdd()}>
               Add
             </Link>
           </li>
