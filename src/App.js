@@ -31,13 +31,13 @@ const App = () => {
     <div>
       <nav className="navbar navbar-expand navbar-dark bg-dark">
         <a className="navbar-brand">
-          <Link to={"/todos"} className="nav-link">
+          <Link to={"/"} className="nav-link">
             NorthOne Todos
           </Link>
         </a>
         <div className="navbar-nav mr-auto">
           <li className="nav-item">
-            <Link to={"/todos"} className="nav-link">
+            <Link to={"/"} className="nav-link">
               Todos
             </Link>
           </li>
