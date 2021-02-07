@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import DatePicker from "react-date-picker";
+
 import {
   setCurrentTodo,
   setMessage,
@@ -9,7 +11,6 @@ import {
   deleteTodo,
 } from "../redux/actions";
 import { selectCurrentTodo, selectMessage } from "../redux/selectors";
-import DatePicker from "react-date-picker";
 
 
 const Todo = (props) => {

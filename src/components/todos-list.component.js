@@ -32,7 +32,12 @@ const TodosList = () => {
   const currentIndex = useSelector(selectCurrentIndex);
   const searchTitle = useSelector(selectSearchTitle);
 
-  const mapToPair = (arr = []) => {
+  useEffect(() => {
+    retrieveTodos();
+    checkCurrentIndex();
+  }, []);
+
+  const mapTodoEventsToCalendar = (arr = []) => {
     const result = arr.map((obj) => {
       const res = {};
       res["title"] = obj["title"];
@@ -41,11 +46,6 @@ const TodosList = () => {
     });
     return result;
   };
-
-  useEffect(() => {
-    retrieveTodos();
-    checkCurrentIndex();
-  }, []);
 
   const retrieveTodos = () => {
     dispatch(getTodos());
@@ -195,7 +195,7 @@ const TodosList = () => {
             plugins={[dayGridPlugin]}
             initialView="dayGridMonth"
             weekends={true}
-            events={mapToPair(todos)}
+            events={mapTodoEventsToCalendar(todos)}
           />
         ) : (
           <div>No "To Do" Events to Show</div>
