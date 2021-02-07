@@ -51,8 +51,8 @@ const TodosList = () => {
 
   const checkCurrentIndex = () => {
     if (!currentIndex) {
-      dispatch(setCurrentTodo(JSON.parse(localStorage.getItem('currentTodo'))));
-      dispatch(setCurrentIndex(JSON.parse(localStorage.getItem('currentIndex'))));
+      // dispatch(setCurrentTodo(JSON.parse(localStorage.getItem('currentTodo'))));
+      // dispatch(setCurrentIndex(JSON.parse(localStorage.getItem('currentIndex'))));
     }
   }
   const onChangeSearchTitle = e => {
