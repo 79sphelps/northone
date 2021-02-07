@@ -3,6 +3,10 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { faEdit, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import DatePicker from "react-date-picker";
+import FullCalendar from "@fullcalendar/react";
+import dayGridPlugin from "@fullcalendar/daygrid";
+
 import {
   getTodos,
   deleteTodos,
@@ -18,9 +22,6 @@ import {
   selectSearchTitle,
 } from "../redux/selectors";
 import { formatDate } from "../redux/utils";
-import DatePicker from "react-date-picker";
-import FullCalendar from "@fullcalendar/react";
-import dayGridPlugin from "@fullcalendar/daygrid";
 
 
 const TodosList = () => {
