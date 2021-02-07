@@ -9,6 +9,9 @@ import {
 import { selectCurrentTodo, selectMessage } from "../redux/selectors";
 import DatePicker from "react-date-picker";
 
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 const Todo = (props) => {
   const dispatch = useDispatch();
 
@@ -126,7 +129,7 @@ const Todo = (props) => {
             className="btn btn-danger mr-2"
             onClick={() => deleteTodoUnderEdit()}
           >
-            Delete
+            Delete{' '}<FontAwesomeIcon icon={faTrash} />
           </button>
 
           <button
