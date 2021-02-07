@@ -118,7 +118,7 @@ const deleteTodos = (payload) => {
 };
 
 const apiErrored = (payload) => {
-  return { type: API_ERRORED };
+  return { type: API_ERRORED, payload };
 };
 
 export {

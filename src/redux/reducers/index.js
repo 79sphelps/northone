@@ -22,6 +22,7 @@ const initialState = {
   currentIndex: -1,
   message: "",
   submitted: false,
+  error: ''
 };
 
 function rootReducer(state = initialState, action) {
@@ -79,7 +80,8 @@ function rootReducer(state = initialState, action) {
       return state;
 
     case API_ERRORED:
-      return state;
+      // return { ...state, error: state.error = 'yes' }
+      return { ...state, error: action.payload }
 
     default:
       return state;

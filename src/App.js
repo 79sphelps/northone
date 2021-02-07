@@ -7,6 +7,10 @@ import AddTodo from "./components/add-todo.component";
 import Todo from "./components/todo.component";
 import TodosList from "./components/todos-list.component";
 
+// get our fontawesome imports
+import { faHome, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 const App = () => {
   const dispatch = useDispatch();
   const initializeTodoToAdd = () => {
@@ -18,8 +22,9 @@ const App = () => {
     <div>
       <nav className="navbar navbar-expand navbar-dark bg-dark">
         <a href="/" className="navbar-brand">
-          NorthOne To Do's
+          <FontAwesomeIcon icon={faHome} />
         </a>
+
         <div className="navbar-nav mr-auto">
           <li className="nav-item">
             <Link to={"/"} className="nav-link">
@@ -32,7 +37,7 @@ const App = () => {
               className="nav-link"
               onClick={() => initializeTodoToAdd()}
             >
-              Add
+              Add{' '}<FontAwesomeIcon icon={faPlus} />
             </Link>
           </li>
         </div>

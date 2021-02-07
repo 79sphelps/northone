@@ -15,6 +15,7 @@ import {
   DELETE_TODO,
   DELETE_TODO_IN_STATE,
   DELETE_TODOS,
+  API_ERRORED
 } from "../constants/action.types";
 
 export default function* watcherSaga() {
@@ -31,17 +32,17 @@ function* getTodosWorkerSaga() {
     const payload = yield call(getTodos);
     yield put({ type: SET_TODOS, payload });
   } catch (e) {
-    yield put({ type: "API_ERRORED", payload: e });
+    yield put({ type: API_ERRORED, payload: e });
   }
 }
 
 function* deleteTodosWorkerSaga(action) {
   try {
-    const payload = yield call(deleteTodos);
+    yield call(deleteTodos);
     let ary = [];
     yield put({ type: SET_TODOS, ary });
   } catch (e) {
-    yield put({ type: "API_ERRORED", payload: e });
+    yield put({ type: API_ERRORED, payload: e });
   }
 }
 
@@ -51,7 +52,7 @@ function* findByTitleWorkerSaga(action) {
     yield put({ type: SET_TODOS, payload });
     // yield put({ type: SET_CURRENT_TODO });
   } catch (e) {
-    yield put({ type: "API_ERRORED", payload: e });
+    yield put({ type: API_ERRORED, payload: e });
   }
 }
 
@@ -61,12 +62,11 @@ function* updateTodoWorkerSaga(action) {
     const payload = action.payload;
     yield put({ type: UPDATE_TODO_IN_STATE, payload });
     let todo = action.payload.todo;
-    // todo.dueDate = todo.dueDate.toISOString();
     yield put({ type: SET_CURRENT_TODO, payload: todo });
     const message = "The todo was updated successfully!";
     yield put({ type: SET_MESSAGE, payload: message });
   } catch (e) {
-    yield put({ type: "API_ERRORED", payload: e });
+    yield put({ type: API_ERRORED, payload: e });
   }
 }
 
@@ -81,7 +81,7 @@ function* deleteTodoWorkerSaga(action) {
     yield put({ type: SET_CURRENT_INDEX, payload: -1 });
     // yield put(push('/todos'));
   } catch (e) {
-    yield put({ type: "API_ERRORED", payload: e });
+    yield put({ type: API_ERRORED, payload: e });
   }
 }
 
@@ -91,7 +91,7 @@ function* addTodoWorkerSaga(action) {
     yield put({ type: ADD_TODO_IN_STATE, payload });
     yield put({ type: SET_SUBMITTED, payload: true });
   } catch (e) {
-    yield put({ type: "API_ERRORED", payload: e });
+    yield put({ type: API_ERRORED, payload: e });
   }
 }
 

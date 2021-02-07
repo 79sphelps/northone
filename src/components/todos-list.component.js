@@ -20,6 +20,9 @@ import DatePicker from "react-date-picker";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 
+import { faEdit, faSearch } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 const TodosList = () => {
   const dispatch = useDispatch();
   const datePicker = useRef({ isOpen: true });
@@ -100,7 +103,7 @@ const TodosList = () => {
               type="button"
               onClick={() => findItemByTitle()}
             >
-              Search
+              <FontAwesomeIcon icon={faSearch} />
             </button>
           </div>
         </div>
@@ -174,8 +177,8 @@ const TodosList = () => {
             <Link
               to={"/todos/" + currentTodo._id}
               className="btn btn-sm btn-warning"
-            >
-              Edit
+            >Edit{' '}
+              <FontAwesomeIcon icon={faEdit} />
             </Link>
           </div>
         ) : (
