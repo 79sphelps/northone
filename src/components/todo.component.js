@@ -14,12 +14,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Todo = (props) => {
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    clearMessage();
-    checkLocalStorage();
-  }, []);
-
   const currentTodo = useSelector(selectCurrentTodo);
   const message = useSelector(selectMessage);
   const [dateValue, onChange] = useState(
@@ -28,7 +22,13 @@ const Todo = (props) => {
     )
   );
 
+  useEffect(() => {
+    clearMessage();
+    checkLocalStorage();
+  }, []);
+
   const clearMessage = () => dispatch(setMessage(""));
+
   const checkLocalStorage = () => {
     if (!currentTodo) {
       let todo = localStorage.getItem("currentTodo");
@@ -40,19 +40,11 @@ const Todo = (props) => {
     dispatch(setCurrentTodo({ ...currentTodo, [name]: value }));
   };
 
-  const updateStatus = (status) => {
-    var data = {
-      id: currentTodo._id,
-      title: currentTodo.title,
-      description: currentTodo.description,
-      status: status,
-      dueDate: dateValue,
-    };
-    dispatch(updateTodo({ id: currentTodo._id, todo: data }));
-  };
-
-  const updateTodoUnderEdit = () => {
+  const updateTodoUnderEdit = (status = null) => {
     currentTodo.dueDate = dateValue;
+    if (status !== null) {
+      currentTodo.status = status;
+    }
     dispatch(updateTodo({ id: currentTodo._id, todo: currentTodo }));
   };
 
@@ -112,14 +104,14 @@ const Todo = (props) => {
           {currentTodo.status ? (
             <button
               className="btn btn-primary mr-2"
-              onClick={() => updateStatus(false)}
+              onClick={() => updateTodoUnderEdit(false)}
             >
               Mark Pending
             </button>
           ) : (
             <button
               className="btn btn-primary mr-2"
-              onClick={() => updateStatus(true)}
+              onClick={() => updateTodoUnderEdit(true)}
             >
               Mark Done
             </button>
