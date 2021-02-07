@@ -22,13 +22,6 @@ const App = () => {
   const dispatch = useDispatch();
 
   const initializeTodoToAdd = () => {
-    dispatch(setTodoToAdd({
-      id: null,
-      title: "",
-      description: "",
-      status: false,
-      dueDate: formatDate(new Date())
-    }));
     dispatch(setSubmitted(false));
     dispatch(setMessage(''));
   }

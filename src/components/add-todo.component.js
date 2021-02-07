@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   addTodo,
@@ -15,9 +15,25 @@ import DatePicker from 'react-date-picker';
 
 const AddTodo = () => {
   const dispatch = useDispatch();
-  const TodoToAdd = useSelector(selectTodoToAdd);
+  let TodoToAdd = useSelector(selectTodoToAdd);
   const submitted = useSelector(selectSubmitted);
   const [dateValue, onChange] = useState(new Date());
+
+  if (!TodoToAdd) {
+    let todoToAdd = JSON.parse(localStorage.getItem('todoToAdd'));
+    if (!todoToAdd) {
+      todoToAdd = {
+        id: null,
+        title: "",
+        description: "",
+        status: false,
+        dueDate: formatDate(new Date())
+      };
+      localStorage.setItem('todoToAdd', JSON.stringify(todoToAdd));
+    }
+    dispatch(setTodoToAdd(todoToAdd));
+    TodoToAdd = todoToAdd;
+  }
 
   let initialTodoState = {
     id: null,
@@ -41,6 +57,7 @@ const AddTodo = () => {
       dueDate: dateValue
     };
     dispatch(addTodo(data));
+    localStorage.removeItem('todoToAdd');
   };
 
   const newTodo = () => {
@@ -50,7 +67,7 @@ const AddTodo = () => {
 
   return (
     <div className="submit-form">
-      {submitted ? (
+      {submitted && TodoToAdd ? (
         <div>
           <h4>You submitted successfully!</h4>
           <button className="btn btn-success" onClick={() => newTodo()}>
