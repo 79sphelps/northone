@@ -1,17 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  addTodo,
-  setTodoToAdd,
-  setSubmitted
-} from '../redux/actions';
-import {
-  selectTodoToAdd,
-  selectSubmitted
-} from '../redux/selectors';
-import { formatDate } from '../redux/utils';
-import DatePicker from 'react-date-picker';
-
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addTodo, setTodoToAdd, setSubmitted } from "../redux/actions";
+import { selectTodoToAdd, selectSubmitted } from "../redux/selectors";
+import { formatDate } from "../redux/utils";
+import DatePicker from "react-date-picker";
 
 const AddTodo = () => {
   const dispatch = useDispatch();
@@ -20,16 +12,16 @@ const AddTodo = () => {
   const [dateValue, onChange] = useState(new Date());
 
   if (!TodoToAdd) {
-    let todoToAdd = JSON.parse(localStorage.getItem('todoToAdd'));
+    let todoToAdd = JSON.parse(localStorage.getItem("todoToAdd"));
     if (!todoToAdd) {
       todoToAdd = {
         id: null,
         title: "",
         description: "",
         status: false,
-        dueDate: formatDate(new Date())
+        dueDate: formatDate(new Date()),
       };
-      localStorage.setItem('todoToAdd', JSON.stringify(todoToAdd));
+      localStorage.setItem("todoToAdd", JSON.stringify(todoToAdd));
     }
     dispatch(setTodoToAdd(todoToAdd));
     TodoToAdd = todoToAdd;
@@ -37,15 +29,15 @@ const AddTodo = () => {
 
   let initialTodoState = {
     id: null,
-    title: '',
-    description: '',
+    title: "",
+    description: "",
     status: false,
-    dueDate: formatDate(new Date())
+    dueDate: formatDate(new Date()),
   };
 
-  const handleInputChange = event => {
+  const handleInputChange = (event) => {
     const { name, value } = event.target;
-    dispatch(setTodoToAdd({ ...TodoToAdd, [name]: value }))
+    dispatch(setTodoToAdd({ ...TodoToAdd, [name]: value }));
   };
 
   const saveTodo = () => {
@@ -54,10 +46,10 @@ const AddTodo = () => {
       title: TodoToAdd.title,
       description: TodoToAdd.description,
       status: false,
-      dueDate: dateValue
+      dueDate: dateValue,
     };
     dispatch(addTodo(data));
-    localStorage.removeItem('todoToAdd');
+    localStorage.removeItem("todoToAdd");
   };
 
   const newTodo = () => {
@@ -103,11 +95,14 @@ const AddTodo = () => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="dueDate">Due Date</label>{' '}
+            <label htmlFor="dueDate">Due Date</label>{" "}
             <DatePicker onChange={onChange} value={dateValue} />
           </div>
 
-          <button onClick={() => saveTodo(TodoToAdd)} className="btn btn-success">
+          <button
+            onClick={() => saveTodo(TodoToAdd)}
+            className="btn btn-success"
+          >
             Submit
           </button>
         </div>

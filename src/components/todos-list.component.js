@@ -1,26 +1,24 @@
-import React, { useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import {
-    getTodos,
-    deleteTodos,
-    findByTitle,
-    setSearchTitle,
-    setCurrentIndex,
-    setCurrentTodo
-} from '../redux/actions';
+  getTodos,
+  deleteTodos,
+  findByTitle,
+  setSearchTitle,
+  setCurrentIndex,
+  setCurrentTodo,
+} from "../redux/actions";
 import {
   selectTodos,
   selectCurrentTodo,
   selectCurrentIndex,
-  selectSearchTitle
-} from '../redux/selectors';
-import { formatDate } from '../redux/utils';
-
-import DatePicker from 'react-date-picker';
-import FullCalendar from '@fullcalendar/react'
-import dayGridPlugin from '@fullcalendar/daygrid'
-
+  selectSearchTitle,
+} from "../redux/selectors";
+import { formatDate } from "../redux/utils";
+import DatePicker from "react-date-picker";
+import FullCalendar from "@fullcalendar/react";
+import dayGridPlugin from "@fullcalendar/daygrid";
 
 const TodosList = () => {
   const dispatch = useDispatch();
@@ -31,10 +29,10 @@ const TodosList = () => {
   const searchTitle = useSelector(selectSearchTitle);
 
   const mapToPair = (arr = []) => {
-    const result = arr.map(obj => {
+    const result = arr.map((obj) => {
       const res = {};
-      res['title'] = obj['title'];
-      res['date'] =  formatDate(obj['dueDate']);
+      res["title"] = obj["title"];
+      res["date"] = formatDate(obj["dueDate"]);
       return res;
     });
     return result;
@@ -54,8 +52,8 @@ const TodosList = () => {
       // dispatch(setCurrentTodo(JSON.parse(localStorage.getItem('currentTodo'))));
       // dispatch(setCurrentIndex(JSON.parse(localStorage.getItem('currentIndex'))));
     }
-  }
-  const onChangeSearchTitle = e => {
+  };
+  const onChangeSearchTitle = (e) => {
     dispatch(setSearchTitle(e.target.value));
   };
 
@@ -71,8 +69,8 @@ const TodosList = () => {
     if (datePicker && datePicker.current && datePicker.current.openCalendar) {
       datePicker.current.openCalendar();
     }
-    localStorage.setItem('currentTodo', JSON.stringify(todo));
-    localStorage.setItem('currentIndex', JSON.stringify(currentIndex));
+    localStorage.setItem("currentTodo", JSON.stringify(todo));
+    localStorage.setItem("currentIndex", JSON.stringify(currentIndex));
   };
 
   const removeAllTodos = () => {
@@ -115,7 +113,8 @@ const TodosList = () => {
             todos.map((todo, index) => (
               <li
                 className={
-                  "list-group-item-action list-group-item " + (index === currentIndex ? "active" : "")
+                  "list-group-item-action list-group-item " +
+                  (index === currentIndex ? "active" : "")
                 }
                 onClick={() => setActiveTodo(todo, index)}
                 key={index}
@@ -149,7 +148,10 @@ const TodosList = () => {
               {currentTodo.description}
             </div>
             <div>
-              <label><strong>Status:</strong></label>{' '}{currentTodo.status ? "Done" : "Pending"}
+              <label>
+                <strong>Status:</strong>
+              </label>{" "}
+              {currentTodo.status ? "Done" : "Pending"}
             </div>
             {/* <div>
               <label>
@@ -159,8 +161,14 @@ const TodosList = () => {
             </div> */}
 
             <div className="form-group">
-              <label htmlFor="dueDate"><strong>Due Date:</strong></label>{' '}
-              <DatePicker isOpen={true} ref={datePicker} value={new Date(currentTodo.dueDate)} />
+              <label htmlFor="dueDate">
+                <strong>Due Date:</strong>
+              </label>{" "}
+              <DatePicker
+                isOpen={true}
+                ref={datePicker}
+                value={new Date(currentTodo.dueDate)}
+              />
             </div>
 
             <Link
@@ -181,10 +189,10 @@ const TodosList = () => {
       <div className="col-md-12" id="calendar">
         {todos ? (
           <FullCalendar
-            plugins={[ dayGridPlugin ]}
+            plugins={[dayGridPlugin]}
             initialView="dayGridMonth"
             weekends={true}
-            events={ mapToPair(todos) }
+            events={mapToPair(todos)}
           />
         ) : (
           <div>No "To Do" Events to Show</div>

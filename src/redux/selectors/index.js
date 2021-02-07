@@ -1,46 +1,46 @@
-import { createSelector } from 'reselect'
+import { createSelector } from "reselect";
 
 const selectTodos = createSelector(
   (state) => state,
   (state) => state.todos
-)
+);
 
 const selectCurrentTodo = createSelector(
-    (state) => state,
-    (state) => state.currentTodo
-)
+  (state) => state,
+  (state) => state.currentTodo
+);
 
 const selectTodoToAdd = createSelector(
-    (state) => state,
-    (state) => state.todoToAdd
-)
+  (state) => state,
+  (state) => state.todoToAdd
+);
 
 const selectCurrentIndex = createSelector(
-    (state) => state,
-    (state) => state.currentIndex
-)
+  (state) => state,
+  (state) => state.currentIndex
+);
 
 const selectSearchTitle = createSelector(
-    (state) => state,
-    (state) => state.searchTitle
-)
+  (state) => state,
+  (state) => state.searchTitle
+);
 
 const selectMessage = createSelector(
-    (state) => state,
-    (state) => state.message
-)
+  (state) => state,
+  (state) => state.message
+);
 
 const selectSubmitted = createSelector(
-    (state) => state,
-    (state) => state.submitted
-)
+  (state) => state,
+  (state) => state.submitted
+);
 
 export {
-    selectTodos,
-    selectCurrentTodo,
-    selectTodoToAdd,
-    selectCurrentIndex,
-    selectSearchTitle,
-    selectMessage,
-    selectSubmitted
-}
+  selectTodos,
+  selectCurrentTodo,
+  selectTodoToAdd,
+  selectCurrentIndex,
+  selectSearchTitle,
+  selectMessage,
+  selectSubmitted,
+};

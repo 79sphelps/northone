@@ -1,20 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   setCurrentTodo,
   setMessage,
   updateTodo,
-  deleteTodo
-} from '../redux/actions';
-import {
-  selectCurrentTodo,
-  selectMessage
-} from '../redux/selectors';
+  deleteTodo,
+} from "../redux/actions";
+import { selectCurrentTodo, selectMessage } from "../redux/selectors";
+import DatePicker from "react-date-picker";
 
-import DatePicker from 'react-date-picker';
-
-
-const Todo = props => {
+const Todo = (props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -24,27 +19,31 @@ const Todo = props => {
 
   const currentTodo = useSelector(selectCurrentTodo);
   const message = useSelector(selectMessage);
-  const [dateValue, onChange] = useState(new Date(currentTodo && currentTodo.dueDate ? currentTodo.dueDate : new Date()));
+  const [dateValue, onChange] = useState(
+    new Date(
+      currentTodo && currentTodo.dueDate ? currentTodo.dueDate : new Date()
+    )
+  );
 
-  const clearMessage = () => dispatch(setMessage(''));
+  const clearMessage = () => dispatch(setMessage(""));
   const checkLocalStorage = () => {
     if (!currentTodo) {
-      let todo = localStorage.getItem('currentTodo')
+      let todo = localStorage.getItem("currentTodo");
       dispatch(setCurrentTodo(JSON.parse(todo)));
     }
-  }
-  const handleInputChange = event => {
+  };
+  const handleInputChange = (event) => {
     const { name, value } = event.target;
     dispatch(setCurrentTodo({ ...currentTodo, [name]: value }));
   };
 
-  const updateStatus = status => {
+  const updateStatus = (status) => {
     var data = {
       id: currentTodo._id,
       title: currentTodo.title,
       description: currentTodo.description,
       status: status,
-      dueDate: dateValue
+      dueDate: dateValue,
     };
     dispatch(updateTodo({ id: currentTodo._id, todo: data }));
   };
@@ -66,7 +65,9 @@ const Todo = props => {
           <h4>To Do</h4>
           <form>
             <div className="form-group">
-              <label htmlFor="title"><strong>Title:</strong></label>
+              <label htmlFor="title">
+                <strong>Title:</strong>
+              </label>
               <input
                 type="text"
                 className="form-control"
@@ -77,7 +78,9 @@ const Todo = props => {
               />
             </div>
             <div className="form-group">
-              <label htmlFor="description"><strong>Description:</strong></label>
+              <label htmlFor="description">
+                <strong>Description:</strong>
+              </label>
               <input
                 type="text"
                 className="form-control"
@@ -90,13 +93,15 @@ const Todo = props => {
 
             <div className="form-group">
               <label>
-                <strong>Status:</strong>{' '}
+                <strong>Status:</strong>{" "}
               </label>
               {currentTodo.status ? "Done" : "Pending"}
             </div>
 
             <div className="form-group">
-              <label htmlFor="dueDate"><strong>Due Date:</strong></label>{' '}
+              <label htmlFor="dueDate">
+                <strong>Due Date:</strong>
+              </label>{" "}
               <DatePicker onChange={onChange} value={dateValue} />
             </div>
           </form>
@@ -119,7 +124,8 @@ const Todo = props => {
 
           <button
             className="btn btn-danger mr-2"
-            onClick={() => deleteTodoUnderEdit()}>
+            onClick={() => deleteTodoUnderEdit()}
+          >
             Delete
           </button>
 
