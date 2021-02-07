@@ -1,6 +1,8 @@
 import React, { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { faEdit, faSearch } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   getTodos,
   deleteTodos,
@@ -20,8 +22,6 @@ import DatePicker from "react-date-picker";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 
-import { faEdit, faSearch } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const TodosList = () => {
   const dispatch = useDispatch();
@@ -41,14 +41,14 @@ const TodosList = () => {
     return result;
   };
 
-  const retrieveTodos = () => {
-    dispatch(getTodos());
-  };
-
   useEffect(() => {
     retrieveTodos();
     checkCurrentIndex();
   }, []);
+
+  const retrieveTodos = () => {
+    dispatch(getTodos());
+  };
 
   const checkCurrentIndex = () => {
     if (!currentIndex) {
@@ -56,6 +56,7 @@ const TodosList = () => {
       // dispatch(setCurrentIndex(JSON.parse(localStorage.getItem('currentIndex'))));
     }
   };
+
   const onChangeSearchTitle = (e) => {
     dispatch(setSearchTitle(e.target.value));
   };
@@ -162,7 +163,6 @@ const TodosList = () => {
               </label>{" "}
               {currentTodo.dueDate}
             </div> */}
-
             <div className="form-group">
               <label htmlFor="dueDate">
                 <strong>Due Date:</strong>
@@ -173,7 +173,6 @@ const TodosList = () => {
                 value={new Date(currentTodo.dueDate)}
               />
             </div>
-
             <Link
               to={"/todos/" + currentTodo._id}
               className="btn btn-sm btn-warning"

@@ -1,5 +1,7 @@
 import { Switch, Route, Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { faHome, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import { setSubmitted, setMessage } from "./redux/actions";
@@ -7,9 +9,6 @@ import AddTodo from "./components/add-todo.component";
 import Todo from "./components/todo.component";
 import TodosList from "./components/todos-list.component";
 
-// get our fontawesome imports
-import { faHome, faPlus } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const App = () => {
   const dispatch = useDispatch();

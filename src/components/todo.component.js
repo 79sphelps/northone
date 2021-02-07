@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   setCurrentTodo,
   setMessage,
@@ -9,8 +11,6 @@ import {
 import { selectCurrentTodo, selectMessage } from "../redux/selectors";
 import DatePicker from "react-date-picker";
 
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Todo = (props) => {
   const dispatch = useDispatch();
@@ -35,6 +35,7 @@ const Todo = (props) => {
       dispatch(setCurrentTodo(JSON.parse(todo)));
     }
   };
+
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     dispatch(setCurrentTodo({ ...currentTodo, [name]: value }));
