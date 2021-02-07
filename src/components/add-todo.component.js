@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
+  addTodo,
   setTodoToAdd,
   setSubmitted
 } from '../redux/actions';
@@ -9,7 +10,6 @@ import {
   selectSubmitted
 } from '../redux/selectors';
 import { formatDate } from '../redux/utils';
-import TodoDataService from '../redux/services/todo.service.js';
 import DatePicker from 'react-date-picker';
 
 
@@ -40,23 +40,7 @@ const AddTodo = () => {
       status: false,
       dueDate: dateValue
     };
-
-    TodoDataService.addTodo(data)
-      .then(response => {
-        dispatch(setTodoToAdd({
-          id: response.data.id,
-          title: response.data.title,
-          description: response.data.description,
-          status: response.data.status,
-          dueDate: response.data.dueDate
-        }));
-
-        dispatch(setSubmitted(true));
-        // console.log(response.data);
-      })
-      .catch(e => {
-        console.log(e);
-      });
+    dispatch(addTodo(data));
   };
 
   const newTodo = () => {

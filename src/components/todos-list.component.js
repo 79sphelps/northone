@@ -2,7 +2,9 @@ import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-    setTodos,
+    getTodos,
+    deleteTodos,
+    findByTitle,
     setSearchTitle,
     setCurrentIndex,
     setCurrentTodo
@@ -15,7 +17,6 @@ import {
 } from '../redux/selectors';
 import { formatDate } from '../redux/utils';
 
-import TodoDataService from '../redux/services/todo.service.js';
 import DatePicker from 'react-date-picker';
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
@@ -40,20 +41,20 @@ const TodosList = () => {
   };
 
   const retrieveTodos = () => {
-    TodoDataService.getTodos()
-      .then(response => {
-        dispatch(setTodos(response.data));
-        // console.log(response.data);
-      })
-      .catch(e => {
-        console.log(e);
-      });
+    dispatch(getTodos());
   };
 
   useEffect(() => {
     retrieveTodos();
+    checkCurrentIndex();
   }, []);
 
+  const checkCurrentIndex = () => {
+    if (!currentIndex) {
+      dispatch(setCurrentTodo(JSON.parse(localStorage.getItem('currentTodo'))));
+      dispatch(setCurrentIndex(JSON.parse(localStorage.getItem('currentIndex'))));
+    }
+  }
   const onChangeSearchTitle = e => {
     dispatch(setSearchTitle(e.target.value));
   };
@@ -70,29 +71,18 @@ const TodosList = () => {
     if (datePicker && datePicker.current && datePicker.current.openCalendar) {
       datePicker.current.openCalendar();
     }
+    localStorage.setItem('currentTodo', JSON.stringify(todo));
+    localStorage.setItem('currentIndex', JSON.stringify(currentIndex));
   };
 
   const removeAllTodos = () => {
-    TodoDataService.deleteTodos()
-      .then(response => {
-        // console.log(response.data);
-        refreshList();
-      })
-      .catch(e => {
-        console.log(e);
-      });
+    dispatch(deleteTodos());
+    refreshList();
   };
 
-  const findByTitle = () => {
-    TodoDataService.findByTitle(searchTitle)
-      .then(response => {
-        dispatch(setTodos(response.data));
-        dispatch(setCurrentTodo(null));
-        // console.log(response.data);
-      })
-      .catch(e => {
-        console.log(e);
-      });
+  const findItemByTitle = () => {
+    dispatch(findByTitle(searchTitle));
+    // dispatch(setCurrentTodo(null));
   };
 
   return (
@@ -110,7 +100,7 @@ const TodosList = () => {
             <button
               className="btn btn-outline-secondary"
               type="button"
-              onClick={() => findByTitle()}
+              onClick={() => findItemByTitle()}
             >
               Search
             </button>

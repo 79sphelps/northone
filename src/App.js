@@ -1,4 +1,8 @@
-import { Switch, Route, Link } from 'react-router-dom';
+import {
+  Switch,
+  Route,
+  Link
+} from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';

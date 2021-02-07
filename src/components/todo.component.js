@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   setCurrentTodo,
-  setCurrentIndex,
   setMessage,
   updateTodo,
   deleteTodo
@@ -12,16 +11,28 @@ import {
   selectMessage
 } from '../redux/selectors';
 
-import TodoDataService from '../redux/services/todo.service.js';
 import DatePicker from 'react-date-picker';
 
 
 const Todo = props => {
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    clearMessage();
+    checkLocalStorage();
+  }, []);
+
   const currentTodo = useSelector(selectCurrentTodo);
   const message = useSelector(selectMessage);
-  const [dateValue, onChange] = useState(new Date(currentTodo.dueDate));
+  const [dateValue, onChange] = useState(new Date(currentTodo && currentTodo.dueDate ? currentTodo.dueDate : new Date()));
 
+  const clearMessage = () => dispatch(setMessage(''));
+  const checkLocalStorage = () => {
+    if (!currentTodo) {
+      let todo = localStorage.getItem('currentTodo')
+      dispatch(setCurrentTodo(JSON.parse(todo)));
+    }
+  }
   const handleInputChange = event => {
     const { name, value } = event.target;
     dispatch(setCurrentTodo({ ...currentTodo, [name]: value }));
@@ -35,44 +46,17 @@ const Todo = props => {
       status: status,
       dueDate: dateValue
     };
-
-    TodoDataService.updateTodo(currentTodo._id, data)
-      .then(response => {
-        dispatch(setCurrentTodo({ ...currentTodo, status: status }));
-        dispatch(setMessage(`The todo was marked as ${data.status ? 'Done' : 'Pending'} successfully!`));
-        // console.log(response.data);
-      })
-      .catch(e => {
-        console.log(e);
-      });
+    dispatch(updateTodo({ id: currentTodo._id, todo: data }));
   };
 
   const updateTodoUnderEdit = () => {
     currentTodo.dueDate = dateValue;
-    TodoDataService.updateTodo(currentTodo._id, currentTodo)
-      .then(response => {
-        // console.log(response.data);
-        dispatch(updateTodo({ id: currentTodo._id, todo: currentTodo }));
-        dispatch(setMessage('The todo was updated successfully!'));
-      })
-      .catch(e => {
-        console.log(e);
-      });
+    dispatch(updateTodo({ id: currentTodo._id, todo: currentTodo }));
   };
 
   const deleteTodoUnderEdit = () => {
-    TodoDataService.deleteTodo(currentTodo._id)
-      .then(response => {
-        // console.log(response.data);
-        props.history.push("/todos");
-        dispatch(deleteTodo(currentTodo._id));
-        dispatch(setMessage('The todo was deleted successfully!'));
-        dispatch(setCurrentTodo(null));
-        dispatch(setCurrentIndex(-1));
-      })
-      .catch(e => {
-        console.log(e);
-      });
+    dispatch(deleteTodo({ id: currentTodo._id }));
+    props.history.push("/todos");
   };
 
   return (
