@@ -37,22 +37,44 @@ if (process.env.NODE_ENV !== "dev") {
     res.sendFile(path.join(__dirname, 'build', 'index.html'));
   });
 
-  app.get('*', (req, res) => {
+  app.get('/*', (req, res) => {
     res.sendFile(path.join(__dirname, 'build', 'index.html'));
   });
 }
 
-app.use((req, res, next) => {
-  const err = new Error('Not Found');
+// catch 404 and forward to error handler
+// note this is after all good routes and is not an error handler
+// to get a 404, it has to fall through to this route - no error involved
+app.use(function(req, res, next) {
+  var err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
 
-app.use((err, req, res, next) => {
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+// error handlers - these take err object.
+// these are per request error handlers.  They have two so in dev
+// you get a full stack trace.  In prod, first is never setup
+
+// development error handler
+// will print stacktrace
+if (app.get('env') === 'development') {
+  app.use(function(err, req, res, next) {
+      res.status(err.status || 500);
+      res.render('error', {
+          message: err.message,
+          error: err
+      });
+  });
+}
+
+// production error handler
+// no stacktraces leaked to user
+app.use(function(err, req, res, next) {
   res.status(err.status || 500);
-  res.json('error');
+  res.render('error', {
+      message: err.message,
+      error: {}
+  });
 });
 
 const PORT = process.env.PORT || 8080;
