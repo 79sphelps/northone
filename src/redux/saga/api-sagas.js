@@ -7,6 +7,7 @@ import {
   SET_MESSAGE,
   SET_SUBMITTED,
   SET_TODOS,
+  SET_TODO_TO_ADD,
   GET_TODOS,
   ADD_TODO,
   ADD_TODO_IN_STATE,
@@ -90,6 +91,7 @@ function* addTodoWorkerSaga(action) {
     const payload = yield call(addTodo, action.payload);
     yield put({ type: ADD_TODO_IN_STATE, payload });
     yield put({ type: SET_SUBMITTED, payload: true });
+    yield put({ type: SET_TODO_TO_ADD, payload: null });
   } catch (e) {
     yield put({ type: API_ERRORED, payload: e });
   }

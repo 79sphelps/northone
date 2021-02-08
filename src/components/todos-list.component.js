@@ -90,7 +90,7 @@ const TodosList = () => {
 
   return (
     <div className="list row">
-      <div className="col-md-8">
+      <div className="col-md-8" style={{ margin: '0 auto' }}>
         <div className="input-group mb-3">
           <input
             type="text"

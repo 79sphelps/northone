@@ -13,6 +13,7 @@ import {
   DATA_LOADED,
   API_ERRORED,
 } from "../constants/action.types";
+import { deepCopy } from '../utils';
 
 const initialState = {
   todos: [],
@@ -30,12 +31,14 @@ function rootReducer(state = initialState, action) {
 
   switch (action.type) {
     case SET_CURRENT_TODO:
+      if (!action.payload) return { ...state, currentTodo: null }
       return {
         ...state,
-        currentTodo: { ...state.currentTodo, ...action.payload },
+        currentTodo: { ...state.currentTodo, ...action.payload }
       };
 
     case SET_TODO_TO_ADD:
+      if (!action.payload) return { ...state, todoToAdd: null }
       return { ...state, todoToAdd: action.payload };
 
     case SET_SEARCH_TITLE:
@@ -57,7 +60,7 @@ function rootReducer(state = initialState, action) {
       return { ...state, todos: state.todos.concat(action.payload) };
 
     case UPDATE_TODO_IN_STATE:
-      mappings = state.todos;
+      mappings = deepCopy(state.todos);
       const idx = mappings.findIndex((t) => t._id === action.payload.id);
 
       if (mappings && mappings[idx]) {
