@@ -82,6 +82,7 @@ function* findByTitleWorkerSaga(action) {
     const payload = yield call(findByTitle, action.payload);
     yield put({ type: SET_TODOS, payload });
     yield put({ type: SET_CURRENT_TODO, payload: null });
+    yield put({ type: SET_CURRENT_INDEX, payload: -1 });
   } catch (e) {
     yield put({ type: API_ERRORED, payload: e });
   }

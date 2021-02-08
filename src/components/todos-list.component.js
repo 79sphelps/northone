@@ -58,8 +58,9 @@ const TodosList = () => {
     }
   };
 
-  const onChangeSearchTitle = (e) => {
-    dispatch(setSearchTitle(e.target.value));
+  const onChangeSearchTitle = (event) => {
+    event.preventDefault(); // prevent a browser reload/refresh
+    dispatch(setSearchTitle(event.target.value));
   };
 
   const refreshList = () => {

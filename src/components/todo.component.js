@@ -38,6 +38,7 @@ const Todo = (props) => {
   };
 
   const handleInputChange = (event) => {
+    event.preventDefault(); // prevent a browser reload/refresh
     const { name, value } = event.target;
     dispatch(setCurrentTodo({ ...currentTodo, [name]: value }));
   };
