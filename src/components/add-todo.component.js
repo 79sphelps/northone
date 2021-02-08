@@ -63,7 +63,7 @@ const AddTodo = () => {
     <div className="submit-form">
       {submitted && TodoToAdd ? (
         <div>
-          <h4>You submitted successfully!</h4>
+          <h4>The new "To Do" item was created successfully!</h4>
           <button className="btn btn-success" onClick={() => newTodo()}>
             Add
           </button>

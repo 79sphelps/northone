@@ -9,6 +9,7 @@ import {
   SET_TODOS,
   SET_TODO_TO_ADD,
   GET_TODOS,
+  GET_TODOS_SUCCESS,
   ADD_TODO,
   ADD_TODO_IN_STATE,
   UPDATE_TODO,
@@ -19,6 +20,33 @@ import {
   API_ERRORED
 } from "../constants/action.types";
 
+/*
+redux-saga is a library that aims to make application side effects (i.e. asynchronous things like data
+fetching and impure things like accessing the browser cache) easier to manage, more efficient to
+execute, simple to test, and better at handling failures.
+
+Generators can pause and restart — be exited and re-entered — and actually remember the context/state
+of the function over time.
+
+Each yield in a generator basically represents an asynchronous step in a more synchronous/sequential
+process — somewhat like await in an async function.
+
+Basic Flow:
+- a watcherSaga is a saga that watches for an action to be dispatched to the Store, triggering a
+  workerSaga.
+- takeLatest is a helper function provided by redux-saga that will trigger a new workerSaga when
+  it sees an GET_TODOS, while cancelling any previously triggered workerSaga still in process.
+- getTodos simply uses axios to request the todo list from the todos API and returns a Promise
+  for the response.
+- workerSaga attempts to getTodos, using another redux-saga helper function call, and stores the
+  result (a resolved or failed Promise) in a response variable.
+- If getTodos was a success, we extract the todo list from the response and dispatch an
+  GET_TODOS_SUCCESS action with todo list in the payload to the Store, using ANOTHER redux-saga
+  helper function put.
+- If there was an error with getTodos, we let the Store know about it by dispatching an
+  API_ERRORED action with the error.
+*/
+
 export default function* watcherSaga() {
   yield takeEvery(GET_TODOS, getTodosWorkerSaga);
   yield takeEvery(DELETE_TODOS, deleteTodosWorkerSaga);
@@ -28,10 +56,12 @@ export default function* watcherSaga() {
   yield takeEvery(ADD_TODO, addTodoWorkerSaga);
 }
 
+// **TODO: Pass the payload to the success handler and set state from there.
 function* getTodosWorkerSaga() {
   try {
     const payload = yield call(getTodos);
-    yield put({ type: SET_TODOS, payload });
+    yield put({ type: GET_TODOS_SUCCESS }); // TBD: Pass payload
+    yield put({ type: SET_TODOS, payload });  // TBD: Invoke from success handler
   } catch (e) {
     yield put({ type: API_ERRORED, payload: e });
   }
@@ -51,7 +81,7 @@ function* findByTitleWorkerSaga(action) {
   try {
     const payload = yield call(findByTitle, action.payload);
     yield put({ type: SET_TODOS, payload });
-    // yield put({ type: SET_CURRENT_TODO });
+    yield put({ type: SET_CURRENT_TODO, payload: null });
   } catch (e) {
     yield put({ type: API_ERRORED, payload: e });
   }

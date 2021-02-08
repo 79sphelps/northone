@@ -14,6 +14,7 @@ import {
   GET_SUBMITTED,
   SET_TODOS,
   GET_TODOS,
+  GET_TODOS_SUCCESS,
   GET_TODO,
   ADD_TODO,
   ADD_TODO_IN_STATE,
@@ -83,6 +84,10 @@ const setTodos = (payload) => {
 
 const getTodos = (payload) => {
   return { type: GET_TODOS };
+};
+
+const getTodosSuccess = (payload) => {
+  return { type: GET_TODOS_SUCCESS };
 };
 
 const getTodo = (payload) => {
