@@ -1,3 +1,15 @@
+# Overview of App
+Basic React/Redux project using both React and React-Redux Hooks. Uses Redux-Sagas for managing async calls in redux state and makes use of custom selectors. It uses Axios for making HTTP calls for simplicity. Use of Bootstrap and FontAwesome for styling.
+
+FrontEnd Features:
+- React frontend with basic redux for state management and sagas for asynchronous calls
+- Functionality: basic CRUD requirements and search, calendar display
+- 3 routes: list, edit, add
+- 3 components
+
+Backend:
+- Node.js/Express with basic routing
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
