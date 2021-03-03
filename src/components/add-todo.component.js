@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import DatePicker from "react-date-picker";
 
@@ -12,6 +12,33 @@ const AddTodo = () => {
   let TodoToAdd = useSelector(selectTodoToAdd);
   const submitted = useSelector(selectSubmitted);
   const [dateValue, onChange] = useState(new Date());
+
+
+  
+  // useEffect(() => {
+  //   const storedTodoToAdd = JSON.parse(localStorage.getItem("todoToAdd"));
+  //   if (storedTodoToAdd) {
+  //     dispatch(setTodoToAdd(storedTodoToAdd));
+  //   }
+  // }, []);
+
+  // useEffect(() => {
+  //   if (!TodoToAdd) {
+  //     let todoToAdd = {
+  //       id: null,
+  //       title: "",
+  //       description: "",
+  //       status: false,
+  //       dueDate: formatDate(new Date()),
+  //     };
+  //     localStorage.setItem("todoToAdd", JSON.stringify(todoToAdd));
+  //     TodoToAdd = todoToAdd;
+  //   } else {
+  //     localStorage.setItem("todoToAdd", JSON.stringify(TodoToAdd));
+  //   }
+  // }, [TodoToAdd]);
+
+
 
   if (!TodoToAdd) {
     let todoToAdd = JSON.parse(localStorage.getItem("todoToAdd"));
@@ -28,6 +55,7 @@ const AddTodo = () => {
     dispatch(setTodoToAdd(todoToAdd));
     TodoToAdd = todoToAdd;
   }
+
 
   let initialTodoState = {
     id: null,
@@ -78,7 +106,7 @@ const AddTodo = () => {
               className="form-control"
               id="title"
               required
-              value={TodoToAdd.title}
+              value={TodoToAdd && TodoToAdd.title ? TodoToAdd.title : ''}
               onChange={(event) => handleInputChange(event)}
               name="title"
             />
@@ -91,7 +119,7 @@ const AddTodo = () => {
               className="form-control"
               id="description"
               required
-              value={TodoToAdd.description}
+              value={TodoToAdd && TodoToAdd.description ? TodoToAdd.description : ''}
               onChange={(event) => handleInputChange(event)}
               name="description"
             />

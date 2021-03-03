@@ -1,37 +1,43 @@
 import { createSelector } from "reselect";
 
+const getState = createSelector((state) => state, (state) => state);
+
+// const selectTodos = createSelector(
+//   (state) => state,
+//   (state) => state.todos
+// );
 const selectTodos = createSelector(
-  (state) => state,
+  [getState],
   (state) => state.todos
 );
 
 const selectCurrentTodo = createSelector(
-  (state) => state,
+  [getState],
   (state) => state.currentTodo
 );
 
 const selectTodoToAdd = createSelector(
-  (state) => state,
+  [getState],
   (state) => state.todoToAdd
 );
 
 const selectCurrentIndex = createSelector(
-  (state) => state,
+  [getState],
   (state) => state.currentIndex
 );
 
 const selectSearchTitle = createSelector(
-  (state) => state,
+  [getState],
   (state) => state.searchTitle
 );
 
 const selectMessage = createSelector(
-  (state) => state,
+  [getState],
   (state) => state.message
 );
 
 const selectSubmitted = createSelector(
-  (state) => state,
+  [getState],
   (state) => state.submitted
 );
 
