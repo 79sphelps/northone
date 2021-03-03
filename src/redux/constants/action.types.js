@@ -37,8 +37,12 @@ export const DELETE_TODO_SUCCESSFUL = "DELETE_TODO_SUCCESSFUL";
 export const DELETE_TODOS = "DELETE_TODOS";
 export const DELETE_TODOS_SUCCESSFUL = "DELETE_TODOS_SUCCESSFUL";
 
-export const DATA_LOADED = "DATA_LOADED";
+// export const DATA_LOADED = "DATA_LOADED";
 export const API_ERRORED = "API_ERRORED";
 
 export const IS_FETCHING = "IS_FETCHING";
-// export const HAS_FETCHED = 'HAS_FETCHED';
+export const IS_UPDATING = "IS_UPDATING";
+export const IS_DELETING = "IS_DELETING";
+export const IS_DELETING_ALL = "IS_DELETING_ALL";
+export const IS_ADDING = "IS_ADDING";
+export const IS_FINDING = "IS_FINDING";

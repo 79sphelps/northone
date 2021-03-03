@@ -6,17 +6,12 @@ import {
   SET_CURRENT_INDEX,
   SET_MESSAGE,
   SET_SUBMITTED,
-  // SET_TODOS,
   GET_TODOS_SUCCESSFUL,
   SET_TODO_TO_ADD,
   GET_TODOS,
-  // GET_TODOS_SUCCESS,
   ADD_TODO,
-  // ADD_TODO_IN_STATE,
   UPDATE_TODO,
-  // UPDATE_TODO_IN_STATE,
   DELETE_TODO,
-  // DELETE_TODO_IN_STATE,
   DELETE_TODOS,
   DELETE_TODOS_SUCCESSFUL,
   API_ERRORED,
@@ -24,6 +19,12 @@ import {
   DELETE_TODO_SUCCESSFUL,
   ADD_TODO_SUCCESSFUL,
   FIND_BY_TITLE_SUCCESSFUL,
+  IS_FETCHING,
+  IS_DELETING_ALL,
+  IS_FINDING,
+  IS_UPDATING,
+  IS_DELETING,
+  IS_ADDING,
 } from "../constants/action.types";
 
 /*
@@ -64,6 +65,7 @@ export default function* watcherSaga() {
 
 function* getTodosWorkerSaga() {
   try {
+    yield put({ type: IS_FETCHING });
     const payload = yield call(getTodos);
     yield put({ type: GET_TODOS_SUCCESSFUL, payload });
   } catch (e) {
@@ -73,6 +75,7 @@ function* getTodosWorkerSaga() {
 
 function* deleteTodosWorkerSaga(action) {
   try {
+    yield put({ type: IS_DELETING_ALL });
     yield call(deleteTodos);
     let ary = [];
     yield put({ type: DELETE_TODOS_SUCCESSFUL, ary });
@@ -83,6 +86,7 @@ function* deleteTodosWorkerSaga(action) {
 
 function* findByTitleWorkerSaga(action) {
   try {
+    yield put({ type: IS_FINDING });
     const payload = yield call(findByTitle, action.payload);
     yield put({ type: FIND_BY_TITLE_SUCCESSFUL, payload });
 
@@ -95,6 +99,7 @@ function* findByTitleWorkerSaga(action) {
 
 function* updateTodoWorkerSaga(action) {
   try {
+    yield put({ type: IS_UPDATING });
     yield call(updateTodo, action.payload);
     const payload = action.payload;
     yield put({ type: UPDATE_TODO_SUCCESSFUL, payload });
@@ -111,6 +116,7 @@ function* updateTodoWorkerSaga(action) {
 
 function* deleteTodoWorkerSaga(action) {
   try {
+    yield put({ type: IS_DELETING });
     yield call(deleteTodo, action.payload.id);
     const payload = action.payload;
     yield put({ type: DELETE_TODO_SUCCESSFUL, payload });
@@ -127,6 +133,7 @@ function* deleteTodoWorkerSaga(action) {
 
 function* addTodoWorkerSaga(action) {
   try {
+    yield put({ type: IS_ADDING });
     const payload = yield call(addTodo, action.payload);
     yield put({ type: ADD_TODO_SUCCESSFUL, payload });
 
