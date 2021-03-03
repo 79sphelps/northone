@@ -6,18 +6,24 @@ import {
   SET_CURRENT_INDEX,
   SET_MESSAGE,
   SET_SUBMITTED,
-  SET_TODOS,
+  // SET_TODOS,
+  GET_TODOS_SUCCESSFUL,
   SET_TODO_TO_ADD,
   GET_TODOS,
-  GET_TODOS_SUCCESS,
+  // GET_TODOS_SUCCESS,
   ADD_TODO,
-  ADD_TODO_IN_STATE,
+  // ADD_TODO_IN_STATE,
   UPDATE_TODO,
-  UPDATE_TODO_IN_STATE,
+  // UPDATE_TODO_IN_STATE,
   DELETE_TODO,
-  DELETE_TODO_IN_STATE,
+  // DELETE_TODO_IN_STATE,
   DELETE_TODOS,
-  API_ERRORED
+  DELETE_TODOS_SUCCESSFUL,
+  API_ERRORED,
+  UPDATE_TODO_SUCCESSFUL,
+  DELETE_TODO_SUCCESSFUL,
+  ADD_TODO_SUCCESSFUL,
+  FIND_BY_TITLE_SUCCESSFUL,
 } from "../constants/action.types";
 
 /*
@@ -56,12 +62,10 @@ export default function* watcherSaga() {
   yield takeEvery(ADD_TODO, addTodoWorkerSaga);
 }
 
-// **TODO: Pass the payload to the success handler and set state from there.
 function* getTodosWorkerSaga() {
   try {
     const payload = yield call(getTodos);
-    yield put({ type: GET_TODOS_SUCCESS }); // TBD: Pass payload
-    yield put({ type: SET_TODOS, payload });  // TBD: Invoke from success handler
+    yield put({ type: GET_TODOS_SUCCESSFUL, payload });
   } catch (e) {
     yield put({ type: API_ERRORED, payload: e });
   }
@@ -71,7 +75,7 @@ function* deleteTodosWorkerSaga(action) {
   try {
     yield call(deleteTodos);
     let ary = [];
-    yield put({ type: SET_TODOS, ary });
+    yield put({ type: DELETE_TODOS_SUCCESSFUL, ary });
   } catch (e) {
     yield put({ type: API_ERRORED, payload: e });
   }
@@ -80,7 +84,8 @@ function* deleteTodosWorkerSaga(action) {
 function* findByTitleWorkerSaga(action) {
   try {
     const payload = yield call(findByTitle, action.payload);
-    yield put({ type: SET_TODOS, payload });
+    yield put({ type: FIND_BY_TITLE_SUCCESSFUL, payload });
+
     yield put({ type: SET_CURRENT_TODO, payload: null });
     yield put({ type: SET_CURRENT_INDEX, payload: -1 });
   } catch (e) {
@@ -92,9 +97,11 @@ function* updateTodoWorkerSaga(action) {
   try {
     yield call(updateTodo, action.payload);
     const payload = action.payload;
-    yield put({ type: UPDATE_TODO_IN_STATE, payload });
+    yield put({ type: UPDATE_TODO_SUCCESSFUL, payload });
+
     let todo = action.payload.todo;
     yield put({ type: SET_CURRENT_TODO, payload: todo });
+
     const message = "The todo was updated successfully!";
     yield put({ type: SET_MESSAGE, payload: message });
   } catch (e) {
@@ -106,7 +113,8 @@ function* deleteTodoWorkerSaga(action) {
   try {
     yield call(deleteTodo, action.payload.id);
     const payload = action.payload;
-    yield put({ type: DELETE_TODO_IN_STATE, payload });
+    yield put({ type: DELETE_TODO_SUCCESSFUL, payload });
+
     const message = "The todo was deleted successfully!";
     yield put({ type: SET_MESSAGE, payload: message });
     yield put({ type: SET_CURRENT_TODO, payload: null });
@@ -120,7 +128,8 @@ function* deleteTodoWorkerSaga(action) {
 function* addTodoWorkerSaga(action) {
   try {
     const payload = yield call(addTodo, action.payload);
-    yield put({ type: ADD_TODO_IN_STATE, payload });
+    yield put({ type: ADD_TODO_SUCCESSFUL, payload });
+
     yield put({ type: SET_SUBMITTED, payload: true });
     yield put({ type: SET_TODO_TO_ADD, payload: null });
   } catch (e) {

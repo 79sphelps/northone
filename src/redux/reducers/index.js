@@ -6,12 +6,14 @@ import {
   SET_MESSAGE,
   SET_SUBMITTED,
   SET_TODOS,
-  ADD_TODO_IN_STATE,
-  UPDATE_TODO_IN_STATE,
-  DELETE_TODO_IN_STATE,
-  DELETE_TODOS,
   DATA_LOADED,
   API_ERRORED,
+  GET_TODOS_SUCCESSFUL,
+  DELETE_TODOS_SUCCESSFUL,
+  UPDATE_TODO_SUCCESSFUL,
+  DELETE_TODO_SUCCESSFUL,
+  ADD_TODO_SUCCESSFUL,
+  FIND_BY_TITLE_SUCCESSFUL,
 } from "../constants/action.types";
 import { deepCopy } from '../utils';
 
@@ -44,6 +46,9 @@ function rootReducer(state = initialState, action) {
     case SET_SEARCH_TITLE:
       return { ...state, searchTitle: action.payload };
 
+    case FIND_BY_TITLE_SUCCESSFUL:
+      return { ...state, todos: action.payload };
+
     case SET_CURRENT_INDEX:
       return { ...state, currentIndex: action.payload };
 
@@ -56,10 +61,13 @@ function rootReducer(state = initialState, action) {
     case SET_TODOS:
       return { ...state, todos: action.payload };
 
-    case ADD_TODO_IN_STATE:
+    case GET_TODOS_SUCCESSFUL:
+      return { ...state, todos: action.payload };
+
+    case ADD_TODO_SUCCESSFUL:
       return { ...state, todos: state.todos.concat(action.payload) };
 
-    case UPDATE_TODO_IN_STATE:
+    case UPDATE_TODO_SUCCESSFUL:
       mappings = deepCopy(state.todos);
       const idx = mappings.findIndex((t) => t._id === action.payload.id);
 
@@ -72,12 +80,12 @@ function rootReducer(state = initialState, action) {
 
       return { ...state, todos: mappings };
 
-    case DELETE_TODO_IN_STATE:
+    case DELETE_TODO_SUCCESSFUL:
       mappings = state.todos.filter((t) => t._id !== action.payload.id);
       return { ...state, todos: mappings };
 
-    case DELETE_TODOS:
-      return { ...state, todos: [] };
+    case DELETE_TODOS_SUCCESSFUL:
+      return { ...state, todos: action.payload };
 
     case DATA_LOADED:
       return state;

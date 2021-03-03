@@ -4,6 +4,7 @@ import {
   SET_TODO_TO_ADD,
   GET_TODO_TO_ADD,
   FIND_BY_TITLE,
+  FIND_BY_TITLE_SUCCESSFUL,
   SET_SEARCH_TITLE,
   GET_SEARCH_TITLE,
   SET_CURRENT_INDEX,
@@ -14,15 +15,16 @@ import {
   GET_SUBMITTED,
   SET_TODOS,
   GET_TODOS,
-  GET_TODOS_SUCCESS,
+  GET_TODOS_SUCCESSFUL,
   GET_TODO,
   ADD_TODO,
-  ADD_TODO_IN_STATE,
+  ADD_TODO_SUCCESSFUL,
   UPDATE_TODO,
-  UPDATE_TODO_IN_STATE,
+  UPDATE_TODO_SUCCESSFUL,
   DELETE_TODO,
-  DELETE_TODO_IN_STATE,
+  DELETE_TODO_SUCCESSFUL,
   DELETE_TODOS,
+  DELETE_TODOS_SUCCESSFUL,
   API_ERRORED,
 } from "../constants/action.types";
 
@@ -44,6 +46,10 @@ const getTodoToAdd = (payload) => {
 
 const findByTitle = (payload) => {
   return { type: FIND_BY_TITLE, payload };
+};
+
+const findByTitleSuccessful = (payload) => {
+  return { type: FIND_BY_TITLE_SUCCESSFUL, payload };
 };
 
 const setSearchTitle = (payload) => {
@@ -86,8 +92,8 @@ const getTodos = (payload) => {
   return { type: GET_TODOS };
 };
 
-const getTodosSuccess = (payload) => {
-  return { type: GET_TODOS_SUCCESS };
+const getTodosSuccessful = (payload) => {
+  return { type: GET_TODOS_SUCCESSFUL };
 };
 
 const getTodo = (payload) => {
@@ -98,28 +104,32 @@ const addTodo = (payload) => {
   return { type: ADD_TODO, payload };
 };
 
-const addTodoInState = (payload) => {
-  return { type: ADD_TODO_IN_STATE, payload };
+const addTodoSuccessful = (payload) => {
+  return { type: ADD_TODO_SUCCESSFUL, payload };
 };
 
 const updateTodo = (payload) => {
   return { type: UPDATE_TODO, payload };
 };
 
-const updateTodoInState = (payload) => {
-  return { type: UPDATE_TODO_IN_STATE, payload };
+const updateTodoSuccessful = (payload) => {
+  return { type: UPDATE_TODO_SUCCESSFUL, payload };
 };
 
 const deleteTodo = (payload) => {
   return { type: DELETE_TODO, payload };
 };
 
-const deleteTodoInState = (payload) => {
-  return { type: DELETE_TODO_IN_STATE, payload };
+const deleteTodoSuccessful = (payload) => {
+  return { type: DELETE_TODO_SUCCESSFUL, payload };
 };
 
 const deleteTodos = (payload) => {
   return { type: DELETE_TODOS };
+};
+
+const deleteTodosSuccessful = (payload) => {
+  return { type: DELETE_TODOS_SUCCESSFUL, payload };
 };
 
 const apiErrored = (payload) => {
@@ -142,13 +152,16 @@ export {
   getSubmitted,
   setTodos,
   getTodos,
+  getTodosSuccessful,
+  deleteTodosSuccessful,
+  updateTodoSuccessful,
+  deleteTodoSuccessful,
+  addTodoSuccessful,
+  findByTitleSuccessful,
   getTodo,
   addTodo,
-  addTodoInState,
   updateTodo,
-  updateTodoInState,
   deleteTodo,
-  deleteTodoInState,
   deleteTodos,
   apiErrored,
 };
