@@ -2,10 +2,6 @@ import { createSelector } from "reselect";
 
 const getState = createSelector((state) => state, (state) => state);
 
-// const selectTodos = createSelector(
-//   (state) => state,
-//   (state) => state.todos
-// );
 const selectTodos = createSelector(
   [getState],
   (state) => state.todos
