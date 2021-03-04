@@ -1,9 +1,10 @@
 # Overview of App
-Basic React/Redux project using both React and React-Redux Hooks. Uses Redux-Sagas for managing async calls in redux state and makes use of custom selectors. It uses Axios for making HTTP calls for simplicity. Use of Bootstrap and FontAwesome for styling.
+Basic React/Redux project using both React and React-Redux Hooks. Uses Redux-Sagas for managing async calls in redux state and makes use of custom selectors. It uses Axios for making HTTP calls for simplicity. Use of Bootstrap and FontAwesome for styling. Unit tests written for some redux actions, reducers, sagas, selectors.
 
 FrontEnd Features:
 - React frontend with basic redux for state management and sagas for asynchronous calls
 - Functionality: basic CRUD requirements and search, calendar display
+- Unit tests for some redux actions, reducers, sagas, selectors.
 - 3 routes: list, edit, add
 - 3 components
 
