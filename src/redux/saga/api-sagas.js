@@ -63,7 +63,7 @@ export default function* watcherSaga() {
   yield takeEvery(ADD_TODO, addTodoWorkerSaga);
 }
 
-function* getTodosWorkerSaga() {
+export function* getTodosWorkerSaga() {
   try {
     yield put({ type: IS_FETCHING });
     const payload = yield call(getTodos);
@@ -73,7 +73,7 @@ function* getTodosWorkerSaga() {
   }
 }
 
-function* deleteTodosWorkerSaga(action) {
+export function* deleteTodosWorkerSaga(action) {
   try {
     yield put({ type: IS_DELETING_ALL });
     yield call(deleteTodos);
@@ -84,7 +84,7 @@ function* deleteTodosWorkerSaga(action) {
   }
 }
 
-function* findByTitleWorkerSaga(action) {
+export function* findByTitleWorkerSaga(action) {
   try {
     yield put({ type: IS_FINDING });
     const payload = yield call(findByTitle, action.payload);
@@ -97,7 +97,7 @@ function* findByTitleWorkerSaga(action) {
   }
 }
 
-function* updateTodoWorkerSaga(action) {
+export function* updateTodoWorkerSaga(action) {
   try {
     yield put({ type: IS_UPDATING });
     yield call(updateTodo, action.payload);
@@ -114,7 +114,7 @@ function* updateTodoWorkerSaga(action) {
   }
 }
 
-function* deleteTodoWorkerSaga(action) {
+export function* deleteTodoWorkerSaga(action) {
   try {
     yield put({ type: IS_DELETING });
     yield call(deleteTodo, action.payload.id);
@@ -131,7 +131,7 @@ function* deleteTodoWorkerSaga(action) {
   }
 }
 
-function* addTodoWorkerSaga(action) {
+export function* addTodoWorkerSaga(action) {
   try {
     yield put({ type: IS_ADDING });
     const payload = yield call(addTodo, action.payload);
