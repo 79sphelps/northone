@@ -44,6 +44,8 @@ import {
 import { createStore } from "redux";
 import reducers from "./redux/reducers";
 
+import * as reactRedux from 'react-redux';
+
 function makeTestStore(opts = {}) {
   const store = createStore(opts)
   const origDispatch = store.dispatch
@@ -57,8 +59,17 @@ function makeTestStore(opts = {}) {
 //   expect(linkElement).toBeInTheDocument();
 // });
 
+
 // ACTION TESTS
+
 describe('action creators', () => {
+  // const useSelectorMock = jest.spyOn(reactRedux, 'useSelector')
+  // const useDispatchMock = jest.spyOn(reactRedux, 'useDispatch')
+
+  // beforeEach(() => {
+  //   useSelectorMock.mockClear()
+  //   useDispatchMock.mockClear()
+  // })
 
   it('should set current todo successfully', () => {
     const todo = {

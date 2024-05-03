@@ -75,6 +75,9 @@ exports.update = (req, res) => {
     return res.status(400).send({ message: "Data to update cannot be empty." });
   }
 
+  console.log(req)
+
+
   const id = req.params.id;
 
   Todo.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
