@@ -19,7 +19,7 @@ app.use(bodyParser.json());
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const db = require('./api/models');
+const db = require('../api/models');
 db.mongoose.connect(db.url, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Connected to the DB'))
   .catch(err => {
@@ -31,7 +31,7 @@ if (process.env.NODE_ENV !== "dev") {
   app.use('/', express.static(path.join(__dirname, '/build')));
 }
 
-require('./api/routes')(app);
+require('../api/routes')(app);
 
 if (process.env.NODE_ENV !== "dev") {
   app.get('/', (req, res) => {
