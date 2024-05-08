@@ -9,6 +9,9 @@ import {
   addTodo,
   getTodos,
   setTodos,
+  updateTodo,
+  deleteTodo,
+  deleteTodos,
 } from "./redux/actions";
 import {
   SET_CURRENT_TODO,
@@ -24,10 +27,20 @@ import {
   GET_TODOS,
   GET_TODOS_SUCCESSFUL,
   SET_TODOS,
+  UPDATE_TODO,
+  UPDATE_TODO_SUCCESSFUL,
+  SET_MESSAGE,
+  IS_UPDATING,
 } from "./redux/constants/action.types";
 
 import { call, put } from "redux-saga/effects";
-import { getTodosWorkerSaga, addTodoWorkerSaga } from "./redux/saga/api-sagas";
+import { 
+  getTodosWorkerSaga, 
+  addTodoWorkerSaga, 
+  updateTodoWorkerSaga, 
+  deleteTodoWorkerSaga, 
+  deleteTodosWorkerSaga 
+} from "./redux/saga/api-sagas";
 
 import rootReducer from './redux/reducers';
 
@@ -208,6 +221,62 @@ describe('action creators', () => {
     expect(iterator.throw("some error").value).toEqual(put(expectedAction2));
 
     expect(iterator.next().done).toEqual(true);
+  });
+
+  it('should handle "update a todo" successfully', () => {
+    const todo = {
+      id: "012345",
+      title: "My New Title",
+      description: "My New Title Description",
+      status: false,
+      dueDate: formatDate(new Date()),
+    };
+
+    const iterator = addTodoWorkerSaga({ type: ADD_TODO, payload: todo });
+
+    const expectedAction1 = { type: IS_ADDING };
+    expect(iterator.next().value).toEqual(put(expectedAction1));
+
+    expect(JSON.stringify(iterator.next().value)).toEqual(JSON.stringify(call(addTodo, todo)));
+
+    const expectedAction2 = { type: ADD_TODO_SUCCESSFUL, payload: undefined };
+    expect(iterator.next().value).toEqual(put(expectedAction2));
+
+    // const expectedAction3 = { type: SET_SUBMITTED, payload: true };
+    // expect(iterator.next().value).toEqual(put(expectedAction3));
+
+    // const expectedAction4 = { type: SET_TODO_TO_ADD, payload: null };
+    // expect(iterator.next().value).toEqual(put(expectedAction4));
+
+    // expect(iterator.next().done).toEqual(true);
+
+    const updatedTodo = {
+      id: "012345",
+      title: "My New Title - Updated",
+      description: "My New Title Description",
+      status: false,
+      dueDate: formatDate(new Date()),
+    }
+
+    const iterator2 = updateTodoWorkerSaga({ type: UPDATE_TODO, payload: updatedTodo })
+
+    const expectedAction5 = { type: IS_UPDATING };
+    expect(iterator2.next().value).toEqual(put(expectedAction5));
+
+    expect(JSON.stringify(iterator2.next().value)).toEqual(JSON.stringify(call(updateTodo, updatedTodo)));
+
+    const expectedAction6 = { type: UPDATE_TODO_SUCCESSFUL, payload: updatedTodo };
+    expect(iterator2.next().value).toEqual(put(expectedAction6));
+
+    const expectedAction7 = { type: SET_CURRENT_TODO, payload: undefined };
+    expect(iterator2.next().value).toEqual(put(expectedAction7));
+
+    const message = "The todo was updated successfully!";
+
+    const expectedAction8 = { type: SET_MESSAGE, payload: message };
+    expect(iterator2.next().value).toEqual(put(expectedAction8));
+
+    expect(iterator2.next().done).toEqual(true);
   });
 
 
