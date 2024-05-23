@@ -9,9 +9,9 @@ if (process.env.NODE_ENV !== "dev") {
   app.use(cors());
 } else {
   let corsOptions = {
-      // origin: 'http://localhost:3000'
+      origin: 'http://localhost:3000'
       // origin: 'https://northone-fp6p0zqmv-79sphelps-projects.vercel.app/'
-      origin: 'northone.vercel.app',
+      // origin: 'northone.vercel.app',
   };
   app.use(cors(corsOptions));
 }
