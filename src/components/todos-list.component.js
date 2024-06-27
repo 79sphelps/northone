@@ -6,7 +6,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import DatePicker from "react-date-picker";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
-
+import timeGridPlugin from '@fullcalendar/timegrid';
+import interactionPlugin from '@fullcalendar/interaction';
 import {
   getTodos,
   deleteTodos,
@@ -38,10 +39,19 @@ const TodosList = () => {
   }, []);
 
   const mapTodoEventsToCalendar = (arr = []) => {
+
+    console.log(todos)
+
     const result = arr.map((obj) => {
       const res = {};
       res["title"] = obj["title"];
       res["date"] = formatDate(obj["dueDate"]);
+
+
+      // res["start"] = obj["start"] ? obj['start'] : '';
+      res["start"] = obj["start"] ? res["date"] + 'T' + obj["start"] + ':00' : res["date"] + 'T12:00:00';
+      console.log(res["start"]);
+
       return res;
     });
     return result;
@@ -88,6 +98,69 @@ const TodosList = () => {
     dispatch(findByTitle(searchTitle));
     // dispatch(setCurrentTodo(null));
   };
+
+
+
+
+
+  let eventGuid = 0
+  let todayStr = new Date().toISOString().replace(/T.*$/, '') // YYYY-MM-DD of today
+  
+   const INITIAL_EVENTS = [
+    {
+      id: createEventId(),
+      title: 'All-day event',
+      start: todayStr
+    },
+    {
+      id: createEventId(),
+      title: 'Timed event',
+      start: todayStr + 'T12:00:00'
+    }
+  ]
+  
+  function createEventId() {
+    return String(eventGuid++)
+  }
+  
+
+
+  function handleDateSelect(selectInfo) {
+    let title = prompt('Please enter a new title for your event')
+    let calendarApi = selectInfo.view.calendar
+
+    calendarApi.unselect() // clear date selection
+
+    if (title) {
+      calendarApi.addEvent({
+        id: createEventId(),
+        title,
+        start: selectInfo.startStr,
+        end: selectInfo.endStr,
+        allDay: selectInfo.allDay
+      })
+    }
+  }
+
+  function handleEventClick(clickInfo) {
+    // if (confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
+    //   clickInfo.event.remove()
+    // }
+  }
+
+  // function handleEvents(events) {
+  //   setCurrentEvents(events)
+  // }
+
+  function renderEventContent(eventInfo) {
+    return (
+      <>
+        <b>{eventInfo.timeText}</b>
+        <i>{eventInfo.event.title}</i>
+      </>
+    )
+  }
+
 
   return (
     <div className="list row">
@@ -193,10 +266,29 @@ const TodosList = () => {
       <div className="col-md-12" id="calendar">
         {todos ? (
           <FullCalendar
-            plugins={[dayGridPlugin]}
+            plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+            // plugins={[dayGridPlugin]}
             initialView="dayGridMonth"
             weekends={true}
             events={mapTodoEventsToCalendar(todos)}
+
+
+
+
+            // events={INITIAL_EVENTS}
+            headerToolbar={{
+              left: 'prev,next today',
+              center: 'title',
+              right: 'dayGridMonth,timeGridWeek,timeGridDay'
+            }}
+            editable={true}
+            selectable={true}
+            selectMirror={true}
+            dayMaxEvents={true}
+            select={handleDateSelect}
+            eventContent={renderEventContent} // custom render function
+            eventClick={handleEventClick}
+            // eventsSet={handleEvents} // called after events are initialized/added/changed/removed
           />
         ) : (
           <div>No "To Do" Events to Show</div>

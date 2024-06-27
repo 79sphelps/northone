@@ -7,6 +7,14 @@ import { selectTodoToAdd, selectSubmitted } from "../redux/selectors";
 import { formatDate } from "../redux/utils";
 
 
+
+import TimePicker from 'react-time-picker';
+import 'react-time-picker/dist/TimePicker.css';
+import 'react-clock/dist/Clock.css';
+
+
+
+
 const AddTodo = () => {
   const dispatch = useDispatch();
   let TodoToAdd = useSelector(selectTodoToAdd);
@@ -14,7 +22,13 @@ const AddTodo = () => {
   const [dateValue, onChange] = useState(new Date());
 
 
+
+
+  // const [timeValue, onChangeTimeValue] = useState('10:00');
+  const [timeValue, onChangeTimeValue] = useState('');
   
+
+
   // useEffect(() => {
   //   const storedTodoToAdd = JSON.parse(localStorage.getItem("todoToAdd"));
   //   if (storedTodoToAdd) {
@@ -49,6 +63,9 @@ const AddTodo = () => {
         description: "",
         status: false,
         dueDate: formatDate(new Date()),
+
+        start: ''
+
       };
       localStorage.setItem("todoToAdd", JSON.stringify(todoToAdd));
     }
@@ -63,6 +80,9 @@ const AddTodo = () => {
     description: "",
     status: false,
     dueDate: formatDate(new Date()),
+
+    start: ''
+
   };
 
   const handleInputChange = (event) => {
@@ -78,7 +98,13 @@ const AddTodo = () => {
       description: TodoToAdd.description,
       status: false,
       dueDate: dateValue,
+
+      start: timeValue
+
     };
+
+    console.log(data);
+
     dispatch(addTodo(data));
     localStorage.removeItem("todoToAdd");
   };
@@ -129,6 +155,10 @@ const AddTodo = () => {
             <label htmlFor="dueDate">Due Date</label>{" "}
             <DatePicker onChange={onChange} value={dateValue} />
           </div>
+
+
+          <TimePicker onChange={onChangeTimeValue} value={timeValue} />
+
 
           <button
             onClick={() => saveTodo(TodoToAdd)}

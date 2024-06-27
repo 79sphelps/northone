@@ -6,7 +6,6 @@ export default axios.create({
   // baseURL: "https://northone-79sphelps-projects.vercel.app/",
   // baseURL: 'https://northone-backend.vercel.app',
   // baseURL: '',
-  // baseURL: 'https://northone.onrender.com/',
   baseURL: 'https://northone-backend.onrender.com/',
   headers: {
     "Content-Type": "application/json",

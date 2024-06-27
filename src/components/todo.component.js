@@ -11,7 +11,9 @@ import {
   deleteTodo,
 } from "../redux/actions";
 import { selectCurrentTodo, selectMessage } from "../redux/selectors";
-
+import TimePicker from 'react-time-picker';
+import 'react-time-picker/dist/TimePicker.css';
+import 'react-clock/dist/Clock.css';
 
 const Todo = (props) => {
   const dispatch = useDispatch();
@@ -22,6 +24,12 @@ const Todo = (props) => {
       currentTodo && currentTodo.dueDate ? currentTodo.dueDate : new Date()
     )
   );
+
+  const [timeValue, onChangeTimeValue] = useState(
+    currentTodo && currentTodo.start ? currentTodo.start : new Date().toISOString().replace(/T.*$/, '') + 'T12:00:00');
+      // currentTodo.dueDate + currentTodo.start : 
+      //   new Date().toISOString().replace(/T.*$/, '')  + 'T12:00:00');
+
 
   useEffect(() => {
     clearMessage();
@@ -45,6 +53,9 @@ const Todo = (props) => {
 
   const updateTodoUnderEdit = (status = null) => {
     currentTodo.dueDate = dateValue;
+    
+    currentTodo.start = timeValue;
+
     if (status !== null) {
       currentTodo.status = status;
     }
@@ -64,7 +75,7 @@ const Todo = (props) => {
           <form>
             <div className="form-group">
               <label htmlFor="title">
-                <strong>Title:</strong>
+                <strong>Title: </strong>
               </label>
               <input
                 type="text"
@@ -77,7 +88,7 @@ const Todo = (props) => {
             </div>
             <div className="form-group">
               <label htmlFor="description">
-                <strong>Description:</strong>
+                <strong>Description: </strong>
               </label>
               <input
                 type="text"
@@ -91,16 +102,23 @@ const Todo = (props) => {
 
             <div className="form-group">
               <label>
-                <strong>Status:</strong>{" "}
+                <strong>Status: </strong>{" "}
               </label>
               {currentTodo.status ? "Done" : "Pending"}
             </div>
 
             <div className="form-group">
               <label htmlFor="dueDate">
-                <strong>Due Date:</strong>
+                <strong>Due Date: </strong>
               </label>{" "}
               <DatePicker onChange={onChange} value={dateValue} />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="startTime">
+                <strong>Start:  </strong>
+              </label>
+              <TimePicker onChange={onChangeTimeValue} value={timeValue} />
             </div>
           </form>
 

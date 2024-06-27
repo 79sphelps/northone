@@ -10,6 +10,8 @@ class TodoDataService {
   }
 
   addTodo(data) {
+    console.log('---- service ---');
+    console.log(data);
     return http.post(`/api/todos`, data);
   }
 

@@ -7,6 +7,7 @@ module.exports = (mongoose) => {
         description: String,
         status: Boolean,
         dueDate: String,
+        start: String,
       },
       { timestamps: true }
     )
