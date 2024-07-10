@@ -1,34 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import DatePicker from "react-date-picker";
-
 import { addTodo, setTodoToAdd, setSubmitted } from "../redux/actions";
 import { selectTodoToAdd, selectSubmitted } from "../redux/selectors";
 import { formatDate } from "../redux/utils";
-
-
-
 import TimePicker from 'react-time-picker';
 import 'react-time-picker/dist/TimePicker.css';
 import 'react-clock/dist/Clock.css';
-
-
-
 
 const AddTodo = () => {
   const dispatch = useDispatch();
   let TodoToAdd = useSelector(selectTodoToAdd);
   const submitted = useSelector(selectSubmitted);
   const [dateValue, onChange] = useState(new Date());
-
-
-
-
-  // const [timeValue, onChangeTimeValue] = useState('10:00');
-  const [timeValue, onChangeTimeValue] = useState('');
+  const [timeValue, onChangeTimeValue] = useState('');  // useState('10:00');
   
-
-
   // useEffect(() => {
   //   const storedTodoToAdd = JSON.parse(localStorage.getItem("todoToAdd"));
   //   if (storedTodoToAdd) {
@@ -52,8 +38,6 @@ const AddTodo = () => {
   //   }
   // }, [TodoToAdd]);
 
-
-
   if (!TodoToAdd) {
     let todoToAdd = JSON.parse(localStorage.getItem("todoToAdd"));
     if (!todoToAdd) {
@@ -63,9 +47,7 @@ const AddTodo = () => {
         description: "",
         status: false,
         dueDate: formatDate(new Date()),
-
         start: ''
-
       };
       localStorage.setItem("todoToAdd", JSON.stringify(todoToAdd));
     }
@@ -73,16 +55,13 @@ const AddTodo = () => {
     TodoToAdd = todoToAdd;
   }
 
-
   let initialTodoState = {
     id: null,
     title: "",
     description: "",
     status: false,
     dueDate: formatDate(new Date()),
-
     start: ''
-
   };
 
   const handleInputChange = (event) => {
@@ -102,9 +81,6 @@ const AddTodo = () => {
       start: timeValue
 
     };
-
-    console.log(data);
-
     dispatch(addTodo(data));
     localStorage.removeItem("todoToAdd");
   };
@@ -118,7 +94,7 @@ const AddTodo = () => {
     <div className="submit-form">
       {submitted && TodoToAdd ? (
         <div>
-          <h4>The new "To Do" item was created successfully!</h4>
+          <h4>The new calendar item was created successfully!</h4>
           <button className="btn btn-success" onClick={() => newTodo()}>
             Add
           </button>
@@ -137,7 +113,6 @@ const AddTodo = () => {
               name="title"
             />
           </div>
-
           <div className="form-group">
             <label htmlFor="description">Description</label>
             <input
@@ -150,16 +125,11 @@ const AddTodo = () => {
               name="description"
             />
           </div>
-
           <div className="form-group">
             <label htmlFor="dueDate">Due Date</label>{" "}
             <DatePicker onChange={onChange} value={dateValue} />
           </div>
-
-
           <TimePicker onChange={onChangeTimeValue} value={timeValue} />
-
-
           <button
             onClick={() => saveTodo(TodoToAdd)}
             className="btn btn-success"

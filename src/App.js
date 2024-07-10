@@ -28,7 +28,7 @@ const App = () => {
         <div className="navbar-nav mr-auto">
           <li className="nav-item">
             <Link to={"/"} className="nav-link">
-              To Do List
+              Calendar Events
             </Link>
           </li>
           <li className="nav-item">

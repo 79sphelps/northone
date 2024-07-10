@@ -24,7 +24,6 @@ import {
 } from "../redux/selectors";
 import { formatDate } from "../redux/utils";
 
-
 const TodosList = () => {
   const dispatch = useDispatch();
   const datePicker = useRef({ isOpen: true });
@@ -35,23 +34,17 @@ const TodosList = () => {
 
   useEffect(() => {
     retrieveTodos();
-    checkCurrentIndex();
+    // checkCurrentIndex();
   }, []);
 
   const mapTodoEventsToCalendar = (arr = []) => {
-
-    console.log(todos)
-
     const result = arr.map((obj) => {
       const res = {};
       res["title"] = obj["title"];
       res["date"] = formatDate(obj["dueDate"]);
-
-
       // res["start"] = obj["start"] ? obj['start'] : '';
       res["start"] = obj["start"] ? res["date"] + 'T' + obj["start"] + ':00' : res["date"] + 'T12:00:00';
       console.log(res["start"]);
-
       return res;
     });
     return result;
@@ -61,12 +54,12 @@ const TodosList = () => {
     dispatch(getTodos());
   };
 
-  const checkCurrentIndex = () => {
-    if (!currentIndex) {
-      // dispatch(setCurrentTodo(JSON.parse(localStorage.getItem('currentTodo'))));
-      // dispatch(setCurrentIndex(JSON.parse(localStorage.getItem('currentIndex'))));
-    }
-  };
+  // const checkCurrentIndex = () => {
+  //   if (!currentIndex) {
+  //     dispatch(setCurrentTodo(JSON.parse(localStorage.getItem('currentTodo'))));
+  //     dispatch(setCurrentIndex(JSON.parse(localStorage.getItem('currentIndex'))));
+  //   }
+  // };
 
   const onChangeSearchTitle = (event) => {
     event.preventDefault(); // prevent a browser reload/refresh
@@ -99,32 +92,26 @@ const TodosList = () => {
     // dispatch(setCurrentTodo(null));
   };
 
-
-
-
-
   let eventGuid = 0
-  let todayStr = new Date().toISOString().replace(/T.*$/, '') // YYYY-MM-DD of today
+  // let todayStr = new Date().toISOString().replace(/T.*$/, '') // YYYY-MM-DD of today
   
-   const INITIAL_EVENTS = [
-    {
-      id: createEventId(),
-      title: 'All-day event',
-      start: todayStr
-    },
-    {
-      id: createEventId(),
-      title: 'Timed event',
-      start: todayStr + 'T12:00:00'
-    }
-  ]
+  //  const INITIAL_EVENTS = [
+  //   {
+  //     id: createEventId(),
+  //     title: 'All-day event',
+  //     start: todayStr
+  //   },
+  //   {
+  //     id: createEventId(),
+  //     title: 'Timed event',
+  //     start: todayStr + 'T12:00:00'
+  //   }
+  // ]
   
   function createEventId() {
     return String(eventGuid++)
   }
   
-
-
   function handleDateSelect(selectInfo) {
     let title = prompt('Please enter a new title for your event')
     let calendarApi = selectInfo.view.calendar
@@ -142,11 +129,11 @@ const TodosList = () => {
     }
   }
 
-  function handleEventClick(clickInfo) {
-    // if (confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
-    //   clickInfo.event.remove()
-    // }
-  }
+  // function handleEventClick(clickInfo) {
+  //   if (confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
+  //     clickInfo.event.remove()
+  //   }
+  // }
 
   // function handleEvents(events) {
   //   setCurrentEvents(events)
@@ -160,7 +147,6 @@ const TodosList = () => {
       </>
     )
   }
-
 
   return (
     <div className="list row">
@@ -185,7 +171,7 @@ const TodosList = () => {
         </div>
       </div>
       <div className="col-md-6">
-        <h4>To Do's List</h4>
+        <h4>Calendar Events</h4>
 
         <ul className="list-group">
           {todos &&
@@ -213,7 +199,7 @@ const TodosList = () => {
       <div className="col-md-6">
         {currentTodo ? (
           <div>
-            <h4>"To Do" Item</h4>
+            <h4>Calendar Item</h4>
             <div>
               <label>
                 <strong>Title:</strong>
@@ -258,7 +244,7 @@ const TodosList = () => {
         ) : (
           <div>
             <br />
-            <p>Click on a "To Do" item to show detailed info</p>
+            <p>Click on a calendar item to show detailed info</p>
           </div>
         )}
       </div>
@@ -271,10 +257,6 @@ const TodosList = () => {
             initialView="dayGridMonth"
             weekends={true}
             events={mapTodoEventsToCalendar(todos)}
-
-
-
-
             // events={INITIAL_EVENTS}
             headerToolbar={{
               left: 'prev,next today',
@@ -287,11 +269,11 @@ const TodosList = () => {
             dayMaxEvents={true}
             select={handleDateSelect}
             eventContent={renderEventContent} // custom render function
-            eventClick={handleEventClick}
+            // eventClick={handleEventClick}
             // eventsSet={handleEvents} // called after events are initialized/added/changed/removed
           />
         ) : (
-          <div>No "To Do" Events to Show</div>
+          <div>No Calendar Events to Show</div>
         )}
       </div>
     </div>

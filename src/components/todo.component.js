@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import DatePicker from "react-date-picker";
-
 import {
   setCurrentTodo,
   setMessage,
@@ -27,9 +26,8 @@ const Todo = (props) => {
 
   const [timeValue, onChangeTimeValue] = useState(
     currentTodo && currentTodo.start ? currentTodo.start : new Date().toISOString().replace(/T.*$/, '') + 'T12:00:00');
-      // currentTodo.dueDate + currentTodo.start : 
-      //   new Date().toISOString().replace(/T.*$/, '')  + 'T12:00:00');
-
+    // currentTodo.dueDate + currentTodo.start : 
+    // new Date().toISOString().replace(/T.*$/, '')  + 'T12:00:00');
 
   useEffect(() => {
     clearMessage();
@@ -53,9 +51,7 @@ const Todo = (props) => {
 
   const updateTodoUnderEdit = (status = null) => {
     currentTodo.dueDate = dateValue;
-    
     currentTodo.start = timeValue;
-
     if (status !== null) {
       currentTodo.status = status;
     }
@@ -71,7 +67,7 @@ const Todo = (props) => {
     <div>
       {currentTodo ? (
         <div className="edit-form">
-          <h4>To Do</h4>
+          <h4>Calendar Event</h4>
           <form>
             <div className="form-group">
               <label htmlFor="title">
@@ -157,7 +153,7 @@ const Todo = (props) => {
       ) : (
         <div>
           <br />
-          <p>Please click on a "To Do"...</p>
+          <p>Please click on a calendar event.</p>
         </div>
       )}
     </div>
