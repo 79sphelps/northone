@@ -102,7 +102,7 @@ const AddTodo = () => {
       ) : (
         <div>
           <div className="form-group">
-            <label htmlFor="title">Title</label>
+            <label htmlFor="title">Title: </label>{" "}
             <input
               type="text"
               className="form-control"
@@ -114,7 +114,7 @@ const AddTodo = () => {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="description">Description</label>
+            <label htmlFor="description">Description: </label>{" "}
             <input
               type="text"
               className="form-control"
@@ -126,16 +126,21 @@ const AddTodo = () => {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="dueDate">Due Date</label>{" "}
+            <label htmlFor="dueDate">Due Date:</label>{" "}
             <DatePicker onChange={onChange} value={dateValue} />
           </div>
-          <TimePicker onChange={onChangeTimeValue} value={timeValue} />
+          <div>
+          <label htmlFor="dueDate">Time Start:</label>{" "}<TimePicker onChange={onChangeTimeValue} value={timeValue} />
+          </div>
+          <div>
           <button
             onClick={() => saveTodo(TodoToAdd)}
             className="btn btn-success"
+            style={{ marginTop: "20px" }}
           >
             Submit
           </button>
+          </div>
         </div>
       )}
     </div>
