@@ -14,7 +14,7 @@ import TimePicker from "react-time-picker";
 import "react-time-picker/dist/TimePicker.css";
 import "react-clock/dist/Clock.css";
 
-const Todo = (props) => {
+const CalendarEvent = (props) => {
   const dispatch = useDispatch();
   const currentTodo = useSelector(selectCurrentTodo);
   const message = useSelector(selectMessage);
@@ -63,7 +63,7 @@ const Todo = (props) => {
 
   const deleteTodoUnderEdit = () => {
     dispatch(deleteTodo({ id: currentTodo._id }));
-    props.history.push("/todos");
+    props.history.push("/calendar-events");
   };
 
   return (
@@ -153,7 +153,7 @@ const Todo = (props) => {
           </button>
           <button
             className="btn btn-danger mr-2"
-            onClick={() => props.history.push("/todos")}
+            onClick={() => props.history.push("/calendar-events")}
           >
             Cancel
           </button>
@@ -169,4 +169,4 @@ const Todo = (props) => {
   );
 };
 
-export default Todo;
+export default CalendarEvent;

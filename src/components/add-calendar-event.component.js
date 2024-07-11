@@ -8,7 +8,7 @@ import TimePicker from "react-time-picker";
 import "react-time-picker/dist/TimePicker.css";
 import "react-clock/dist/Clock.css";
 
-const AddTodo = () => {
+const AddCalendarEvent = () => {
   const dispatch = useDispatch();
   let TodoToAdd = useSelector(selectTodoToAdd);
   const submitted = useSelector(selectSubmitted);
@@ -148,4 +148,4 @@ const AddTodo = () => {
   );
 };
 
-export default AddTodo;
+export default AddCalendarEvent;

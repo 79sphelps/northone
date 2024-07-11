@@ -24,7 +24,7 @@ import {
 } from "../redux/selectors";
 import { formatDate } from "../redux/utils";
 
-const TodosList = () => {
+const CalendarEvents = () => {
   const dispatch = useDispatch();
   const datePicker = useRef({ isOpen: false });
   const todos = useSelector(selectTodos);
@@ -237,7 +237,7 @@ const TodosList = () => {
               />
             </div>
             <Link
-              to={"/todos/" + currentTodo._id}
+              to={"/calendar-events/" + currentTodo._id}
               className="btn btn-sm btn-warning"
             >
               Edit <FontAwesomeIcon icon={faEdit} />
@@ -282,4 +282,4 @@ const TodosList = () => {
   );
 };
 
-export default TodosList;
+export default CalendarEvents;
