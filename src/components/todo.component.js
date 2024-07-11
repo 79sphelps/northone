@@ -10,9 +10,9 @@ import {
   deleteTodo,
 } from "../redux/actions";
 import { selectCurrentTodo, selectMessage } from "../redux/selectors";
-import TimePicker from 'react-time-picker';
-import 'react-time-picker/dist/TimePicker.css';
-import 'react-clock/dist/Clock.css';
+import TimePicker from "react-time-picker";
+import "react-time-picker/dist/TimePicker.css";
+import "react-clock/dist/Clock.css";
 
 const Todo = (props) => {
   const dispatch = useDispatch();
@@ -25,9 +25,12 @@ const Todo = (props) => {
   );
 
   const [timeValue, onChangeTimeValue] = useState(
-    currentTodo && currentTodo.start ? currentTodo.start : new Date().toISOString().replace(/T.*$/, '') + 'T12:00:00');
-    // currentTodo.dueDate + currentTodo.start : 
-    // new Date().toISOString().replace(/T.*$/, '')  + 'T12:00:00');
+    currentTodo && currentTodo.start
+      ? currentTodo.start
+      : new Date().toISOString().replace(/T.*$/, "") + "T12:00:00"
+  );
+  // currentTodo.dueDate + currentTodo.start :
+  // new Date().toISOString().replace(/T.*$/, '')  + 'T12:00:00');
 
   useEffect(() => {
     clearMessage();
@@ -112,7 +115,7 @@ const Todo = (props) => {
 
             <div className="form-group">
               <label htmlFor="startTime">
-                <strong>Start:  </strong>
+                <strong>Start: </strong>
               </label>
               <TimePicker onChange={onChangeTimeValue} value={timeValue} />
             </div>
@@ -138,7 +141,7 @@ const Todo = (props) => {
             className="btn btn-danger mr-2"
             onClick={() => deleteTodoUnderEdit()}
           >
-            Delete{' '}<FontAwesomeIcon icon={faTrash} />
+            Delete <FontAwesomeIcon icon={faTrash} />
           </button>
 
           <button
@@ -147,6 +150,12 @@ const Todo = (props) => {
             onClick={() => updateTodoUnderEdit()}
           >
             Update
+          </button>
+          <button
+            className="btn btn-danger mr-2"
+            onClick={() => props.history.push("/todos")}
+          >
+            Cancel
           </button>
           <p>{message}</p>
         </div>

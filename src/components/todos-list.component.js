@@ -6,8 +6,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import DatePicker from "react-date-picker";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
-import timeGridPlugin from '@fullcalendar/timegrid';
-import interactionPlugin from '@fullcalendar/interaction';
+import timeGridPlugin from "@fullcalendar/timegrid";
+import interactionPlugin from "@fullcalendar/interaction";
 import {
   getTodos,
   deleteTodos,
@@ -26,7 +26,7 @@ import { formatDate } from "../redux/utils";
 
 const TodosList = () => {
   const dispatch = useDispatch();
-  const datePicker = useRef({ isOpen: true });
+  const datePicker = useRef({ isOpen: false });
   const todos = useSelector(selectTodos);
   const currentTodo = useSelector(selectCurrentTodo);
   const currentIndex = useSelector(selectCurrentIndex);
@@ -43,7 +43,9 @@ const TodosList = () => {
       res["title"] = obj["title"];
       res["date"] = formatDate(obj["dueDate"]);
       // res["start"] = obj["start"] ? obj['start'] : '';
-      res["start"] = obj["start"] ? res["date"] + 'T' + obj["start"] + ':00' : res["date"] + 'T12:00:00';
+      res["start"] = obj["start"]
+        ? res["date"] + "T" + obj["start"] + ":00"
+        : res["date"] + "T12:00:00";
       console.log(res["start"]);
       return res;
     });
@@ -92,9 +94,9 @@ const TodosList = () => {
     // dispatch(setCurrentTodo(null));
   };
 
-  let eventGuid = 0
+  let eventGuid = 0;
   // let todayStr = new Date().toISOString().replace(/T.*$/, '') // YYYY-MM-DD of today
-  
+
   //  const INITIAL_EVENTS = [
   //   {
   //     id: createEventId(),
@@ -107,16 +109,16 @@ const TodosList = () => {
   //     start: todayStr + 'T12:00:00'
   //   }
   // ]
-  
-  function createEventId() {
-    return String(eventGuid++)
-  }
-  
-  function handleDateSelect(selectInfo) {
-    let title = prompt('Please enter a new title for your event')
-    let calendarApi = selectInfo.view.calendar
 
-    calendarApi.unselect() // clear date selection
+  function createEventId() {
+    return String(eventGuid++);
+  }
+
+  function handleDateSelect(selectInfo) {
+    let title = prompt("Please enter a new title for your event");
+    let calendarApi = selectInfo.view.calendar;
+
+    calendarApi.unselect(); // clear date selection
 
     if (title) {
       calendarApi.addEvent({
@@ -124,8 +126,8 @@ const TodosList = () => {
         title,
         start: selectInfo.startStr,
         end: selectInfo.endStr,
-        allDay: selectInfo.allDay
-      })
+        allDay: selectInfo.allDay,
+      });
     }
   }
 
@@ -145,12 +147,12 @@ const TodosList = () => {
         <b>{eventInfo.timeText}</b>
         <i>{eventInfo.event.title}</i>
       </>
-    )
+    );
   }
 
   return (
     <div className="list row">
-      <div className="col-md-8" style={{ margin: '0 auto' }}>
+      <div className="col-md-8" style={{ margin: "0 auto" }}>
         <div className="input-group mb-3">
           <input
             type="text"
@@ -229,7 +231,7 @@ const TodosList = () => {
                 <strong>Due Date:</strong>
               </label>{" "}
               <DatePicker
-                isOpen={true}
+                isOpen={false}
                 ref={datePicker}
                 value={new Date(currentTodo.dueDate)}
               />
@@ -237,8 +239,8 @@ const TodosList = () => {
             <Link
               to={"/todos/" + currentTodo._id}
               className="btn btn-sm btn-warning"
-            >Edit{' '}
-              <FontAwesomeIcon icon={faEdit} />
+            >
+              Edit <FontAwesomeIcon icon={faEdit} />
             </Link>
           </div>
         ) : (
@@ -259,9 +261,9 @@ const TodosList = () => {
             events={mapTodoEventsToCalendar(todos)}
             // events={INITIAL_EVENTS}
             headerToolbar={{
-              left: 'prev,next today',
-              center: 'title',
-              right: 'dayGridMonth,timeGridWeek,timeGridDay'
+              left: "prev,next today",
+              center: "title",
+              right: "dayGridMonth,timeGridWeek,timeGridDay",
             }}
             editable={true}
             selectable={true}

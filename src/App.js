@@ -10,7 +10,6 @@ import AddTodo from "./components/add-todo.component";
 import Todo from "./components/todo.component";
 import TodosList from "./components/todos-list.component";
 
-
 const App = () => {
   const dispatch = useDispatch();
   const initializeTodoToAdd = () => {
@@ -37,7 +36,7 @@ const App = () => {
               className="nav-link"
               onClick={() => initializeTodoToAdd()}
             >
-              Add{' '}<FontAwesomeIcon icon={faPlus} />
+              Add <FontAwesomeIcon icon={faPlus} />
             </Link>
           </li>
         </div>
