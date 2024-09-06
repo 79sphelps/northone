@@ -58,11 +58,13 @@ const CalendarEvent = (props) => {
     if (status !== null) {
       currentTodo.status = status;
     }
-    dispatch(updateTodo({ id: currentTodo._id, todo: currentTodo }));
+    // dispatch(updateTodo({ id: currentTodo._id, todo: currentTodo }));
+    dispatch(updateTodo({ id: currentTodo.id, todo: currentTodo }));
   };
 
   const deleteTodoUnderEdit = () => {
-    dispatch(deleteTodo({ id: currentTodo._id }));
+    // dispatch(deleteTodo({ id: currentTodo._id }));
+    dispatch(deleteTodo({ id: currentTodo.id }));
     props.history.push("/calendar-events");
   };
 

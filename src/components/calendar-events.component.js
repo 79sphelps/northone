@@ -237,7 +237,8 @@ const CalendarEvents = () => {
               />
             </div>
             <Link
-              to={"/calendar-events/" + currentTodo._id}
+              // to={"/calendar-events/" + currentTodo._id}
+              to={"/calendar-events/" + currentTodo.id}
               className="btn btn-sm btn-warning"
             >
               Edit <FontAwesomeIcon icon={faEdit} />
