@@ -1,10 +1,10 @@
-import { Switch, Route, Link } from "react-router-dom";
+// import { Switch, Route, Link } from "react-router-dom";
+import { Route, Routes, Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { faHome, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
-
 import { setSubmitted, setMessage } from "./redux/actions";
 import AddCalendarEvent from "./components/add-calendar-event.component";
 import CalendarEvent from "./components/calendar-event.component";
@@ -43,11 +43,16 @@ const App = () => {
       </nav>
 
       <div className="container mt-3">
-        <Switch>
-          <Route exact path={["/", "/calendar-events"]} component={CalendarEvents} />
+        {/* <Switch> */}
+        <Routes>
+          {/* <Route exact path={["/", "/calendar-events"]} component={CalendarEvents} />
           <Route exact path="/add" component={AddCalendarEvent} />
-          <Route path="/calendar-events/:id" component={CalendarEvent} />
-        </Switch>
+          <Route path="/calendar-events/:id" component={CalendarEvent} /> */}
+          <Route exact path={"/"} element={<CalendarEvents />} />
+          <Route exact path={"/calendar-events"} element={<CalendarEvents />} />
+          <Route exact path="/add" element={<AddCalendarEvent />} />
+          <Route path="/calendar-events/:id" element={<CalendarEvent />} />
+        </Routes>
       </div>
     </div>
   );

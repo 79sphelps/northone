@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect, useRef } from "react";
+import { Link , useNavigate} from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { faEdit, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -24,13 +24,38 @@ import {
 } from "../redux/selectors";
 import { formatDate } from "../redux/utils";
 
+import Button from "react-bootstrap/Button";
+import { addTodo } from "../redux/actions";
+import Modal from "react-bootstrap/Modal";
+import TimePicker from "react-time-picker";
+import "react-time-picker/dist/TimePicker.css";
+import "react-clock/dist/Clock.css";
+
+
 const CalendarEvents = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const datePicker = useRef({ isOpen: false });
   const todos = useSelector(selectTodos);
   const currentTodo = useSelector(selectCurrentTodo);
   const currentIndex = useSelector(selectCurrentIndex);
   const searchTitle = useSelector(selectSearchTitle);
+
+  let initialEvent = {
+    id: null,
+    title: "",
+    description: "",
+    status: false,
+    dueDate: formatDate(new Date()),
+    start: "",
+  };
+
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  // const handleShow = () => setShow(true);
+  const [dateValue, onChange] = useState(new Date());
+  const [timeValue, onChangeTimeValue] = useState(""); // useState('10:00');
+  const [newEvent, setNewEvent] = useState(initialEvent);
 
   useEffect(() => {
     retrieveTodos();
@@ -46,7 +71,15 @@ const CalendarEvents = () => {
       res["start"] = obj["start"]
         ? res["date"] + "T" + obj["start"] + ":00"
         : res["date"] + "T12:00:00";
-      console.log(res["start"]);
+      res["id"] = obj["_id"];
+
+      res["createdAt"] = obj["createdAt"];
+      res["description"] = obj["description"];
+      res["dueDate"] = obj["dueDate"];
+      res["status"] = obj["status"];
+      res["updatedAt"] = obj["updatedAt"];
+      res["start2"] = obj["start"];
+
       return res;
     });
     return result;
@@ -94,7 +127,7 @@ const CalendarEvents = () => {
     // dispatch(setCurrentTodo(null));
   };
 
-  let eventGuid = 0;
+  // let eventGuid = 0;
   // let todayStr = new Date().toISOString().replace(/T.*$/, '') // YYYY-MM-DD of today
 
   //  const INITIAL_EVENTS = [
@@ -110,32 +143,63 @@ const CalendarEvents = () => {
   //   }
   // ]
 
-  function createEventId() {
-    return String(eventGuid++);
-  }
+  // function createEventId() {
+  //   return String(eventGuid++);
+  // }
 
   function handleDateSelect(selectInfo) {
-    let title = prompt("Please enter a new title for your event");
-    let calendarApi = selectInfo.view.calendar;
+    // let title = prompt("Please enter a new title for your event");
+    // let calendarApi = selectInfo.view.calendar;
+    // calendarApi.unselect(); // clear date selection
+    // if (title) {
+    //   calendarApi.addEvent({
+    //     id: createEventId(),
+    //     title,
+    //     start: selectInfo.startStr,
+    //     end: selectInfo.endStr,
+    //     allDay: selectInfo.allDay,
+    //   });
+    // }
 
-    calendarApi.unselect(); // clear date selection
-
-    if (title) {
-      calendarApi.addEvent({
-        id: createEventId(),
-        title,
-        start: selectInfo.startStr,
-        end: selectInfo.endStr,
-        allDay: selectInfo.allDay,
-      });
-    }
+    setShow(true);
   }
 
-  // function handleEventClick(clickInfo) {
-  //   if (confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
-  //     clickInfo.event.remove()
-  //   }
-  // }
+  const saveNewEvent = () => {
+    var data = {
+      title: newEvent.title,
+      description: newEvent.description,
+      status: false,
+      dueDate: dateValue,
+      start: timeValue,
+    };
+    dispatch(addTodo(data));
+    setShow(false);
+    setNewEvent(initialEvent);
+  };
+
+  const handleEventChange = (v) => {
+    v.preventDefault(); // prevent a browser reload/refresh
+    const { name, value } = v.target;
+    setNewEvent({ ...newEvent, [name]: value });
+  };
+
+  function handleEventClick(clickInfo) {
+    // if (confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
+    //   clickInfo.event.remove()
+    // }
+    let todo = {
+      id: clickInfo.event.id,
+      title: clickInfo.event.title,
+      description: clickInfo.event.extendedProps.description,
+      status: clickInfo.event.status,
+      // dueDate: formatDate(new Date()),
+      dueDate: clickInfo.event.extendedProps.dueDate,
+      start: clickInfo.event.extendedProps.start2,
+    };
+
+    setActiveTodo(todo, 0);
+    navigate("/calendar-events/" + clickInfo.event.id);
+  }
 
   // function handleEvents(events) {
   //   setCurrentEvents(events)
@@ -174,7 +238,6 @@ const CalendarEvents = () => {
       </div>
       <div className="col-md-6">
         <h4>Calendar Events</h4>
-
         <ul className="list-group">
           {todos &&
             todos.map((todo, index) => (
@@ -190,7 +253,6 @@ const CalendarEvents = () => {
               </li>
             ))}
         </ul>
-
         <button
           className="m-3 btn btn-sm btn-danger"
           onClick={() => removeAllTodos()}
@@ -237,8 +299,7 @@ const CalendarEvents = () => {
               />
             </div>
             <Link
-              // to={"/calendar-events/" + currentTodo._id}
-              to={"/calendar-events/" + currentTodo.id}
+              to={"/calendar-events/" + currentTodo._id}
               className="btn btn-sm btn-warning"
             >
               Edit <FontAwesomeIcon icon={faEdit} />
@@ -251,7 +312,6 @@ const CalendarEvents = () => {
           </div>
         )}
       </div>
-
       <div className="col-md-12" id="calendar">
         {todos ? (
           <FullCalendar
@@ -272,13 +332,86 @@ const CalendarEvents = () => {
             dayMaxEvents={true}
             select={handleDateSelect}
             eventContent={renderEventContent} // custom render function
-            // eventClick={handleEventClick}
+            eventClick={handleEventClick}
             // eventsSet={handleEvents} // called after events are initialized/added/changed/removed
           />
         ) : (
           <div>No Calendar Events to Show</div>
         )}
       </div>
+
+      <Modal
+        show={show}
+        onHide={handleClose}
+        centered="true"
+        scrollable={true}
+        style={{
+          marginTop: "100px",
+          marginBottom: "75px",
+          height: "90%",
+          width: "90%",
+          marginLeft: "5%",
+        }}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title style={{ color: "black" }}>Create New Event</Modal.Title>
+        </Modal.Header>
+        <Modal.Body style={{ color: "black" }}>
+          <div className="submit-form">
+            <div>
+              <div className="form-group">
+                <label htmlFor="title">Title: </label>{" "}
+                <input
+                  type="text"
+                  className="form-control"
+                  id="title"
+                  required
+                  value={newEvent && newEvent.title ? newEvent.title : ""}
+                  onChange={(e) => handleEventChange(e)}
+                  name="title"
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="description">Description: </label>{" "}
+                <input
+                  type="text"
+                  className="form-control"
+                  id="description"
+                  required
+                  value={newEvent.description ? newEvent.description : ""}
+                  onChange={(e) => handleEventChange(e)}
+                  name="description"
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="dueDate">Due Date:</label>{" "}
+                <DatePicker
+                  onChange={onChange}
+                  value={dateValue}
+                />
+              </div>
+              <div>
+                <label htmlFor="dueDate">Time Start:</label>{" "}
+                <TimePicker onChange={onChangeTimeValue} value={timeValue} />
+              </div>
+              <div>
+                <button
+                  onClick={() => saveNewEvent()}
+                  className="btn btn-success"
+                  style={{ marginTop: "20px" }}
+                >
+                  Submit
+                </button>
+              </div>
+            </div>
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };

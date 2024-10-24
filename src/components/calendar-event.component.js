@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { 
+  // Link , 
+  useNavigate
+} from "react-router-dom";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import DatePicker from "react-date-picker";
@@ -15,6 +19,7 @@ import "react-time-picker/dist/TimePicker.css";
 import "react-clock/dist/Clock.css";
 
 const CalendarEvent = (props) => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const currentTodo = useSelector(selectCurrentTodo);
   const message = useSelector(selectMessage);
@@ -65,7 +70,8 @@ const CalendarEvent = (props) => {
   const deleteTodoUnderEdit = () => {
     // dispatch(deleteTodo({ id: currentTodo._id }));
     dispatch(deleteTodo({ id: currentTodo.id }));
-    props.history.push("/calendar-events");
+    // props.history.push("/calendar-events");
+    navigate("/calendar-events");
   };
 
   return (
@@ -155,7 +161,8 @@ const CalendarEvent = (props) => {
           </button>
           <button
             className="btn btn-danger mr-2"
-            onClick={() => props.history.push("/calendar-events")}
+            // onClick={() => props.history.push("/calendar-events")}
+            onClick={() => navigate("/calendar-events")}
           >
             Cancel
           </button>
