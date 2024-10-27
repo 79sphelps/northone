@@ -1,5 +1,5 @@
 // import { Switch, Route, Link } from "react-router-dom";
-import { Route, Routes, Link } from "react-router-dom";
+import { Route, Routes, Link, BrowserRouter as Router } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { faHome, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -18,6 +18,9 @@ const App = () => {
   };
 
   return (
+
+    <Router>
+
     <div>
       <nav className="navbar navbar-expand navbar-dark bg-dark">
         <a href="/" className="navbar-brand">
@@ -55,6 +58,9 @@ const App = () => {
         </Routes>
       </div>
     </div>
+
+    </Router>
+
   );
 };
 

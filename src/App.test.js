@@ -1,5 +1,6 @@
-// import { render, screen } from '@testing-library/react';
-// import App from './App';
+import React from 'react'; 
+import { render, fireEvent, findByAltText, screen, waitFor } from '@testing-library/react'; 
+
 import { formatDate } from "./redux/utils";
 import { 
   setCurrentTodo, 
@@ -57,6 +58,7 @@ import {
 import { createStore } from "redux";
 import reducers from "./redux/reducers";
 
+import App from './App';
 import * as reactRedux from 'react-redux';
 
 function makeTestStore(opts = {}) {
@@ -66,11 +68,49 @@ function makeTestStore(opts = {}) {
   return store
 }
 
-// test('renders learn react link', () => {
-//   render(<App />);
-//   const linkElement = screen.getByText(/learn react/i);
-//   expect(linkElement).toBeInTheDocument();
+jest.mock('react-redux', () => ({
+  useDispatch: jest.fn(),
+  useSelector: jest.fn(),
+}));
+
+
+// useDispatch returns a function which we are mocking here
+// const mockDispatch = jest.fn();
+
+// beforeAll(() => {
+//   reactRedux.useDispatch = jest.fn().mockImplementation(() => mockDispatch);
 // });
+
+// beforeEach(() => {
+//   reactRedux.useDispatch.mockClear();
+// });
+
+
+describe('MyComponent', () => { 
+  beforeEach(() => {
+    useDispatchMock.mockImplementation(() => () => {});
+    // useSelectorMock.mockImplementation(selector => selector(mockStore));
+  })
+  afterEach(() => {
+      useDispatchMock.mockClear();
+      // useSelectorMock.mockClear();
+  })
+
+  // const useSelectorMock = reactRedux.useSelector;
+  const useDispatchMock = reactRedux.useDispatch;
+
+  it('contains a link with "Calendar Events" ', async () => { 
+    render(<App />);
+    expect(screen.getByRole('link', { name: 'Calendar Events' })).toHaveAttribute('href', '/')
+  }); 
+
+  it('contains a link with "Add ', async () => { 
+    render(<App />);
+    expect(screen.getByRole('link', { name: 'Add' })).toHaveAttribute('href', '/add')
+  }); 
+}); 
+
+
 
 
 // ACTION TESTS
