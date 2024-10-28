@@ -1,6 +1,25 @@
 import React from 'react'; 
-import { render, fireEvent, findByAltText, screen, waitFor } from '@testing-library/react'; 
+import { render, fireEvent, screen, waitFor } from '@testing-library/react'; 
 
+import userEvent from '@testing-library/user-event'
+import '@testing-library/jest-dom'
+// import {LocationDisplay} from './App'
+// import {BrowserRouter, MemoryRouter} from 'react-router-dom'
+import App from './App';
+
+import * as reactRedux from 'react-redux';
+import { createStore } from "redux";
+import reducers from "./redux/reducers";
+import rootReducer from './redux/reducers';
+import { 
+  selectTodos,
+  // selectCurrentTodo,
+  // selectTodoToAdd,
+  // selectCurrentIndex,
+  selectSearchTitle,
+  // selectMessage,
+  // selectSubmitted,
+} from './redux/selectors';
 import { formatDate } from "./redux/utils";
 import { 
   setCurrentTodo, 
@@ -11,8 +30,8 @@ import {
   getTodos,
   setTodos,
   updateTodo,
-  deleteTodo,
-  deleteTodos,
+  // deleteTodo,
+  // deleteTodos,
 } from "./redux/actions";
 import {
   SET_CURRENT_TODO,
@@ -27,7 +46,7 @@ import {
   IS_FETCHING,
   GET_TODOS,
   GET_TODOS_SUCCESSFUL,
-  SET_TODOS,
+  // SET_TODOS,
   UPDATE_TODO,
   UPDATE_TODO_SUCCESSFUL,
   SET_MESSAGE,
@@ -39,27 +58,9 @@ import {
   getTodosWorkerSaga, 
   addTodoWorkerSaga, 
   updateTodoWorkerSaga, 
-  deleteTodoWorkerSaga, 
-  deleteTodosWorkerSaga 
+  // deleteTodoWorkerSaga, 
+  // deleteTodosWorkerSaga 
 } from "./redux/saga/api-sagas";
-
-import rootReducer from './redux/reducers';
-
-import { 
-  selectTodos,
-  selectCurrentTodo,
-  selectTodoToAdd,
-  selectCurrentIndex,
-  selectSearchTitle,
-  selectMessage,
-  selectSubmitted,
-} from './redux/selectors';
-
-import { createStore } from "redux";
-import reducers from "./redux/reducers";
-
-import App from './App';
-import * as reactRedux from 'react-redux';
 
 function makeTestStore(opts = {}) {
   const store = createStore(opts)
@@ -73,7 +74,6 @@ jest.mock('react-redux', () => ({
   useSelector: jest.fn(),
 }));
 
-
 // useDispatch returns a function which we are mocking here
 // const mockDispatch = jest.fn();
 
@@ -84,7 +84,6 @@ jest.mock('react-redux', () => ({
 // beforeEach(() => {
 //   reactRedux.useDispatch.mockClear();
 // });
-
 
 describe('MyComponent', () => { 
   beforeEach(() => {
@@ -99,19 +98,51 @@ describe('MyComponent', () => {
   // const useSelectorMock = reactRedux.useSelector;
   const useDispatchMock = reactRedux.useDispatch;
 
-  it('contains a link with "Calendar Events" ', async () => { 
+  it('contains a link with "Calendar Events"', async () => { 
     render(<App />);
     expect(screen.getByRole('link', { name: 'Calendar Events' })).toHaveAttribute('href', '/')
   }); 
 
-  it('contains a link with "Add ', async () => { 
+  it('contains a link with "Add"', async () => { 
     render(<App />);
     expect(screen.getByRole('link', { name: 'Add' })).toHaveAttribute('href', '/add')
   }); 
+
+  it('contains an input field with "Search by title" placeholder', async () => { 
+    render(<App />);
+    // expect(screen.getByText('Search by title')).toBeInTheDocument();
+    // expect(screen.queryByPlaceholderText(/Search by title/i)).toBeInTheDocument();
+    expect(screen.getByPlaceholderText(/Search by title/i)).toBeInTheDocument();
+  }); 
+
+  it('can navigate to the "add calendar event" page', async () => {
+    // render(<App />, {wrapper: BrowserRouter})
+    render(<App />)
+    const user = userEvent.setup()
+  
+    // verify page content for default route
+    expect(screen.getByText(/Click on a calendar item to show detailed info/i)).toBeInTheDocument()
+  
+    // verify page content for expected route after navigating
+    await user.click(screen.getByText(/Add/i))
+    expect(screen.getByText(/Add a New Calendar Event/i)).toBeInTheDocument()
+  })
+
+  // it('landing on a bad page', () => {
+  //   const badRoute = '/some/bad/route'
+  
+  //   // use <MemoryRouter> when you want to manually control the history
+  //   render(
+  //     <MemoryRouter initialEntries={[badRoute]}>
+  //       <App />
+  //     </MemoryRouter>,
+  //   )
+  
+  //   // verify navigation to "no match" route
+  //   expect(screen.getByText(/Page Not Found/i)).toBeInTheDocument()
+  // })
+
 }); 
-
-
-
 
 // ACTION TESTS
 

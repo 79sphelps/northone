@@ -1,5 +1,5 @@
 // import { Switch, Route, Link } from "react-router-dom";
-import { Route, Routes, Link, BrowserRouter as Router } from "react-router-dom";
+import { Route, Routes, Link, BrowserRouter as Router, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { faHome, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,6 +9,13 @@ import { setSubmitted, setMessage } from "./redux/actions";
 import AddCalendarEvent from "./components/add-calendar-event.component";
 import CalendarEvent from "./components/calendar-event.component";
 import CalendarEvents from "./components/calendar-events.component";
+import NotFound from "./components/not-found";
+
+export const LocationDisplay = () => {
+  const location = useLocation()
+
+  return <div data-testid="location-display">{location.pathname}</div>
+}
 
 const App = () => {
   const dispatch = useDispatch();
@@ -55,7 +62,9 @@ const App = () => {
           <Route exact path={"/calendar-events"} element={<CalendarEvents />} />
           <Route exact path="/add" element={<AddCalendarEvent />} />
           <Route path="/calendar-events/:id" element={<CalendarEvent />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
+        <LocationDisplay />
       </div>
     </div>
 

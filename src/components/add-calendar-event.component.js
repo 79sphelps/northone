@@ -99,6 +99,7 @@ const AddCalendarEvent = () => {
         </div>
       ) : (
         <div>
+          <h1>Add a New Calendar Event</h1>
           <div className="form-group">
             <label htmlFor="title">Title: </label>{" "}
             <input
