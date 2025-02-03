@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { 
-  // Link , 
-  useNavigate
-} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import TimePicker from "react-time-picker";
+import "react-time-picker/dist/TimePicker.css";
+import "react-clock/dist/Clock.css";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import DatePicker from "react-date-picker";
@@ -14,9 +14,7 @@ import {
   deleteTodo,
 } from "../redux/actions";
 import { selectCurrentTodo, selectMessage } from "../redux/selectors";
-import TimePicker from "react-time-picker";
-import "react-time-picker/dist/TimePicker.css";
-import "react-clock/dist/Clock.css";
+
 
 const CalendarEvent = (props) => {
   const navigate = useNavigate();
@@ -34,8 +32,6 @@ const CalendarEvent = (props) => {
       ? currentTodo.start
       : new Date().toISOString().replace(/T.*$/, "") + "T12:00:00"
   );
-  // currentTodo.dueDate + currentTodo.start :
-  // new Date().toISOString().replace(/T.*$/, '')  + 'T12:00:00');
 
   useEffect(() => {
     clearMessage();
@@ -52,7 +48,7 @@ const CalendarEvent = (props) => {
   };
 
   const handleInputChange = (event) => {
-    event.preventDefault(); // prevent a browser reload/refresh
+    event.preventDefault();
     const { name, value } = event.target;
     dispatch(setCurrentTodo({ ...currentTodo, [name]: value }));
   };
@@ -63,15 +59,12 @@ const CalendarEvent = (props) => {
     if (status !== null) {
       currentTodo.status = status;
     }
-    // dispatch(updateTodo({ id: currentTodo._id, todo: currentTodo }));
-    dispatch(updateTodo({ id: currentTodo.id, todo: currentTodo }));
+    dispatch(updateTodo({ id: currentTodo._id, todo: currentTodo }));
   };
 
   const deleteTodoUnderEdit = () => {
-    // dispatch(deleteTodo({ id: currentTodo._id }));
-    dispatch(deleteTodo({ id: currentTodo.id }));
-    // props.history.push("/calendar-events");
-    navigate("/calendar-events");
+    dispatch(deleteTodo({ id: currentTodo._id }));
+    navigate("/calendar-events"); // props.history.push("/calendar-events");
   };
 
   return (
@@ -106,21 +99,18 @@ const CalendarEvent = (props) => {
                 onChange={(currentTodo) => handleInputChange(currentTodo)}
               />
             </div>
-
             <div className="form-group">
               <label>
                 <strong>Status: </strong>{" "}
               </label>
               {currentTodo.status ? "Done" : "Pending"}
             </div>
-
             <div className="form-group">
               <label htmlFor="dueDate">
                 <strong>Due Date: </strong>
               </label>{" "}
               <DatePicker onChange={onChange} value={dateValue} />
             </div>
-
             <div className="form-group">
               <label htmlFor="startTime">
                 <strong>Start: </strong>
@@ -128,7 +118,6 @@ const CalendarEvent = (props) => {
               <TimePicker onChange={onChangeTimeValue} value={timeValue} />
             </div>
           </form>
-
           {currentTodo.status ? (
             <button
               className="btn btn-primary mr-2"
@@ -144,14 +133,12 @@ const CalendarEvent = (props) => {
               Mark Done
             </button>
           )}
-
           <button
             className="btn btn-danger mr-2"
             onClick={() => deleteTodoUnderEdit()}
           >
             Delete <FontAwesomeIcon icon={faTrash} />
           </button>
-
           <button
             type="submit"
             className="btn btn-success mr-2"
@@ -161,8 +148,7 @@ const CalendarEvent = (props) => {
           </button>
           <button
             className="btn btn-danger mr-2"
-            // onClick={() => props.history.push("/calendar-events")}
-            onClick={() => navigate("/calendar-events")}
+            onClick={() => navigate("/calendar-events")}  // onClick={() => props.history.push("/calendar-events")}
           >
             Cancel
           </button>

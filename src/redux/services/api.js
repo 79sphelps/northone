@@ -2,9 +2,6 @@ import axios from "axios";
 
 export default axios.create({
   // baseURL: "http://localhost:8080",
-  // baseURL: "https://northone-fp6p0zqmv-79sphelps-projects.vercel.app/",
-  // baseURL: "https://northone-79sphelps-projects.vercel.app/",
-  // baseURL: 'https://northone-backend.vercel.app',
   // baseURL: '',
   baseURL: 'https://northone-backend.onrender.com/',
   headers: {

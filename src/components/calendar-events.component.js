@@ -1,9 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link , useNavigate} from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import TimePicker from "react-time-picker";
 import { faEdit, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import DatePicker from "react-date-picker";
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
+import "react-time-picker/dist/TimePicker.css";
+import "react-clock/dist/Clock.css";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
@@ -23,13 +28,7 @@ import {
   selectSearchTitle,
 } from "../redux/selectors";
 import { formatDate } from "../redux/utils";
-
-import Button from "react-bootstrap/Button";
 import { addTodo } from "../redux/actions";
-import Modal from "react-bootstrap/Modal";
-import TimePicker from "react-time-picker";
-import "react-time-picker/dist/TimePicker.css";
-import "react-clock/dist/Clock.css";
 
 
 const CalendarEvents = () => {
@@ -52,7 +51,6 @@ const CalendarEvents = () => {
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
-  // const handleShow = () => setShow(true);
   const [dateValue, onChange] = useState(new Date());
   const [timeValue, onChangeTimeValue] = useState(""); // useState('10:00');
   const [newEvent, setNewEvent] = useState(initialEvent);
@@ -67,19 +65,16 @@ const CalendarEvents = () => {
       const res = {};
       res["title"] = obj["title"];
       res["date"] = formatDate(obj["dueDate"]);
-      // res["start"] = obj["start"] ? obj['start'] : '';
       res["start"] = obj["start"]
         ? res["date"] + "T" + obj["start"] + ":00"
         : res["date"] + "T12:00:00";
       res["id"] = obj["_id"];
-
       res["createdAt"] = obj["createdAt"];
       res["description"] = obj["description"];
       res["dueDate"] = obj["dueDate"];
       res["status"] = obj["status"];
       res["updatedAt"] = obj["updatedAt"];
       res["start2"] = obj["start"];
-
       return res;
     });
     return result;
@@ -97,7 +92,7 @@ const CalendarEvents = () => {
   // };
 
   const onChangeSearchTitle = (event) => {
-    event.preventDefault(); // prevent a browser reload/refresh
+    event.preventDefault();
     dispatch(setSearchTitle(event.target.value));
   };
 
@@ -127,40 +122,7 @@ const CalendarEvents = () => {
     // dispatch(setCurrentTodo(null));
   };
 
-  // let eventGuid = 0;
-  // let todayStr = new Date().toISOString().replace(/T.*$/, '') // YYYY-MM-DD of today
-
-  //  const INITIAL_EVENTS = [
-  //   {
-  //     id: createEventId(),
-  //     title: 'All-day event',
-  //     start: todayStr
-  //   },
-  //   {
-  //     id: createEventId(),
-  //     title: 'Timed event',
-  //     start: todayStr + 'T12:00:00'
-  //   }
-  // ]
-
-  // function createEventId() {
-  //   return String(eventGuid++);
-  // }
-
   function handleDateSelect(selectInfo) {
-    // let title = prompt("Please enter a new title for your event");
-    // let calendarApi = selectInfo.view.calendar;
-    // calendarApi.unselect(); // clear date selection
-    // if (title) {
-    //   calendarApi.addEvent({
-    //     id: createEventId(),
-    //     title,
-    //     start: selectInfo.startStr,
-    //     end: selectInfo.endStr,
-    //     allDay: selectInfo.allDay,
-    //   });
-    // }
-
     setShow(true);
   }
 
@@ -178,33 +140,25 @@ const CalendarEvents = () => {
   };
 
   const handleEventChange = (v) => {
-    v.preventDefault(); // prevent a browser reload/refresh
+    v.preventDefault();
     const { name, value } = v.target;
     setNewEvent({ ...newEvent, [name]: value });
   };
 
   function handleEventClick(clickInfo) {
-    // if (confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
-    //   clickInfo.event.remove()
-    // }
     let todo = {
       id: clickInfo.event.id,
       title: clickInfo.event.title,
       description: clickInfo.event.extendedProps.description,
       status: clickInfo.event.status,
-      // dueDate: formatDate(new Date()),
-      dueDate: clickInfo.event.extendedProps.dueDate,
+      dueDate: clickInfo.event.extendedProps.dueDate,       // dueDate: formatDate(new Date()),
       start: clickInfo.event.extendedProps.start2,
     };
 
     setActiveTodo(todo, 0);
     navigate("/calendar-events/" + clickInfo.event.id);
   }
-
-  // function handleEvents(events) {
-  //   setCurrentEvents(events)
-  // }
-
+  
   function renderEventContent(eventInfo) {
     return (
       <>

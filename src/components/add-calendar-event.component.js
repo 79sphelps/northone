@@ -1,47 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import DatePicker from "react-date-picker";
-import { addTodo, setTodoToAdd, setSubmitted } from "../redux/actions";
-import { selectTodoToAdd, selectSubmitted } from "../redux/selectors";
-import { formatDate } from "../redux/utils";
 import TimePicker from "react-time-picker";
 import "react-time-picker/dist/TimePicker.css";
 import "react-clock/dist/Clock.css";
+import { addTodo, setTodoToAdd } from "../redux/actions";
+import { selectTodoToAdd } from "../redux/selectors";
+import { formatDate } from "../redux/utils";
+
 
 const AddCalendarEvent = () => {
   const dispatch = useDispatch();
-  let TodoToAdd = useSelector(selectTodoToAdd);
-  const submitted = useSelector(selectSubmitted);
+  const TodoToAdd = useSelector(selectTodoToAdd);
+  const [submitted, setSubmitted] = useState(false);
   const [dateValue, onChange] = useState(new Date());
   const [timeValue, onChangeTimeValue] = useState(""); // useState('10:00');
+  const [message, setMessage] = useState('');
 
-  // useEffect(() => {
-  //   const storedTodoToAdd = JSON.parse(localStorage.getItem("todoToAdd"));
-  //   if (storedTodoToAdd) {
-  //     dispatch(setTodoToAdd(storedTodoToAdd));
-  //   }
-  // }, []);
+  useEffect(() => {
+    const storedTodoToAdd = JSON.parse(localStorage.getItem("todoToAdd"));
+    if (storedTodoToAdd) {
+      dispatch(setTodoToAdd(storedTodoToAdd));
+    }
+  }, []);
 
-  // useEffect(() => {
-  //   if (!TodoToAdd) {
-  //     let todoToAdd = {
-  //       id: null,
-  //       title: "",
-  //       description: "",
-  //       status: false,
-  //       dueDate: formatDate(new Date()),
-  //     };
-  //     localStorage.setItem("todoToAdd", JSON.stringify(todoToAdd));
-  //     TodoToAdd = todoToAdd;
-  //   } else {
-  //     localStorage.setItem("todoToAdd", JSON.stringify(TodoToAdd));
-  //   }
-  // }, [TodoToAdd]);
-
-  if (!TodoToAdd) {
-    let todoToAdd = JSON.parse(localStorage.getItem("todoToAdd"));
-    if (!todoToAdd) {
-      todoToAdd = {
+  useEffect(() => {
+    if (!TodoToAdd) {
+      let todoToAdd = {
         id: null,
         title: "",
         description: "",
@@ -51,9 +36,7 @@ const AddCalendarEvent = () => {
       };
       localStorage.setItem("todoToAdd", JSON.stringify(todoToAdd));
     }
-    dispatch(setTodoToAdd(todoToAdd));
-    TodoToAdd = todoToAdd;
-  }
+  }, [TodoToAdd]);
 
   let initialTodoState = {
     id: null,
@@ -65,7 +48,7 @@ const AddCalendarEvent = () => {
   };
 
   const handleInputChange = (event) => {
-    event.preventDefault(); // prevent a browser reload/refresh
+    event.preventDefault();
     const { name, value } = event.target;
     dispatch(setTodoToAdd({ ...TodoToAdd, [name]: value }));
   };
@@ -81,11 +64,13 @@ const AddCalendarEvent = () => {
     };
     dispatch(addTodo(data));
     localStorage.removeItem("todoToAdd");
+    setMessage('Todo item created successfully!');
   };
 
   const newTodo = () => {
     dispatch(setTodoToAdd(initialTodoState));
-    dispatch(setSubmitted(false));
+    setSubmitted(false);
+    setMessage('');
   };
 
   return (
@@ -142,6 +127,7 @@ const AddCalendarEvent = () => {
             >
               Submit
             </button>
+            { message !== '' ? <div>{message}</div> : null }
           </div>
         </div>
       )}
