@@ -2,19 +2,19 @@ import { createSelector } from "reselect";
 
 const getState = createSelector((state) => state, (state) => state);
 
-const selectTodos = createSelector(
+const selectCalendarEvents = createSelector(
   [getState],
-  (state) => state.todos
+  (state) => state.calendarEvents
 );
 
-const selectCurrentTodo = createSelector(
+const selectCurrentCalendarEvent = createSelector(
   [getState],
-  (state) => state.currentTodo
+  (state) => state.currentCalendarEvent
 );
 
-const selectTodoToAdd = createSelector(
+const selectCalendarEventToAdd = createSelector(
   [getState],
-  (state) => state.todoToAdd
+  (state) => state.calendarEventToAdd
 );
 
 const selectCurrentIndex = createSelector(
@@ -38,9 +38,9 @@ const selectSubmitted = createSelector(
 );
 
 export {
-  selectTodos,
-  selectCurrentTodo,
-  selectTodoToAdd,
+  selectCalendarEvents,
+  selectCurrentCalendarEvent,
+  selectCalendarEventToAdd,
   selectCurrentIndex,
   selectSearchTitle,
   selectMessage,

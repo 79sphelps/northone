@@ -1,12 +1,12 @@
-import api from "./api";
+import api from "./api.js";
 import { errorHandler, isAxiosError } from './errorHandler.ts';
 
-const GET_TODOS_ENDPOINT = `/api/todos`;
+const GET_CALENDAR_EVENTS_ENDPOINT = `/api/calendarEvents`;
 
-class TodoDataService {
-  getTodos() {
+class CalendarEventDataService {
+  getCalendarEvents() {
     try {
-      return api.get(GET_TODOS_ENDPOINT);
+      return api.get(GET_CALENDAR_EVENTS_ENDPOINT);
     } catch (error) {
       if (isAxiosError(error)) {
         const { message } = errorHandler(error);
@@ -17,9 +17,9 @@ class TodoDataService {
     }
   }
 
-  getTodo(id) {
+  getCalendarEvent(id) {
     try {
-      return api.get(`/api/todos/${id}`);
+      return api.get(`/api/calendarEvents/${id}`);
     } catch (error) {
       if (isAxiosError(error)) {
         const { message } = errorHandler(error);
@@ -30,9 +30,9 @@ class TodoDataService {
     }
   }
 
-  addTodo(data) {
+  addCalendarEvent(data) {
     try {
-      return api.post(`/api/todos`, data);
+      return api.post(`/api/calendarEvents`, data);
     } catch (error) {
       if (isAxiosError(error)) {
         const { message } = errorHandler(error);
@@ -43,9 +43,9 @@ class TodoDataService {
     }
   }
 
-  updateTodo(id, data) {
+  updateCalendarEvent(id, data) {
     try {
-      return api.put(`/api/todos/${id}`, data);
+      return api.put(`/api/calendarEvents/${id}`, data);
     } catch (error) {
       if (isAxiosError(error)) {
         const { message } = errorHandler(error);
@@ -56,9 +56,9 @@ class TodoDataService {
     }
   }
 
-  deleteTodo(id) {
+  deleteCalendarEvent(id) {
     try {
-      return api.delete(`/api/todos/${id}`);
+      return api.delete(`/api/calendarEvents/${id}`);
     } catch (error) {
       if (isAxiosError(error)) {
         const { message } = errorHandler(error);
@@ -69,9 +69,9 @@ class TodoDataService {
     }
   }
 
-  deleteTodos() {
+  deleteCalendarEvents() {
     try {
-      return api.delete(`/api/todos`);
+      return api.delete(`/api/calendarEvents`);
     } catch (error) {
       if (isAxiosError(error)) {
         // console.log(error.response?.data.username);
@@ -85,7 +85,7 @@ class TodoDataService {
 
   findByTitle(title) {
     try {
-      return api.get(`/api/todos?title=${title}`);
+      return api.get(`/api/calendarEvents?title=${title}`);
     } catch (error) {
       if (isAxiosError(error)) {
         // console.log(error.response?.data.username);
@@ -98,4 +98,4 @@ class TodoDataService {
   }
 }
 
-export default new TodoDataService();
+export default new CalendarEventDataService();

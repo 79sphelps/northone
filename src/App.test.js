@@ -69,6 +69,8 @@ function makeTestStore(opts = {}) {
   return store
 }
 
+HTMLCanvasElement.prototype.getContext = jest.fn(); // resolved an error
+
 jest.mock('react-redux', () => ({
   useDispatch: jest.fn(),
   useSelector: jest.fn(),

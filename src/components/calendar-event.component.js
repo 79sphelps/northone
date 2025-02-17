@@ -8,28 +8,28 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import DatePicker from "react-date-picker";
 import {
-  setCurrentTodo,
+  setCurrentCalendarEvent,
   setMessage,
-  updateTodo,
-  deleteTodo,
+  updateCalendarEvent,
+  deleteCalendarEvent,
 } from "../redux/actions";
-import { selectCurrentTodo, selectMessage } from "../redux/selectors";
+import { selectCurrentCalendarEvent, selectMessage } from "../redux/selectors";
 
 
 const CalendarEvent = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const currentTodo = useSelector(selectCurrentTodo);
+  const currentCalendarEvent = useSelector(selectCurrentCalendarEvent);
   const message = useSelector(selectMessage);
   const [dateValue, onChange] = useState(
     new Date(
-      currentTodo && currentTodo.dueDate ? currentTodo.dueDate : new Date()
+      currentCalendarEvent && currentCalendarEvent.dueDate ? currentCalendarEvent.dueDate : new Date()
     )
   );
 
   const [timeValue, onChangeTimeValue] = useState(
-    currentTodo && currentTodo.start
-      ? currentTodo.start
+    currentCalendarEvent && currentCalendarEvent.start
+      ? currentCalendarEvent.start
       : new Date().toISOString().replace(/T.*$/, "") + "T12:00:00"
   );
 
@@ -41,35 +41,35 @@ const CalendarEvent = (props) => {
   const clearMessage = () => dispatch(setMessage(""));
 
   const checkLocalStorage = () => {
-    if (!currentTodo) {
-      let todo = localStorage.getItem("currentTodo");
-      dispatch(setCurrentTodo(JSON.parse(todo)));
+    if (!currentCalendarEvent) {
+      let calendarEvent = localStorage.getItem("currentCalendarEvent");
+      dispatch(setCurrentCalendarEvent(JSON.parse(calendarEvent)));
     }
   };
 
   const handleInputChange = (event) => {
     event.preventDefault();
     const { name, value } = event.target;
-    dispatch(setCurrentTodo({ ...currentTodo, [name]: value }));
+    dispatch(setCurrentCalendarEvent({ ...currentCalendarEvent, [name]: value }));
   };
 
-  const updateTodoUnderEdit = (status = null) => {
-    currentTodo.dueDate = dateValue;
-    currentTodo.start = timeValue;
+  const updateCalendarEventUnderEdit = (status = null) => {
+    currentCalendarEvent.dueDate = dateValue;
+    currentCalendarEvent.start = timeValue;
     if (status !== null) {
-      currentTodo.status = status;
+      currentCalendarEvent.status = status;
     }
-    dispatch(updateTodo({ id: currentTodo._id, todo: currentTodo }));
+    dispatch(updateCalendarEvent({ id: currentCalendarEvent._id, calendarEvent: currentCalendarEvent }));
   };
 
-  const deleteTodoUnderEdit = () => {
-    dispatch(deleteTodo({ id: currentTodo._id }));
+  const deleteCalendarEventUnderEdit = () => {
+    dispatch(deleteCalendarEvent({ id: currentCalendarEvent._id }));
     navigate("/calendar-events"); // props.history.push("/calendar-events");
   };
 
   return (
     <div>
-      {currentTodo ? (
+      {currentCalendarEvent ? (
         <div className="edit-form">
           <h4>Calendar Event</h4>
           <form>
@@ -82,8 +82,8 @@ const CalendarEvent = (props) => {
                 className="form-control"
                 id="title"
                 name="title"
-                value={currentTodo.title}
-                onChange={(currentTodo) => handleInputChange(currentTodo)}
+                value={currentCalendarEvent.title}
+                onChange={(currentCalendarEvent) => handleInputChange(currentCalendarEvent)}
               />
             </div>
             <div className="form-group">
@@ -95,15 +95,15 @@ const CalendarEvent = (props) => {
                 className="form-control"
                 id="description"
                 name="description"
-                value={currentTodo.description}
-                onChange={(currentTodo) => handleInputChange(currentTodo)}
+                value={currentCalendarEvent.description}
+                onChange={(currentCalendarEvent) => handleInputChange(currentCalendarEvent)}
               />
             </div>
             <div className="form-group">
               <label>
                 <strong>Status: </strong>{" "}
               </label>
-              {currentTodo.status ? "Done" : "Pending"}
+              {currentCalendarEvent.status ? "Done" : "Pending"}
             </div>
             <div className="form-group">
               <label htmlFor="dueDate">
@@ -118,31 +118,31 @@ const CalendarEvent = (props) => {
               <TimePicker onChange={onChangeTimeValue} value={timeValue} />
             </div>
           </form>
-          {currentTodo.status ? (
+          {currentCalendarEvent.status ? (
             <button
               className="btn btn-primary mr-2"
-              onClick={() => updateTodoUnderEdit(false)}
+              onClick={() => updateCalendarEventUnderEdit(false)}
             >
               Mark Pending
             </button>
           ) : (
             <button
               className="btn btn-primary mr-2"
-              onClick={() => updateTodoUnderEdit(true)}
+              onClick={() => updateCalendarEventUnderEdit(true)}
             >
               Mark Done
             </button>
           )}
           <button
             className="btn btn-danger mr-2"
-            onClick={() => deleteTodoUnderEdit()}
+            onClick={() => deleteCalendarEventUnderEdit()}
           >
             Delete <FontAwesomeIcon icon={faTrash} />
           </button>
           <button
             type="submit"
             className="btn btn-success mr-2"
-            onClick={() => updateTodoUnderEdit()}
+            onClick={() => updateCalendarEventUnderEdit()}
           >
             Update
           </button>

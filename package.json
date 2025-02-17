@@ -48,7 +48,7 @@
     "start_backup": "cross-env NODE_ENV=production node src/server.js",
     "start-local": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --runInBand",
     "eject": "react-scripts eject",
     "heroku-postbuild": "npm run build"
   },

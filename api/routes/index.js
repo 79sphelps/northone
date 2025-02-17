@@ -1,14 +1,14 @@
 module.exports = (app) => {
-  const todos = require("../controllers/controller.js");
+  const calendarEvents = require("../controllers/controller.js");
   const router = require("express").Router();
 
-  router.post("/", todos.create);
-  router.get("/", todos.findAll);
-  router.get("/status", todos.findAllDone);
-  router.get("/:id", todos.findOne);
-  router.put("/:id", todos.update);
-  router.delete("/:id", todos.delete);
-  router.delete("/", todos.deleteAll);
+  router.post("/", calendarEvents.create);
+  router.get("/", calendarEvents.findAll);
+  router.get("/status", calendarEvents.findAllDone);
+  router.get("/:id", calendarEvents.findOne);
+  router.put("/:id", calendarEvents.update);
+  router.delete("/:id", calendarEvents.delete);
+  router.delete("/", calendarEvents.deleteAll);
 
-  app.use("/api/todos", router);
+  app.use("/api/calendarEvents", router);
 };

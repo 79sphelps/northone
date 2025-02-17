@@ -14,29 +14,29 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import {
-  getTodos,
-  deleteTodos,
+  getCalendarEvents,
+  deleteCalendarEvents,
   findByTitle,
   setSearchTitle,
   setCurrentIndex,
-  setCurrentTodo,
+  setCurrentCalendarEvent,
 } from "../redux/actions";
 import {
-  selectTodos,
-  selectCurrentTodo,
+  selectCalendarEvents,
+  selectCurrentCalendarEvent,
   selectCurrentIndex,
   selectSearchTitle,
 } from "../redux/selectors";
 import { formatDate } from "../redux/utils";
-import { addTodo } from "../redux/actions";
+import { addCalendarEvent } from "../redux/actions";
 
 
 const CalendarEvents = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const datePicker = useRef({ isOpen: false });
-  const todos = useSelector(selectTodos);
-  const currentTodo = useSelector(selectCurrentTodo);
+  const calendarEvents = useSelector(selectCalendarEvents);
+  const currentCalendarEvent = useSelector(selectCurrentCalendarEvent);
   const currentIndex = useSelector(selectCurrentIndex);
   const searchTitle = useSelector(selectSearchTitle);
 
@@ -56,11 +56,11 @@ const CalendarEvents = () => {
   const [newEvent, setNewEvent] = useState(initialEvent);
 
   useEffect(() => {
-    retrieveTodos();
+    retrieveCalendarEvents();
     // checkCurrentIndex();
   }, []);
 
-  const mapTodoEventsToCalendar = (arr = []) => {
+  const mapCalendarEventEventsToCalendar = (arr = []) => {
     const result = arr.map((obj) => {
       const res = {};
       res["title"] = obj["title"];
@@ -80,13 +80,13 @@ const CalendarEvents = () => {
     return result;
   };
 
-  const retrieveTodos = () => {
-    dispatch(getTodos());
+  const retrieveCalendarEvents = () => {
+    dispatch(getCalendarEvents());
   };
 
   // const checkCurrentIndex = () => {
   //   if (!currentIndex) {
-  //     dispatch(setCurrentTodo(JSON.parse(localStorage.getItem('currentTodo'))));
+  //     dispatch(setCurrentCalendarEvent(JSON.parse(localStorage.getItem('currentCalendarEvent'))));
   //     dispatch(setCurrentIndex(JSON.parse(localStorage.getItem('currentIndex'))));
   //   }
   // };
@@ -97,29 +97,29 @@ const CalendarEvents = () => {
   };
 
   const refreshList = () => {
-    retrieveTodos();
-    dispatch(setCurrentTodo(null));
+    retrieveCalendarEvents();
+    dispatch(setCurrentCalendarEvent(null));
     dispatch(setCurrentIndex(-1));
   };
 
-  const setActiveTodo = (todo, index) => {
-    dispatch(setCurrentTodo(todo));
+  const setActiveCalendarEvent = (calendarEvent, index) => {
+    dispatch(setCurrentCalendarEvent(calendarEvent));
     dispatch(setCurrentIndex(index));
     if (datePicker && datePicker.current && datePicker.current.openCalendar) {
       datePicker.current.openCalendar();
     }
-    localStorage.setItem("currentTodo", JSON.stringify(todo));
+    localStorage.setItem("currentCalendarEvent", JSON.stringify(calendarEvent));
     localStorage.setItem("currentIndex", JSON.stringify(currentIndex));
   };
 
-  const removeAllTodos = () => {
-    dispatch(deleteTodos());
+  const removeAllCalendarEvents = () => {
+    dispatch(deleteCalendarEvents());
     refreshList();
   };
 
   const findItemByTitle = () => {
     dispatch(findByTitle(searchTitle));
-    // dispatch(setCurrentTodo(null));
+    // dispatch(setCurrentCalendarEvent(null));
   };
 
   function handleDateSelect(selectInfo) {
@@ -134,7 +134,7 @@ const CalendarEvents = () => {
       dueDate: dateValue,
       start: timeValue,
     };
-    dispatch(addTodo(data));
+    dispatch(addCalendarEvent(data));
     setShow(false);
     setNewEvent(initialEvent);
   };
@@ -146,7 +146,7 @@ const CalendarEvents = () => {
   };
 
   function handleEventClick(clickInfo) {
-    let todo = {
+    let calendarEvent = {
       id: clickInfo.event.id,
       title: clickInfo.event.title,
       description: clickInfo.event.extendedProps.description,
@@ -155,7 +155,7 @@ const CalendarEvents = () => {
       start: clickInfo.event.extendedProps.start2,
     };
 
-    setActiveTodo(todo, 0);
+    setActiveCalendarEvent(calendarEvent, 0);
     navigate("/calendar-events/" + clickInfo.event.id);
   }
   
@@ -193,54 +193,54 @@ const CalendarEvents = () => {
       <div className="col-md-6">
         <h4>Calendar Events</h4>
         <ul className="list-group">
-          {todos &&
-            todos.map((todo, index) => (
+          {calendarEvents &&
+            calendarEvents.map((calendarEvent, index) => (
               <li
                 className={
                   "list-group-item-action list-group-item " +
                   (index === currentIndex ? "active" : "")
                 }
-                onClick={() => setActiveTodo(todo, index)}
+                onClick={() => setActiveCalendarEvent(calendarEvent, index)}
                 key={index}
               >
-                {todo.title}
+                {calendarEvent.title}
               </li>
             ))}
         </ul>
         <button
           className="m-3 btn btn-sm btn-danger"
-          onClick={() => removeAllTodos()}
+          onClick={() => removeAllCalendarEvents()}
         >
           Remove All
         </button>
       </div>
       <div className="col-md-6">
-        {currentTodo ? (
+        {currentCalendarEvent ? (
           <div>
             <h4>Calendar Item</h4>
             <div>
               <label>
                 <strong>Title:</strong>
               </label>{" "}
-              {currentTodo.title}
+              {currentCalendarEvent.title}
             </div>
             <div>
               <label>
                 <strong>Description:</strong>
               </label>{" "}
-              {currentTodo.description}
+              {currentCalendarEvent.description}
             </div>
             <div>
               <label>
                 <strong>Status:</strong>
               </label>{" "}
-              {currentTodo.status ? "Done" : "Pending"}
+              {currentCalendarEvent.status ? "Done" : "Pending"}
             </div>
             {/* <div>
               <label>
                 <strong>Due Date:</strong>
               </label>{" "}
-              {currentTodo.dueDate}
+              {currentCalendarEvent.dueDate}
             </div> */}
             <div className="form-group">
               <label htmlFor="dueDate">
@@ -249,11 +249,11 @@ const CalendarEvents = () => {
               <DatePicker
                 isOpen={false}
                 ref={datePicker}
-                value={new Date(currentTodo.dueDate)}
+                value={new Date(currentCalendarEvent.dueDate)}
               />
             </div>
             <Link
-              to={"/calendar-events/" + currentTodo._id}
+              to={"/calendar-events/" + currentCalendarEvent._id}
               className="btn btn-sm btn-warning"
             >
               Edit <FontAwesomeIcon icon={faEdit} />
@@ -267,13 +267,13 @@ const CalendarEvents = () => {
         )}
       </div>
       <div className="col-md-12" id="calendar">
-        {todos ? (
+        {calendarEvents ? (
           <FullCalendar
             plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
             // plugins={[dayGridPlugin]}
             initialView="dayGridMonth"
             weekends={true}
-            events={mapTodoEventsToCalendar(todos)}
+            events={mapCalendarEventEventsToCalendar(calendarEvents)}
             // events={INITIAL_EVENTS}
             headerToolbar={{
               left: "prev,next today",

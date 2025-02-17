@@ -1,5 +1,5 @@
 const db = require("../models");
-const Todo = db.todos;
+const CalendarEvent = db.calendarEvents;
 
 exports.create = (req, res) => {
   if (!req.body.title) {
@@ -7,7 +7,7 @@ exports.create = (req, res) => {
     return;
   }
 
-  const todo = new Todo({
+  const calendarEvent = new CalendarEvent({
     title: req.body.title,
     description: req.body.description,
     status: req.body.status ? req.body.status : false,
@@ -15,8 +15,8 @@ exports.create = (req, res) => {
     start: req.body.start,
   });
 
-  todo
-    .save(todo)
+  calendarEvent
+    .save(calendarEvent)
     .then((data) => res.status(201).send(data))
     .catch((err) => {
       res.status(500).send({
@@ -32,13 +32,13 @@ exports.findAll = (req, res) => {
     ? { title: { $regex: new RegExp(title), $options: "i" } }
     : {};
 
-  Todo.find(condition)
+    CalendarEvent.find(condition)
     .then((data) => res.status(200).send(data))
     .catch((err) => {
       res
         .status(500)
         .send({
-          message: err.message || "Some error occurred while fetching todos.",
+          message: err.message || "Some error occurred while fetching calendarEvents.",
         });
     });
 };
@@ -47,7 +47,7 @@ exports.findOne = (req, res) => {
   if (!req.body)
     res.status(400).send({ message: "Search content cannot be empty" });
   const id = req.params.id;
-  Todo.findById(id)
+  CalendarEvent.findById(id)
     .then((data) => {
       if (!data) res.status(404).send({ message: "Todo not found" });
       else res.status(200).send(data);
@@ -55,12 +55,12 @@ exports.findOne = (req, res) => {
     .catch((err) =>
       res
         .status(500)
-        .send({ message: err.message || "Error retrieving todo with id " + id })
+        .send({ message: err.message || "Error retrieving calendarEvent with id " + id })
     );
 };
 
 exports.findAllDone = (req, res) => {
-  Todo.find({ status: true })
+  CalendarEvent.find({ status: true })
     .then((data) => res.status(200).send(data))
     .catch((err) =>
       res
@@ -78,7 +78,7 @@ exports.update = (req, res) => {
 
   const id = req.params.id;
 
-  Todo.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
+  CalendarEvent.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
     .then((data) => {
       if (!data) {
         res
@@ -102,7 +102,7 @@ exports.delete = (req, res) => {
 
   const id = req.params.id;
 
-  Todo.findByIdAndRemove(id, { useFindAndModify: false })
+  CalendarEvent.findByIdAndRemove(id, { useFindAndModify: false })
     .then((data) => {
       if (!data) {
         res.status(404).send({
@@ -118,7 +118,7 @@ exports.delete = (req, res) => {
 };
 
 exports.deleteAll = (req, res) => {
-  Todo.deleteMany({})
+  CalendarEvent.deleteMany({})
     .then((data) =>
       res
         .status(200)
@@ -129,6 +129,6 @@ exports.deleteAll = (req, res) => {
     .catch((err) =>
       res
         .status(500)
-        .send({ message: err.message || "Error occurred while deleting todos" })
+        .send({ message: err.message || "Error occurred while deleting calendarEvents" })
     );
 };

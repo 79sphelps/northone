@@ -1,8 +1,8 @@
 import {
-  SET_CURRENT_TODO,
-  GET_CURRENT_TODO,
-  SET_TODO_TO_ADD,
-  GET_TODO_TO_ADD,
+  SET_CURRENT_CALENDAR_EVENT,
+  GET_CURRENT_CALENDAR_EVENT,
+  SET_CALENDAR_EVENT_TO_ADD,
+  GET_CALENDAR_EVENT_TO_ADD,
   FIND_BY_TITLE,
   FIND_BY_TITLE_SUCCESSFUL,
   SET_SEARCH_TITLE,
@@ -13,35 +13,35 @@ import {
   GET_MESSAGE,
   SET_SUBMITTED,
   GET_SUBMITTED,
-  SET_TODOS,
-  GET_TODOS,
-  GET_TODOS_SUCCESSFUL,
-  GET_TODO,
-  ADD_TODO,
-  ADD_TODO_SUCCESSFUL,
-  UPDATE_TODO,
-  UPDATE_TODO_SUCCESSFUL,
-  DELETE_TODO,
-  DELETE_TODO_SUCCESSFUL,
-  DELETE_TODOS,
-  DELETE_TODOS_SUCCESSFUL,
+  SET_CALENDAR_EVENTS,
+  GET_CALENDAR_EVENTS,
+  GET_CALENDAR_EVENTS_SUCCESSFUL,
+  GET_CALENDAR_EVENT,
+  ADD_CALENDAR_EVENT,
+  ADD_CALENDAR_EVENT_SUCCESSFUL,
+  UPDATE_CALENDAR_EVENT,
+  UPDATE_CALENDAR_EVENT_SUCCESSFUL,
+  DELETE_CALENDAR_EVENT,
+  DELETE_CALENDAR_EVENT_SUCCESSFUL,
+  DELETE_CALENDAR_EVENTS,
+  DELETE_CALENDAR_EVENTS_SUCCESSFUL,
   API_ERRORED,
 } from "../constants/action.types";
 
-const setCurrentTodo = (payload) => {
-  return { type: SET_CURRENT_TODO, payload };
+const setCurrentCalendarEvent = (payload) => {
+  return { type: SET_CURRENT_CALENDAR_EVENT, payload };
 };
 
-const getCurrentTodo = (payload) => {
-  return { type: GET_CURRENT_TODO };
+const getCurrentCalendarEvent = (payload) => {
+  return { type: GET_CURRENT_CALENDAR_EVENT };
 };
 
-const setTodoToAdd = (payload) => {
-  return { type: SET_TODO_TO_ADD, payload };
+const setCalendarEventToAdd = (payload) => {
+  return { type: SET_CALENDAR_EVENT_TO_ADD, payload };
 };
 
-const getTodoToAdd = (payload) => {
-  return { type: GET_TODO_TO_ADD };
+const getCalendarEventToAdd = (payload) => {
+  return { type: GET_CALENDAR_EVENT_TO_ADD };
 };
 
 const findByTitle = (payload) => {
@@ -84,52 +84,52 @@ const getSubmitted = (payload) => {
   return { type: GET_SUBMITTED };
 };
 
-const setTodos = (payload) => {
-  return { type: SET_TODOS, payload };
+const setCalendarEvents = (payload) => {
+  return { type: SET_CALENDAR_EVENTS, payload };
 };
 
-const getTodos = (payload) => {
-  return { type: GET_TODOS };
+const getCalendarEvents = (payload) => {
+  return { type: GET_CALENDAR_EVENTS };
 };
 
-const getTodosSuccessful = (payload) => {
-  return { type: GET_TODOS_SUCCESSFUL };
+const getCalendarEventsSuccessful = (payload) => {
+  return { type: GET_CALENDAR_EVENTS_SUCCESSFUL };
 };
 
-const getTodo = (payload) => {
-  return { type: GET_TODO, payload };
+const getCalendarEvent = (payload) => {
+  return { type: GET_CALENDAR_EVENT, payload };
 };
 
-const addTodo = (payload) => {
-  return { type: ADD_TODO, payload };
+const addCalendarEvent = (payload) => {
+  return { type: ADD_CALENDAR_EVENT, payload };
 };
 
-const addTodoSuccessful = (payload) => {
-  return { type: ADD_TODO_SUCCESSFUL, payload };
+const addCalendarEventSuccessful = (payload) => {
+  return { type: ADD_CALENDAR_EVENT_SUCCESSFUL, payload };
 };
 
-const updateTodo = (payload) => {
-  return { type: UPDATE_TODO, payload };
+const updateCalendarEvent = (payload) => {
+  return { type: UPDATE_CALENDAR_EVENT, payload };
 };
 
-const updateTodoSuccessful = (payload) => {
-  return { type: UPDATE_TODO_SUCCESSFUL, payload };
+const updateCalendarEventSuccessful = (payload) => {
+  return { type: UPDATE_CALENDAR_EVENT_SUCCESSFUL, payload };
 };
 
-const deleteTodo = (payload) => {
-  return { type: DELETE_TODO, payload };
+const deleteCalendarEvent = (payload) => {
+  return { type: DELETE_CALENDAR_EVENT, payload };
 };
 
-const deleteTodoSuccessful = (payload) => {
-  return { type: DELETE_TODO_SUCCESSFUL, payload };
+const deleteCalendarEventSuccessful = (payload) => {
+  return { type: DELETE_CALENDAR_EVENT_SUCCESSFUL, payload };
 };
 
-const deleteTodos = (payload) => {
-  return { type: DELETE_TODOS };
+const deleteCalendarEvents = (payload) => {
+  return { type: DELETE_CALENDAR_EVENTS };
 };
 
-const deleteTodosSuccessful = (payload) => {
-  return { type: DELETE_TODOS_SUCCESSFUL, payload };
+const deleteCalendarEventsSuccessful = (payload) => {
+  return { type: DELETE_CALENDAR_EVENTS_SUCCESSFUL, payload };
 };
 
 const apiErrored = (payload) => {
@@ -137,10 +137,10 @@ const apiErrored = (payload) => {
 };
 
 export {
-  setCurrentTodo,
-  getCurrentTodo,
-  setTodoToAdd,
-  getTodoToAdd,
+  setCurrentCalendarEvent,
+  getCurrentCalendarEvent,
+  setCalendarEventToAdd,
+  getCalendarEventToAdd,
   findByTitle,
   setSearchTitle,
   getSearchTitle,
@@ -150,18 +150,18 @@ export {
   getMessage,
   setSubmitted,
   getSubmitted,
-  setTodos,
-  getTodos,
-  getTodosSuccessful,
-  deleteTodosSuccessful,
-  updateTodoSuccessful,
-  deleteTodoSuccessful,
-  addTodoSuccessful,
+  setCalendarEvents,
+  getCalendarEvents,
+  getCalendarEventsSuccessful,
+  deleteCalendarEventsSuccessful,
+  updateCalendarEventSuccessful,
+  deleteCalendarEventSuccessful,
+  addCalendarEventSuccessful,
   findByTitleSuccessful,
-  getTodo,
-  addTodo,
-  updateTodo,
-  deleteTodo,
-  deleteTodos,
+  getCalendarEvent,
+  addCalendarEvent,
+  updateCalendarEvent,
+  deleteCalendarEvent,
+  deleteCalendarEvents,
   apiErrored,
 };

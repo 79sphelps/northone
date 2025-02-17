@@ -1,11 +1,11 @@
 import {
-  SET_CURRENT_TODO,
-  SET_TODO_TO_ADD,
+  SET_CURRENT_CALENDAR_EVENT,
+  SET_CALENDAR_EVENT_TO_ADD,
   SET_SEARCH_TITLE,
   SET_CURRENT_INDEX,
   SET_MESSAGE,
   SET_SUBMITTED,
-  SET_TODOS,
+  SET_CALENDAR_EVENTS,
   // DATA_LOADED,
   IS_FETCHING,
   IS_ADDING,
@@ -14,19 +14,19 @@ import {
   IS_FINDING,
   IS_UPDATING,
   API_ERRORED,
-  GET_TODOS_SUCCESSFUL,
-  DELETE_TODOS_SUCCESSFUL,
-  UPDATE_TODO_SUCCESSFUL,
-  DELETE_TODO_SUCCESSFUL,
-  ADD_TODO_SUCCESSFUL,
+  GET_CALENDAR_EVENTS_SUCCESSFUL,
+  DELETE_CALENDAR_EVENTS_SUCCESSFUL,
+  UPDATE_CALENDAR_EVENT_SUCCESSFUL,
+  DELETE_CALENDAR_EVENT_SUCCESSFUL,
+  ADD_CALENDAR_EVENT_SUCCESSFUL,
   FIND_BY_TITLE_SUCCESSFUL,
 } from "../constants/action.types";
 import { deepCopy } from '../utils';
 
 const initialState = {
-  todos: [],
-  currentTodo: null,
-  todoToAdd: null,
+  calendarEvents: [],
+  currentCalendarEvent: null,
+  calendarEventToAdd: null,
   searchTitle: "",
   currentIndex: -1,
   message: "",
@@ -44,22 +44,22 @@ function rootReducer(state = initialState, action) {
   let mappings = null;
 
   switch (action.type) {
-    case SET_CURRENT_TODO:
-      if (!action.payload) return { ...state, currentTodo: null };
+    case SET_CURRENT_CALENDAR_EVENT:
+      if (!action.payload) return { ...state, currentCalendarEvent: null };
       return {
         ...state,
-        currentTodo: { ...state.currentTodo, ...action.payload }
+        currentCalendarEvent: { ...state.currentCalendarEvent, ...action.payload }
       };
 
-    case SET_TODO_TO_ADD:
-      if (!action.payload) return { ...state, todoToAdd: null };
-      return { ...state, todoToAdd: action.payload };
+    case SET_CALENDAR_EVENT_TO_ADD:
+      if (!action.payload) return { ...state, calendarEventToAdd: null };
+      return { ...state, calendarEventToAdd: action.payload };
 
     case SET_SEARCH_TITLE:
       return { ...state, searchTitle: action.payload };
 
     case FIND_BY_TITLE_SUCCESSFUL:
-      return { ...state, isFinding: false, todos: action.payload };
+      return { ...state, isFinding: false, calendarEvents: action.payload };
 
     case SET_CURRENT_INDEX:
       return { ...state, currentIndex: action.payload };
@@ -70,34 +70,34 @@ function rootReducer(state = initialState, action) {
     case SET_SUBMITTED:
       return { ...state, submitted: action.payload };
 
-    case SET_TODOS:
-      return { ...state, todos: action.payload };
+    case SET_CALENDAR_EVENTS:
+      return { ...state, calendarEvents: action.payload };
 
-    case GET_TODOS_SUCCESSFUL:
-      return { ...state, isLoading: false, todos: action.payload };
+    case GET_CALENDAR_EVENTS_SUCCESSFUL:
+      return { ...state, isLoading: false, calendarEvents: action.payload };
 
-    case ADD_TODO_SUCCESSFUL:
-      return { ...state, isAdding: false, todos: state.todos.concat(action.payload) };
+    case ADD_CALENDAR_EVENT_SUCCESSFUL:
+      return { ...state, isAdding: false, calendarEvents: state.calendarEvents.concat(action.payload) };
 
-    case UPDATE_TODO_SUCCESSFUL:
-      mappings = deepCopy(state.todos);
+    case UPDATE_CALENDAR_EVENT_SUCCESSFUL:
+      mappings = deepCopy(state.calendarEvents);
       const idx = mappings.findIndex((t) => t._id === action.payload.id);
 
       if (mappings && mappings[idx]) {
-        let todo = action.payload.todo;
-        todo.dueDate = todo.dueDate.toISOString();
-        delete todo.id;
-        mappings[idx] = { ...mappings[idx], ...todo };
+        let calendarEvent = action.payload.calendarEvent;
+        calendarEvent.dueDate = calendarEvent.dueDate.toISOString();
+        delete calendarEvent.id;
+        mappings[idx] = { ...mappings[idx], ...calendarEvent };
       }
 
-      return { ...state, isUpdating: false, todos: mappings };
+      return { ...state, isUpdating: false, calendarEvents: mappings };
 
-    case DELETE_TODO_SUCCESSFUL:
-      mappings = state.todos.filter((t) => t._id !== action.payload.id);
-      return { ...state, isDeleting: false, todos: mappings };
+    case DELETE_CALENDAR_EVENT_SUCCESSFUL:
+      mappings = state.calendarEvents.filter((t) => t._id !== action.payload.id);
+      return { ...state, isDeleting: false, calendarEvents: mappings };
 
-    case DELETE_TODOS_SUCCESSFUL:
-      return { ...state, isDeletingAll: false, todos: action.payload };
+    case DELETE_CALENDAR_EVENTS_SUCCESSFUL:
+      return { ...state, isDeletingAll: false, calendarEvents: action.payload };
 
     // case DATA_LOADED:
     //   return { ...state, isLoading: false };

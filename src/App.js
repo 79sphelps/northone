@@ -19,13 +19,12 @@ import NotFound from "./components/not-found";
 
 export const LocationDisplay = () => {
   const location = useLocation();
-
   return <div data-testid="location-display">{location.pathname}</div>;
 };
 
 const App = () => {
   const dispatch = useDispatch();
-  const initializeTodoToAdd = () => {
+  const initializeCalendarEventToAdd = () => {
     dispatch(setSubmitted(false));
     dispatch(setMessage(""));
   };
@@ -47,7 +46,7 @@ const App = () => {
               <Link
                 to={"/add"}
                 className="nav-link"
-                onClick={() => initializeTodoToAdd()}
+                onClick={() => initializeCalendarEventToAdd()}
               >
                 Add <FontAwesomeIcon icon={faPlus} />
               </Link>
