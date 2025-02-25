@@ -7,6 +7,7 @@ import "react-clock/dist/Clock.css";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import DatePicker from "react-date-picker";
+import { useForm } from "react-hook-form";
 import {
   setCurrentCalendarEvent,
   setMessage,
@@ -15,8 +16,16 @@ import {
 } from "../redux/actions";
 import { selectCurrentCalendarEvent, selectMessage } from "../redux/selectors";
 
+const ValidationError = ({ fieldError }) => {
+    if (!fieldError) return null;
+    return (
+      <div role="alert" style={{ color: "red", marginBottom: 2 }}>
+        {fieldError.message}
+      </div>
+    );
+  };
 
-const CalendarEvent = (props) => {
+const CalendarEvent = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const currentCalendarEvent = useSelector(selectCurrentCalendarEvent);
@@ -26,12 +35,30 @@ const CalendarEvent = (props) => {
       currentCalendarEvent && currentCalendarEvent.dueDate ? currentCalendarEvent.dueDate : new Date()
     )
   );
-
   const [timeValue, onChangeTimeValue] = useState(
     currentCalendarEvent && currentCalendarEvent.start
       ? currentCalendarEvent.start
       : new Date().toISOString().replace(/T.*$/, "") + "T12:00:00"
   );
+
+//   const defaultValues = {
+//     title: currentCalendarEvent.title,
+//     description: currentCalendarEvent.description,
+//     startTime: currentCalendarEvent.startTime,
+//     dueDate: currentCalendarEvent.dueDate,
+//   };
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors, isValid },
+    // } = useForm({defaultValues: defaultValues}, { mode: "onBlur", reValidateMode: "onBlur" });
+  } = useForm({ mode: "onBlur", reValidateMode: "onBlur" });
+
+  const getEditorStyle = (fieldError) => {
+    return fieldError ? "border: solid 1px red" : "display: block";
+  }
 
   useEffect(() => {
     clearMessage();
@@ -47,19 +74,17 @@ const CalendarEvent = (props) => {
     }
   };
 
-  const handleInputChange = (event) => {
-    event.preventDefault();
-    const { name, value } = event.target;
-    dispatch(setCurrentCalendarEvent({ ...currentCalendarEvent, [name]: value }));
-  };
-
-  const updateCalendarEventUnderEdit = (status = null) => {
-    currentCalendarEvent.dueDate = dateValue;
-    currentCalendarEvent.start = timeValue;
+  const updateCalendarEventStatusUnderEdit = (status = null) => {
     if (status !== null) {
       currentCalendarEvent.status = status;
     }
     dispatch(updateCalendarEvent({ id: currentCalendarEvent._id, calendarEvent: currentCalendarEvent }));
+  };
+
+  const updateCalendarEventUnderEdit = (event) => {
+    event.dueDate = dateValue;
+    event.start = timeValue;
+    dispatch(updateCalendarEvent({ id: currentCalendarEvent._id, calendarEvent: event }));
   };
 
   const deleteCalendarEventUnderEdit = () => {
@@ -72,32 +97,50 @@ const CalendarEvent = (props) => {
       {currentCalendarEvent ? (
         <div className="edit-form">
           <h4>Calendar Event</h4>
-          <form>
+          <form noValidate onSubmit={handleSubmit(updateCalendarEventUnderEdit)}>
             <div className="form-group">
               <label htmlFor="title">
                 <strong>Title: </strong>
               </label>
               <input
+                className={getEditorStyle(errors.firstName)}
+                style={{ display: 'block', width: '100%', height: 40, borderRadius: 5, border: 'solid 1px lightblue' }}
                 type="text"
-                className="form-control"
                 id="title"
-                name="title"
-                value={currentCalendarEvent.title}
-                onChange={(currentCalendarEvent) => handleInputChange(currentCalendarEvent)}
-              />
+                placeholder={currentCalendarEvent.title}
+                {...register("title", {
+                    // onChange: (e) => { setValue('title', e.target.value) },
+                    required: "You must enter a valid title",
+                    minLength: {
+                        value: 5,
+                        message:
+                            "The title must be at least 5 characters",
+                    },
+                })}
+                />
+                <ValidationError fieldError={errors.title} />
             </div>
             <div className="form-group">
               <label htmlFor="description">
                 <strong>Description: </strong>
               </label>
               <input
+                className={getEditorStyle(errors.firstName)}
+                style={{ display: 'block', width: '100%', height: 40, borderRadius: 5, border: 'solid 1px lightblue' }}
                 type="text"
-                className="form-control"
                 id="description"
-                name="description"
-                value={currentCalendarEvent.description}
-                onChange={(currentCalendarEvent) => handleInputChange(currentCalendarEvent)}
-              />
+                placeholder={currentCalendarEvent.description}
+                {...register("description", {
+                    // onChange: (e) => {setValue('description', e.target.value)},
+                    required: "You must enter a valid description",
+                    minLength: {
+                    value: 5,
+                    message:
+                        "The description must be at least 5 characters",
+                    },
+                })}
+                />
+                <ValidationError fieldError={errors.description} />
             </div>
             <div className="form-group">
               <label>
@@ -117,18 +160,17 @@ const CalendarEvent = (props) => {
               </label>
               <TimePicker onChange={onChangeTimeValue} value={timeValue} />
             </div>
-          </form>
-          {currentCalendarEvent.status ? (
+            {currentCalendarEvent.status ? (
             <button
               className="btn btn-primary mr-2"
-              onClick={() => updateCalendarEventUnderEdit(false)}
+              onClick={() => updateCalendarEventStatusUnderEdit(false)}
             >
               Mark Pending
             </button>
           ) : (
             <button
               className="btn btn-primary mr-2"
-              onClick={() => updateCalendarEventUnderEdit(true)}
+              onClick={() => updateCalendarEventStatusUnderEdit(true)}
             >
               Mark Done
             </button>
@@ -142,7 +184,13 @@ const CalendarEvent = (props) => {
           <button
             type="submit"
             className="btn btn-success mr-2"
-            onClick={() => updateCalendarEventUnderEdit()}
+            disabled={!isValid}
+            style={{
+                color: !isValid && "lightgrey",
+                cursor: !isValid && "not-allowed",
+                marginRight: "20px",
+            }}
+            // onClick={() => updateCalendarEventUnderEdit()}
           >
             Update
           </button>
@@ -152,6 +200,7 @@ const CalendarEvent = (props) => {
           >
             Cancel
           </button>
+          </form>
           <p>{message}</p>
         </div>
       ) : (

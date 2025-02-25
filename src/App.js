@@ -13,7 +13,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import { setSubmitted, setMessage } from "./redux/actions";
 import AddCalendarEvent from "./components/add-calendar-event.component";
-import CalendarEvent from "./components/calendar-event.component";
+import CalendarEvent from "./components/calendar-event2.component";
 import CalendarEvents from "./components/calendar-events.component";
 import NotFound from "./components/not-found";
 
