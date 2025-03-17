@@ -43,7 +43,7 @@
   },
   "scripts": {
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "server": "node src/server.js",
+    "server": "node --env-file=.env src/server.js",
     "client": "react-scripts start",
     "start": "react-scripts start --openssl-legacy-provider",
     "start_backup": "cross-env NODE_ENV=production node src/server.js",

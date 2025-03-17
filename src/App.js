@@ -12,7 +12,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import { setSubmitted, setMessage } from "./redux/actions";
-import AddCalendarEvent from "./components/add-calendar-event.component";
+// import AddCalendarEvent from "./components/add-calendar-event.component";
+import AddCalendarEvent2 from "./components/add-calendar-event2.component";
 import CalendarEvent from "./components/calendar-event2.component";
 import CalendarEvents from "./components/calendar-events.component";
 import NotFound from "./components/not-found";
@@ -61,7 +62,8 @@ const App = () => {
               path={"/calendar-events"}
               element={<CalendarEvents />}
             />
-            <Route exact path="/add" element={<AddCalendarEvent />} />
+            {/* <Route exact path="/add" element={<AddCalendarEvent />} /> */}
+            <Route exact path="/add" element={<AddCalendarEvent2 />} />
             <Route path="/calendar-events/:id" element={<CalendarEvent />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
