@@ -1,11 +1,29 @@
+import { useDispatch, useSelector } from "react-redux";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  setSearchTitle,
+  findByTitle,
+} from "../redux/actions";
+import {
+  selectSearchTitle,
+} from "../redux/selectors";
 
-const CalendarSearchBox = ({
-  searchTitle,
-  onChangeSearchTitle,
-  findItemByTitle,
-  faSearch,
-}) => {
+
+const CalendarSearchBox = () => {
+  const dispatch = useDispatch();
+  const searchTitle = useSelector(selectSearchTitle);
+
+  const onChangeSearchTitle = (event) => {
+    event.preventDefault();
+    dispatch(setSearchTitle(event.target.value));
+  };
+
+  const findItemByTitle = () => {
+    dispatch(findByTitle(searchTitle));
+    // dispatch(setCurrentCalendarEvent(null));
+  };
+
   return (
     <div className="col-md-8" style={{ margin: "0 auto" }}>
       <div className="input-group mb-3">
