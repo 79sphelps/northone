@@ -1,10 +1,7 @@
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  setCurrentIndex,
-  setCurrentCalendarEvent,
-} from "../redux/actions";
+import { setCurrentIndex, setCurrentCalendarEvent } from "../redux/actions";
 import { selectCurrentIndex } from "../redux/selectors";
 
 export function useCalendarEvents({ setShow }) {
@@ -44,5 +41,5 @@ export function useCalendarEvents({ setShow }) {
     setActiveCalendarEvent,
     handleDateSelect,
     handleEventClick,
-  }
+  };
 }

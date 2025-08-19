@@ -2,14 +2,8 @@ import { memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  setSearchTitle,
-  findByTitle,
-} from "../redux/actions";
-import {
-  selectSearchTitle,
-} from "../redux/selectors";
-
+import { setSearchTitle, findByTitle } from "../redux/actions";
+import { selectSearchTitle } from "../redux/selectors";
 
 const CalendarSearchBox = memo(() => {
   const dispatch = useDispatch();

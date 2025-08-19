@@ -28,5 +28,5 @@ export function useCalendarList() {
     retrieveCalendarEvents,
     refreshList,
     removeAllCalendarEvents,
-  }
+  };
 }

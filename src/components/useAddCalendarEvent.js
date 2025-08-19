@@ -75,5 +75,5 @@ export function useAddCalendarEvent() {
     newCalendarEvent,
     message,
     submitted,
-  }
+  };
 }

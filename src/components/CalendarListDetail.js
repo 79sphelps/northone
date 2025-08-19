@@ -3,9 +3,7 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { useSelector } from "react-redux";
-import {
-  selectCurrentCalendarEvent,
-} from "../redux/selectors";
+import { selectCurrentCalendarEvent } from "../redux/selectors";
 
 const CalendarListDetail = ({ datePicker }) => {
   const currentCalendarEvent = useSelector(selectCurrentCalendarEvent);

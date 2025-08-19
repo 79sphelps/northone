@@ -7,17 +7,9 @@ import "react-time-picker/dist/TimePicker.css";
 import "react-clock/dist/Clock.css";
 import { useCalendarEventModal } from "./useCalendarEventModal";
 
-const CalendarEventModal = memo(({
-  show,
-  setShow,
-}) => {
-  const {
-    handleClose,
-    saveNewEvent,
-    handleEventChange,
-    newEvent,
-  } = useCalendarEventModal(setShow);
-
+const CalendarEventModal = memo(({ show, setShow }) => {
+  const { handleClose, saveNewEvent, handleEventChange, newEvent } =
+    useCalendarEventModal(setShow);
   const [dateValue, onChange] = useState(new Date());
   const [timeValue, onChangeTimeValue] = useState(""); // useState('10:00');
 

@@ -18,11 +18,8 @@ const CalendarEvents = memo(() => {
   const currentIndex = useSelector(selectCurrentIndex);
 
   useCalendarEventData();
-  const { 
-    setActiveCalendarEvent,
-    handleDateSelect,
-    handleEventClick,
-  } = useCalendarEvents(setShow);
+  const { setActiveCalendarEvent, handleDateSelect, handleEventClick } =
+    useCalendarEvents(setShow);
 
   return (
     <div className="list row">
@@ -38,10 +35,7 @@ const CalendarEvents = memo(() => {
         handleDateSelect={handleDateSelect}
         handleEventClick={handleEventClick}
       />
-      <CalendarEventModal
-        show={show}
-        setShow={setShow}
-      />
+      <CalendarEventModal show={show} setShow={setShow} />
     </div>
   );
 });

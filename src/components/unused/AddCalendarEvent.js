@@ -4,9 +4,9 @@ import DatePicker from "react-date-picker";
 import TimePicker from "react-time-picker";
 import "react-time-picker/dist/TimePicker.css";
 import "react-clock/dist/Clock.css";
-import { addCalendarEvent, setCalendarEventToAdd } from "../redux/actions";
-import { selectCalendarEventToAdd } from "../redux/selectors";
-import { formatDate } from "../redux/utils";
+import { addCalendarEvent, setCalendarEventToAdd } from "../../redux/actions";
+import { selectCalendarEventToAdd } from "../../redux/selectors";
+import { formatDate } from "../../redux/utils";
 
 
 const AddCalendarEvent = () => {

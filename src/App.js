@@ -14,7 +14,7 @@ import "./App.css";
 import { setSubmitted, setMessage } from "./redux/actions";
 // import AddCalendarEvent from "./components/add-calendar-event.component";
 import AddCalendarEvent2 from "./components/AddCalendarEvent2";
-import CalendarEvent from "./components/CalendarEvent2";
+import UpdateCalendarEvent from "./components/UpdateCalendarEvent";
 import CalendarEvents from "./components/CalendarEvents";
 import NotFound from "./components/NotFound";
 
@@ -64,7 +64,10 @@ const App = () => {
             />
             {/* <Route exact path="/add" element={<AddCalendarEvent />} /> */}
             <Route exact path="/add" element={<AddCalendarEvent2 />} />
-            <Route path="/calendar-events/:id" element={<CalendarEvent />} />
+            <Route
+              path="/calendar-events/:id"
+              element={<UpdateCalendarEvent />}
+            />
             <Route path="*" element={<NotFound />} />
           </Routes>
           {/* <LocationDisplay /> */}
