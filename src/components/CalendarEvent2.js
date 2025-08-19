@@ -15,6 +15,7 @@ import {
   deleteCalendarEvent,
 } from "../redux/actions";
 import { selectCurrentCalendarEvent, selectMessage } from "../redux/selectors";
+// import { CalendarEventForm } from "CalendarEventForm";
 
 const ValidationError = ({ fieldError }) => {
   if (!fieldError) return null;
@@ -43,19 +44,19 @@ const CalendarEvent = memo(() => {
       : new Date().toISOString().replace(/T.*$/, "") + "T12:00:00"
   );
 
-  //   const defaultValues = {
-  //     title: currentCalendarEvent.title,
-  //     description: currentCalendarEvent.description,
-  //     startTime: currentCalendarEvent.startTime,
-  //     dueDate: currentCalendarEvent.dueDate,
-  //   };
+  const defaultValues = {
+    title: currentCalendarEvent?.title,
+    description: currentCalendarEvent?.description,
+    startTime: currentCalendarEvent?.startTime,
+    dueDate: currentCalendarEvent?.dueDate,
+  };
 
   const {
     register,
     handleSubmit,
     formState: { errors, isValid },
     // } = useForm({defaultValues: defaultValues}, { mode: "onBlur", reValidateMode: "onBlur" });
-  } = useForm({ mode: "onBlur", reValidateMode: "onBlur" });
+  } = useForm({ defaultValues: defaultValues }, { mode: "all", reValidateMode: "all" });
 
   const getEditorStyle = (fieldError) => {
     return fieldError ? "border: solid 1px red" : "display: block";
@@ -110,7 +111,7 @@ const CalendarEvent = memo(() => {
         <div className="edit-form">
           <h4>Calendar Event</h4>
           <form
-            noValidate
+            // noValidate
             onSubmit={handleSubmit(updateCalendarEventUnderEdit)}
           >
             <div className="form-group">
@@ -118,7 +119,8 @@ const CalendarEvent = memo(() => {
                 <strong>Title: </strong>
               </label>
               <input
-                className={getEditorStyle(errors.firstName)}
+                name="Title"
+                className={getEditorStyle(errors.title)}
                 style={{
                   display: "block",
                   width: "100%",
@@ -145,7 +147,8 @@ const CalendarEvent = memo(() => {
                 <strong>Description: </strong>
               </label>
               <input
-                className={getEditorStyle(errors.firstName)}
+                name="Description"
+                className={getEditorStyle(errors.description)}
                 style={{
                   display: "block",
                   width: "100%",
@@ -160,8 +163,8 @@ const CalendarEvent = memo(() => {
                   // onChange: (e) => {setValue('description', e.target.value)},
                   required: "You must enter a valid description",
                   minLength: {
-                    value: 5,
-                    message: "The description must be at least 5 characters",
+                    value: 10,
+                    message: "The description must be at least 10 characters",
                   },
                 })}
               />
@@ -185,6 +188,7 @@ const CalendarEvent = memo(() => {
               </label>
               <TimePicker onChange={onChangeTimeValue} value={timeValue} />
             </div>
+
             {currentCalendarEvent.status ? (
               <button
                 className="btn btn-primary mr-2"
@@ -200,6 +204,7 @@ const CalendarEvent = memo(() => {
                 Mark Done
               </button>
             )}
+
             <button
               className="btn btn-danger mr-2"
               onClick={() => deleteCalendarEventUnderEdit()}
@@ -209,12 +214,12 @@ const CalendarEvent = memo(() => {
             <button
               type="submit"
               className="btn btn-success mr-2"
-              disabled={!isValid}
-              style={{
-                color: !isValid && "lightgrey",
-                cursor: !isValid && "not-allowed",
-                marginRight: "20px",
-              }}
+              // disabled={!isValid}
+              // style={{
+              //   color: !isValid && "lightgrey",
+              //   cursor: !isValid && "not-allowed",
+              //   marginRight: "20px",
+              // }}
               // onClick={() => updateCalendarEventUnderEdit()}
             >
               Update

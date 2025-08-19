@@ -1,15 +1,13 @@
-import { useState, useEffect, memo } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useState, memo } from "react";
+import { useSelector } from "react-redux";
 import DatePicker from "react-date-picker";
 import TimePicker from "react-time-picker";
 import { useForm } from "react-hook-form";
 import "react-time-picker/dist/TimePicker.css";
 import "react-clock/dist/Clock.css";
-import { addCalendarEvent, setCalendarEventToAdd } from "../redux/actions";
 import { selectCalendarEventToAdd } from "../redux/selectors";
-import { formatDate } from "../redux/utils";
-// import { useAddCalendarEvent } from "./useAddCalendarEvent";   // WIP
-
+import { useAddCalendarEvent } from "./useAddCalendarEvent";
+// import { CalendarEventForm } from "CalendarEventForm";
 
 const ValidationError = ({ fieldError }) => {
   if (!fieldError) return null;
@@ -21,12 +19,9 @@ const ValidationError = ({ fieldError }) => {
 };
 
 const AddCalendarEvent2 = memo(() => {
-  const dispatch = useDispatch();
   const CalendarEventToAdd = useSelector(selectCalendarEventToAdd);
-  const [submitted, setSubmitted] = useState(false);
   const [dateValue, onChange] = useState(new Date());
   const [timeValue, onChangeTimeValue] = useState(""); // useState('10:00');
-  const [message, setMessage] = useState("");
 
   const defaultValues = {
     title: "",
@@ -41,7 +36,8 @@ const AddCalendarEvent2 = memo(() => {
     formState: { errors, isValid },
   } = useForm(
     { defaultValues: defaultValues },
-    { mode: "onBlur", reValidateMode: "onBlur" }
+    // { mode: "onBlur", reValidateMode: "onBlur" }
+    { mode: "all", reValidateMode: "all" }
   );
   // } = useForm({ mode: "onBlur", reValidateMode: "onBlur" });
 
@@ -49,69 +45,12 @@ const AddCalendarEvent2 = memo(() => {
     return fieldError ? "border: solid 1px red" : "display: block";
   };
 
-
-  // const {
-  //   saveCalendarEvent,
-  //   newCalendarEvent,
-  //   message,
-  //   submitted,
-  // } = useAddCalendarEvent();
-
-  useEffect(() => {
-    const storedCalendarEventToAdd = JSON.parse(
-      localStorage.getItem("calendarEventToAdd")
-    );
-    if (storedCalendarEventToAdd) {
-      dispatch(setCalendarEventToAdd(storedCalendarEventToAdd));
-    }
-    // eslint-disable-next-line
-  }, []);
-
-  useEffect(() => {
-    if (!CalendarEventToAdd) {
-      let calendarEventToAdd = {
-        id: null,
-        title: "",
-        description: "",
-        status: false,
-        dueDate: formatDate(new Date()),
-        start: "",
-      };
-      localStorage.setItem(
-        "calendarEventToAdd",
-        JSON.stringify(calendarEventToAdd)
-      );
-    }
-  }, [CalendarEventToAdd]);
-
-  let initialCalendarEventState = {
-    id: null,
-    title: "",
-    description: "",
-    status: false,
-    dueDate: formatDate(new Date()),
-    start: "",
-  };
-
-  const saveCalendarEvent = (event) => {
-    if (!dateValue) return;
-    const data = {
-      title: event.title,
-      description: event.description,
-      status: false,
-      dueDate: dateValue,
-      start: timeValue,
-    };
-    dispatch(addCalendarEvent(data));
-    localStorage.removeItem("calendarEventToAdd");
-    setMessage("CalendarEvent item created successfully!");
-  };
-
-  const newCalendarEvent = () => {
-    dispatch(setCalendarEventToAdd(initialCalendarEventState));
-    setSubmitted(false);
-    setMessage("");
-  };
+  const {
+    saveCalendarEvent,
+    newCalendarEvent,
+    message,
+    submitted,
+  } = useAddCalendarEvent();
 
   return (
     <div className="submit-form">
@@ -128,11 +67,13 @@ const AddCalendarEvent2 = memo(() => {
       ) : (
         <div>
           <h1>Add a New Calendar Event</h1>
-          <form noValidate onSubmit={handleSubmit(saveCalendarEvent)}>
+          {/* <form noValidate onSubmit={handleSubmit(saveCalendarEvent)}> */}
+          <form onSubmit={handleSubmit(saveCalendarEvent)}>
             <div className="form-group">
               <label htmlFor="title">Title: </label>{" "}
               <input
-                className={getEditorStyle(errors.firstName)}
+                name="Title"
+                className={getEditorStyle(errors.title)}
                 style={{
                   display: "block",
                   width: "100%",
@@ -142,7 +83,7 @@ const AddCalendarEvent2 = memo(() => {
                 }}
                 type="text"
                 id="title"
-                placeholder={"Title"}
+                placeholder="Title"
                 {...register("title", {
                   // onChange: (e) => { setValue('title', e.target.value) },
                   required: "You must enter a valid title",
@@ -157,7 +98,8 @@ const AddCalendarEvent2 = memo(() => {
             <div className="form-group">
               <label htmlFor="description">Description: </label>{" "}
               <input
-                className={getEditorStyle(errors.firstName)}
+                name="Description"
+                className={getEditorStyle(errors.description)}
                 style={{
                   display: "block",
                   width: "100%",
@@ -167,13 +109,13 @@ const AddCalendarEvent2 = memo(() => {
                 }}
                 type="text"
                 id="description"
-                placeholder={"Description"}
+                placeholder="Description"
                 {...register("description", {
                   // onChange: (e) => {setValue('description', e.target.value)},
                   required: "You must enter a valid description",
                   minLength: {
-                    value: 5,
-                    message: "The description must be at least 5 characters",
+                    value: 10,
+                    message: "The description must be at least 10 characters",
                   },
                 })}
               />
@@ -191,12 +133,12 @@ const AddCalendarEvent2 = memo(() => {
               <button
                 type="submit"
                 className="btn btn-success mr-2"
-                disabled={!isValid}
-                style={{
-                  color: !isValid && "lightgrey",
-                  cursor: !isValid && "not-allowed",
-                  marginRight: "20px",
-                }}
+                // disabled={!isValid}
+                // style={{
+                //   color: !isValid && "lightgrey",
+                //   cursor: !isValid && "not-allowed",
+                //   marginRight: "20px",
+                // }}
                 // onClick={() => updateCalendarEventUnderEdit()}
               >
                 Submit
