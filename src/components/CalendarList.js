@@ -1,35 +1,14 @@
-import { useDispatch } from "react-redux";
+import { memo } from "react";
 // import "react-time-picker/dist/TimePicker.css";
 // import "react-clock/dist/Clock.css";
-import {
-  getCalendarEvents,
-  deleteCalendarEvents,
-  setCurrentIndex,
-  setCurrentCalendarEvent,
-} from "../redux/actions";
+import { useCalendarList } from "./useCalendarList";
 
-
-const CalendarList = ({
+const CalendarList = memo(({
   calendarEvents,
   setActiveCalendarEvent,
   currentIndex,
 }) => {
-  const dispatch = useDispatch();
-
-  const retrieveCalendarEvents = () => {
-    dispatch(getCalendarEvents());
-  };
-
-  const refreshList = () => {
-    retrieveCalendarEvents();
-    dispatch(setCurrentCalendarEvent(null));
-    dispatch(setCurrentIndex(-1));
-  };
-
-  const removeAllCalendarEvents = () => {
-    dispatch(deleteCalendarEvents());
-    refreshList();
-  };
+  const { removeAllCalendarEvents } = useCalendarList();
 
   return (
     <div className="col-md-6">
@@ -57,6 +36,6 @@ const CalendarList = ({
       </button>
     </div>
   );
-};
+});
 
 export default CalendarList;

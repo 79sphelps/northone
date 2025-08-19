@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect, memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import DatePicker from "react-date-picker";
 import TimePicker from "react-time-picker";
@@ -8,6 +8,8 @@ import "react-clock/dist/Clock.css";
 import { addCalendarEvent, setCalendarEventToAdd } from "../redux/actions";
 import { selectCalendarEventToAdd } from "../redux/selectors";
 import { formatDate } from "../redux/utils";
+// import { useAddCalendarEvent } from "./useAddCalendarEvent";   // WIP
+
 
 const ValidationError = ({ fieldError }) => {
   if (!fieldError) return null;
@@ -18,7 +20,7 @@ const ValidationError = ({ fieldError }) => {
   );
 };
 
-const AddCalendarEvent2 = () => {
+const AddCalendarEvent2 = memo(() => {
   const dispatch = useDispatch();
   const CalendarEventToAdd = useSelector(selectCalendarEventToAdd);
   const [submitted, setSubmitted] = useState(false);
@@ -46,6 +48,14 @@ const AddCalendarEvent2 = () => {
   const getEditorStyle = (fieldError) => {
     return fieldError ? "border: solid 1px red" : "display: block";
   };
+
+
+  // const {
+  //   saveCalendarEvent,
+  //   newCalendarEvent,
+  //   message,
+  //   submitted,
+  // } = useAddCalendarEvent();
 
   useEffect(() => {
     const storedCalendarEventToAdd = JSON.parse(
@@ -198,6 +208,6 @@ const AddCalendarEvent2 = () => {
       )}
     </div>
   );
-};
+});
 
 export default AddCalendarEvent2;

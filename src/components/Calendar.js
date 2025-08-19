@@ -1,10 +1,11 @@
+import { memo } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import { formatDate } from "../redux/utils";
 
-const Calendar = ({
+const Calendar = memo(({
   calendarEvents,
   handleDateSelect,
   handleEventClick,
@@ -67,6 +68,6 @@ const Calendar = ({
       )}
     </div>
   );
-};
+});
 
 export default Calendar;

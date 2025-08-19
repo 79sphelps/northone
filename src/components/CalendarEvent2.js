@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect, memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import TimePicker from "react-time-picker";
@@ -25,7 +25,7 @@ const ValidationError = ({ fieldError }) => {
   );
 };
 
-const CalendarEvent = () => {
+const CalendarEvent = memo(() => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const currentCalendarEvent = useSelector(selectCurrentCalendarEvent);
@@ -236,6 +236,6 @@ const CalendarEvent = () => {
       )}
     </div>
   );
-};
+});
 
 export default CalendarEvent;

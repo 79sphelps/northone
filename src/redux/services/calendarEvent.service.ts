@@ -19,7 +19,7 @@ class CalendarEventDataService {
 
   getCalendarEvent(id) {
     try {
-      return api.get(`/api/calendarEvents/${id}`);
+      return api.get(`${GET_CALENDAR_EVENTS_ENDPOINT}/${id}`);
     } catch (error) {
       if (isAxiosError(error)) {
         const { message } = errorHandler(error);
@@ -32,7 +32,7 @@ class CalendarEventDataService {
 
   addCalendarEvent(data) {
     try {
-      return api.post(`/api/calendarEvents`, data);
+      return api.post(GET_CALENDAR_EVENTS_ENDPOINT, data);
     } catch (error) {
       if (isAxiosError(error)) {
         const { message } = errorHandler(error);
@@ -45,7 +45,7 @@ class CalendarEventDataService {
 
   updateCalendarEvent(id, data) {
     try {
-      return api.put(`/api/calendarEvents/${id}`, data);
+      return api.put(`${GET_CALENDAR_EVENTS_ENDPOINT}/${id}`, data);
     } catch (error) {
       if (isAxiosError(error)) {
         const { message } = errorHandler(error);
@@ -58,7 +58,7 @@ class CalendarEventDataService {
 
   deleteCalendarEvent(id) {
     try {
-      return api.delete(`/api/calendarEvents/${id}`);
+      return api.delete(`${GET_CALENDAR_EVENTS_ENDPOINT}/${id}`);
     } catch (error) {
       if (isAxiosError(error)) {
         const { message } = errorHandler(error);
@@ -71,7 +71,7 @@ class CalendarEventDataService {
 
   deleteCalendarEvents() {
     try {
-      return api.delete(`/api/calendarEvents`);
+      return api.delete(GET_CALENDAR_EVENTS_ENDPOINT);
     } catch (error) {
       if (isAxiosError(error)) {
         // console.log(error.response?.data.username);
@@ -85,7 +85,7 @@ class CalendarEventDataService {
 
   findByTitle(title) {
     try {
-      return api.get(`/api/calendarEvents?title=${title}`);
+      return api.get(`${GET_CALENDAR_EVENTS_ENDPOINT}?title=${title}`);
     } catch (error) {
       if (isAxiosError(error)) {
         // console.log(error.response?.data.username);
