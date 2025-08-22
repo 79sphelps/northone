@@ -10,15 +10,8 @@ import DatePicker from "react-date-picker";
 import { useForm } from "react-hook-form";
 import { selectCurrentCalendarEvent, selectMessage } from "../redux/selectors";
 import { useUpdateCalendarEvent } from "./useUpdateCalendarEvent";
-
-const ValidationError = ({ fieldError }) => {
-  if (!fieldError) return null;
-  return (
-    <div role="alert" style={{ color: "red", marginBottom: 2 }}>
-      {fieldError.message}
-    </div>
-  );
-};
+import EventFormInput from "./EventFormInput";
+import FormInputValidationError from "./FormInputValidationError";
 
 const CalendarUpdateEventForm = memo(() => {
   const navigate = useNavigate();
@@ -72,60 +65,32 @@ const CalendarUpdateEventForm = memo(() => {
         onSubmit={handleSubmit(updateCalendarEventUnderEdit)}
       >
         <div className="form-group">
-          <label htmlFor="title">
-            <strong>Title: </strong>
-          </label>
-          <input
+          <EventFormInput
+            htmlFor="title"
             name="Title"
             className={getEditorStyle(errors.title)}
-            style={{
-              display: "block",
-              width: "100%",
-              height: 40,
-              borderRadius: 5,
-              border: "solid 1px lightblue",
-            }}
-            type="text"
             id="title"
             placeholder={currentCalendarEvent.title}
-            {...register("title", {
-              // onChange: (e) => { setValue('title', e.target.value) },
-              required: "You must enter a valid title",
-              minLength: {
-                value: 5,
-                message: "The title must be at least 5 characters",
-              },
-            })}
+            requiredMsg="You must enter a valid title"
+            minLength={5}
+            minLengthMsg="The title must be at least 5 characters"
+            register={register}
           />
-          <ValidationError fieldError={errors.title} />
+          <FormInputValidationError fieldError={errors.title} />
         </div>
         <div className="form-group">
-          <label htmlFor="description">
-            <strong>Description: </strong>
-          </label>
-          <input
+          <EventFormInput
+            htmlFor="description"
             name="Description"
             className={getEditorStyle(errors.description)}
-            style={{
-              display: "block",
-              width: "100%",
-              height: 40,
-              borderRadius: 5,
-              border: "solid 1px lightblue",
-            }}
-            type="text"
             id="description"
             placeholder={currentCalendarEvent.description}
-            {...register("description", {
-              // onChange: (e) => {setValue('description', e.target.value)},
-              required: "You must enter a valid description",
-              minLength: {
-                value: 10,
-                message: "The description must be at least 10 characters",
-              },
-            })}
+            requiredMsg="You must enter a valid description"
+            minLength={10}
+            minLengthMsg="The description must be at least 10 characters"
+            register={register}
           />
-          <ValidationError fieldError={errors.description} />
+          <FormInputValidationError fieldError={errors.description} />
         </div>
 
         <div className="form-group">

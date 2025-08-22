@@ -4,7 +4,7 @@ import { selectCalendarEventToAdd } from "../redux/selectors";
 import { useAddCalendarEvent } from "./useAddCalendarEvent";
 import CalendarEventForm from "./CalendarEventForm";
 
-const AddCalendarEvent2 = memo(() => {
+const AddCalendarEvent = memo(() => {
   const CalendarEventToAdd = useSelector(selectCalendarEventToAdd);
   const { saveCalendarEvent, newCalendarEvent, message, submitted } =
     useAddCalendarEvent();
@@ -41,4 +41,4 @@ const AddCalendarEvent2 = memo(() => {
   );
 });
 
-export default AddCalendarEvent2;
+export default AddCalendarEvent;
