@@ -73,6 +73,16 @@ export function* getCalendarEventsWorkerSaga() {
   }
 }
 
+export function* getCalendarEventWorkerSaga(action) {
+  try {
+    yield put({ type: IS_FETCHING });
+    const payload = yield call(getCalendarEvent, action.payload.id);
+    yield put({ type: GET_CALENDAR_EVENT_SUCCESSFUL, payload });
+  } catch (e) {
+    yield put({ type: API_ERRORED, payload: e });
+  }
+}
+
 export function* deleteCalendarEventsWorkerSaga(action) {
   try {
     yield put({ type: IS_DELETING_ALL });
@@ -146,6 +156,12 @@ export function* addCalendarEventWorkerSaga(action) {
 
 const getCalendarEvents = () => {
   return CalendarEventDataService.getCalendarEvents()
+    .then((response) => response.data)
+    .catch((e) => console.log(e));
+};
+
+const getCalendarEvent = (id) => {
+  return CalendarEventDataService.getCalendarEvent(id)
     .then((response) => response.data)
     .catch((e) => console.log(e));
 };
