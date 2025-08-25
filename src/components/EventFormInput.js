@@ -1,4 +1,6 @@
-const EventFormInput = ({
+import { memo } from "react";
+
+const EventFormInput = memo(({
   htmlFor,
   name,
   className,
@@ -36,6 +38,6 @@ const EventFormInput = ({
       />
     </>
   );
-};
+});
 
 export default EventFormInput;
