@@ -5,8 +5,8 @@ import { formatDate } from "../redux/utils";
 
 export function useCalendarEventModal({ setShow }) {
   const dispatch = useDispatch();
-  const [dateValue, onChange] = useState(new Date());
-  const [timeValue, onChangeTimeValue] = useState(""); // useState('10:00');
+  const [dateValue, setDateValue] = useState(new Date());
+  const [timeValue, setTimeValue] = useState(""); // useState('10:00');
 
   const handleClose = () => setShow(false);
 

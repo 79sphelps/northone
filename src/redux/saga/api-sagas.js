@@ -99,7 +99,6 @@ export function* findByTitleWorkerSaga(action) {
     yield put({ type: IS_FINDING });
     const payload = yield call(findByTitle, action.payload);
     yield put({ type: FIND_BY_TITLE_SUCCESSFUL, payload });
-
     yield put({ type: SET_CURRENT_CALENDAR_EVENT, payload: null });
     yield put({ type: SET_CURRENT_INDEX, payload: -1 });
   } catch (e) {
@@ -113,11 +112,9 @@ export function* updateCalendarEventWorkerSaga(action) {
     yield call(updateCalendarEvent, action.payload);
     const payload = action.payload;
     yield put({ type: UPDATE_CALENDAR_EVENT_SUCCESSFUL, payload });
-
     let calendarEvent = action.payload.calendarEvent;
     yield put({ type: SET_CURRENT_CALENDAR_EVENT, payload: calendarEvent });
-
-    const message = "The calendarEvent was updated successfully!";
+    const message = "The calendar event was updated successfully!";
     yield put({ type: SET_MESSAGE, payload: message });
   } catch (e) {
     yield put({ type: API_ERRORED, payload: e });
@@ -130,7 +127,6 @@ export function* deleteCalendarEventWorkerSaga(action) {
     yield call(deleteCalendarEvent, action.payload.id);
     const payload = action.payload;
     yield put({ type: DELETE_CALENDAR_EVENT_SUCCESSFUL, payload });
-
     const message = "The calendar event was deleted successfully!";
     yield put({ type: SET_MESSAGE, payload: message });
     yield put({ type: SET_CURRENT_CALENDAR_EVENT, payload: null });
@@ -146,7 +142,6 @@ export function* addCalendarEventWorkerSaga(action) {
     yield put({ type: IS_ADDING });
     const payload = yield call(addCalendarEvent, action.payload);
     yield put({ type: ADD_CALENDAR_EVENT_SUCCESSFUL, payload });
-
     yield put({ type: SET_SUBMITTED, payload: true });
     yield put({ type: SET_CALENDAR_EVENT_TO_ADD, payload: null });
   } catch (e) {

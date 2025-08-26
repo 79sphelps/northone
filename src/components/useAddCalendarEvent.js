@@ -6,12 +6,14 @@ import { addCalendarEvent, setCalendarEventToAdd } from "../redux/actions";
 import { selectCalendarEventToAdd } from "../redux/selectors";
 import { formatDate } from "../redux/utils";
 
+const CALENDAR_EVENT_SUCCESS_MESSAGE = "CalendarEvent item created successfully!";
+
 export function useAddCalendarEvent() {
   const dispatch = useDispatch();
-  const CalendarEventToAdd = useSelector(selectCalendarEventToAdd);
+  const calendarEventToAdd = useSelector(selectCalendarEventToAdd);
   const [submitted, setSubmitted] = useState(false);
-  const [dateValue, onChange] = useState(new Date());
-  const [timeValue, onChangeTimeValue] = useState(""); // useState('10:00');
+  const [dateValue, setDateValue] = useState(new Date());
+  const [timeValue, setTimeValue] = useState(""); // useState('10:00');
   const [message, setMessage] = useState("");
 
   useEffect(() => {
@@ -25,8 +27,8 @@ export function useAddCalendarEvent() {
   }, []);
 
   useEffect(() => {
-    if (!CalendarEventToAdd) {
-      let calendarEventToAdd = {
+    if (!calendarEventToAdd) {
+      let calendarEventToAddObj = {
         id: null,
         title: "",
         description: "",
@@ -36,10 +38,10 @@ export function useAddCalendarEvent() {
       };
       localStorage.setItem(
         "calendarEventToAdd",
-        JSON.stringify(calendarEventToAdd)
+        JSON.stringify(calendarEventToAddObj)
       );
     }
-  }, [CalendarEventToAdd]);
+  }, [calendarEventToAdd]);
 
   let initialCalendarEventState = {
     id: null,
@@ -51,7 +53,10 @@ export function useAddCalendarEvent() {
   };
 
   const saveCalendarEvent = (event) => {
-    if (!dateValue) return;
+    if (!(dateValue instanceof Date) || isNaN(dateValue.getTime())) {
+      setMessage("Please provide a valid date.");
+      return;
+    }
     const data = {
       title: event.title,
       description: event.description,
@@ -61,7 +66,7 @@ export function useAddCalendarEvent() {
     };
     dispatch(addCalendarEvent(data));
     localStorage.removeItem("calendarEventToAdd");
-    setMessage("CalendarEvent item created successfully!");
+    setMessage(CALENDAR_EVENT_SUCCESS_MESSAGE);
   };
 
   const newCalendarEvent = () => {

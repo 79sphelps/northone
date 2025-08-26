@@ -100,6 +100,10 @@ const getCalendarEvent = (payload) => {
   return { type: GET_CALENDAR_EVENT, payload };
 };
 
+const getCalendarEventSuccessful = (payload) => {
+  return { type: GET_CALENDAR_EVENT_SUCCESSFUL };
+};
+
 const addCalendarEvent = (payload) => {
   return { type: ADD_CALENDAR_EVENT, payload };
 };
