@@ -1,6 +1,18 @@
-import { memo } from "react";
+import React, { memo } from "react";
 
-const EventFormInput = memo(({
+interface FormProps {
+  htmlFor: string;
+  name: string;
+  className: string;
+  id: string;
+  placeholder?: string;
+  requiredMsg?: string;
+  minLength?: number;
+  minLengthMsg?: string;
+  register: any;
+}
+
+const EventFormInput: React.FC<FormProps>  = memo(({
   htmlFor,
   name,
   className,

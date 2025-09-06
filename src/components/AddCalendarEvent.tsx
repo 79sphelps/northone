@@ -1,13 +1,17 @@
-import { memo } from "react";
+import React, { memo, useState } from "react";
 import { useSelector } from "react-redux";
-import { selectCalendarEventToAdd } from "../redux/selectors";
-import { useAddCalendarEvent } from "./useAddCalendarEvent";
-import CalendarEventForm from "./CalendarEventForm";
+import { Value } from "react-time-picker/dist/cjs/shared/types";
+import CalendarEventForm from "./CalendarEventForm.tsx";
+import { useAddCalendarEvent } from "./useAddCalendarEvent.ts";
+import { selectCalendarEventToAdd } from "../redux/selectors/index.ts";
 
 const AddCalendarEvent = memo(() => {
   const CalendarEventToAdd = useSelector(selectCalendarEventToAdd);
+  const [dateValue, setDateValue] = useState(new Date());
+  const [timeValue, setTimeValue] = useState<Value>(""); // useState('10:00');
   const { saveCalendarEvent, newCalendarEvent, message, submitted } =
-    useAddCalendarEvent();
+    useAddCalendarEvent({ dateValue, timeValue });
+
   const defaultValues = {
     title: "",
     description: "",
@@ -33,6 +37,10 @@ const AddCalendarEvent = memo(() => {
             onSubmit={saveCalendarEvent}
             message={message}
             defaultValues={defaultValues}
+            onChangeDateValue={setDateValue}
+            onChangeTimeValue={setTimeValue}
+            dateValue={dateValue}
+            timeValue={timeValue}
           />
           {/* <form noValidate onSubmit={handleSubmit(saveCalendarEvent)}> */}
         </div>

@@ -9,7 +9,15 @@ import {
 } from "../redux/actions";
 import { selectCurrentCalendarEvent } from "../redux/selectors";
 
-export function useUpdateCalendarEvent({ dateValue, timeValue }) {
+interface UseUpdateCalendarEventParams {
+  dateValue: string; // or Date, depending on your usage
+  timeValue: string; // or Date, depending on your usage
+}
+
+export function useUpdateCalendarEvent({
+  dateValue,
+  timeValue,
+}: UseUpdateCalendarEventParams) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const currentCalendarEvent = useSelector(selectCurrentCalendarEvent);
@@ -24,8 +32,10 @@ export function useUpdateCalendarEvent({ dateValue, timeValue }) {
 
   const checkLocalStorage = () => {
     if (!currentCalendarEvent) {
-      let calendarEvent = localStorage.getItem("currentCalendarEvent");
-      dispatch(setCurrentCalendarEvent(JSON.parse(calendarEvent)));
+      const calendarEvent = localStorage.getItem("currentCalendarEvent");
+      if (calendarEvent) {
+        dispatch(setCurrentCalendarEvent(JSON.parse(calendarEvent)));
+      }
     }
   };
 
@@ -36,25 +46,29 @@ export function useUpdateCalendarEvent({ dateValue, timeValue }) {
     dispatch(
       updateCalendarEvent({
         id: currentCalendarEvent._id,
-        calendarEvent: currentCalendarEvent,
+        ...currentCalendarEvent,
       })
     );
   };
 
-  const updateCalendarEventUnderEdit = (event) => {
-    event.dueDate = dateValue;
-    event.start = timeValue;
+  const updateCalendarEventUnderEdit = (event: any) => {
+    // event.preventDefault();
+    const updatedEvent = {
+      ...currentCalendarEvent,
+      dueDate: dateValue,
+      start: timeValue,
+      // Add other fields from the form if needed
+    };
     dispatch(
       updateCalendarEvent({
         id: currentCalendarEvent._id,
-        calendarEvent: event,
+        ...updatedEvent,
       })
     );
-    dispatch(setMessage("CalendarEvent item updated successfully!"));
   };
 
   const deleteCalendarEventUnderEdit = () => {
-    dispatch(deleteCalendarEvent({ id: currentCalendarEvent._id }));
+    dispatch(deleteCalendarEvent(currentCalendarEvent._id));
     navigate("/calendar-events"); // props.history.push("/calendar-events");
   };
 

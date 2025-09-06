@@ -1,40 +1,50 @@
 import { createSelector } from "reselect";
 
+// interface State {
+//   calendarEvents: any[];
+//   currentCalendarEvent: any | null;
+//   calendarEventToAdd: any | null;
+//   searchTitle: string;
+//   currentIndex: number;
+//   message: string;
+//   submitted: boolean;
+// }
+
 const getState = createSelector((state) => state, (state) => state);
 
 const selectCalendarEvents = createSelector(
   [getState],
-  (state) => state.calendarEvents
+  (state: any) => state.calendarEvents
 );
 
 const selectCurrentCalendarEvent = createSelector(
   [getState],
-  (state) => state.currentCalendarEvent
+  (state: any) => state.currentCalendarEvent
 );
 
 const selectCalendarEventToAdd = createSelector(
   [getState],
-  (state) => state.calendarEventToAdd
+  (state: any) => state.calendarEventToAdd
 );
 
 const selectCurrentIndex = createSelector(
   [getState],
-  (state) => state.currentIndex
+  (state: any) => state.currentIndex
 );
 
 const selectSearchTitle = createSelector(
   [getState],
-  (state) => state.searchTitle
+  (state: any) => state.searchTitle
 );
 
 const selectMessage = createSelector(
   [getState],
-  (state) => state.message
+  (state: any) => state.message
 );
 
 const selectSubmitted = createSelector(
   [getState],
-  (state) => state.submitted
+  (state: any) => state.submitted
 );
 
 export {

@@ -1,7 +1,19 @@
-import { memo } from "react";
-import { useCalendarList } from "./useCalendarList";
+import React, { memo } from "react";
+import { useCalendarList } from "./useCalendarList.ts";
 
-const CalendarList = memo(
+interface CalendarListProps {
+  calendarEvents: Array<{
+    id: number;
+    title: string;
+    description: string;
+    startTime: string;
+    dueDate: string;
+  }>;
+  setActiveCalendarEvent: (calendarEvent: any, index: number) => void;
+  currentIndex: number;
+}
+
+const CalendarList: React.FC<CalendarListProps> = memo(
   ({ calendarEvents, setActiveCalendarEvent, currentIndex }) => {
     const { removeAllCalendarEvents } = useCalendarList();
 

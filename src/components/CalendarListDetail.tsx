@@ -1,12 +1,26 @@
+import React from "react";
+import { useSelector } from "react-redux";
 import DatePicker from "react-date-picker";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
-import { useSelector } from "react-redux";
-import { selectCurrentCalendarEvent } from "../redux/selectors";
+import { selectCurrentCalendarEvent } from "../redux/selectors/index.ts";
 
-const CalendarListDetail = ({ datePicker }) => {
-  const currentCalendarEvent = useSelector(selectCurrentCalendarEvent);
+// interface CalendarListDetailProps {
+//   datePicker: any;
+// }
+
+interface CurrentCalendarEvent {
+  _id: string;
+  title: string;
+  description: string;
+  status: boolean;
+  dueDate: string;
+}
+
+// const CalendarListDetail: React.FC<CalendarListDetailProps> = () => {
+const CalendarListDetail: React.FC = () => {
+  const currentCalendarEvent: CurrentCalendarEvent = useSelector(selectCurrentCalendarEvent);
   return (
     <div className="col-md-6">
       {currentCalendarEvent ? (
@@ -42,7 +56,7 @@ const CalendarListDetail = ({ datePicker }) => {
             </label>{" "}
             <DatePicker
               isOpen={false}
-              ref={datePicker}
+              // ref={datePicker}
               value={new Date(currentCalendarEvent.dueDate)}
             />
           </div>

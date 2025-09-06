@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Route,
   Routes,
@@ -9,9 +10,9 @@ import { useDispatch } from "react-redux";
 import { faHome, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AddCalendarEvent from "./components/AddCalendarEvent";
-import UpdateCalendarEvent from "./components/UpdateCalendarEvent";
-import CalendarEvents from "./components/CalendarEvents";
-import NotFound from "./components/NotFound";
+import UpdateCalendarEvent from "./components/UpdateCalendarEvent.tsx";
+import CalendarEvents from "./components/CalendarEvents.tsx";
+import NotFound from "./components/NotFound.tsx";
 import { setSubmitted, setMessage } from "./redux/actions";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
@@ -54,13 +55,9 @@ const App = () => {
         </nav>
         <div className="container mt-3">
           <Routes>
-            <Route exact path={"/"} element={<CalendarEvents />} />
-            <Route
-              exact
-              path={"/calendar-events"}
-              element={<CalendarEvents />}
-            />
-            <Route exact path="/add" element={<AddCalendarEvent />} />
+            <Route path={"/"} element={<CalendarEvents />} />
+            <Route path={"/calendar-events"} element={<CalendarEvents />} />
+            <Route path="/add" element={<AddCalendarEvent />} />
             <Route
               path="/calendar-events/:id"
               element={<UpdateCalendarEvent />}

@@ -2,23 +2,37 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "react-time-picker/dist/TimePicker.css";
 import "react-clock/dist/Clock.css";
+import { Value } from "react-time-picker/dist/cjs/shared/types";
 import { addCalendarEvent, setCalendarEventToAdd } from "../redux/actions";
 import { selectCalendarEventToAdd } from "../redux/selectors";
 import { formatDate } from "../redux/utils";
+import { ICalendarEvent } from "../redux/actions";
 
-const CALENDAR_EVENT_SUCCESS_MESSAGE = "CalendarEvent item created successfully!";
+const CALENDAR_EVENT_SUCCESS_MESSAGE =
+  "CalendarEvent item created successfully!";
 
-export function useAddCalendarEvent() {
+interface UseFormHandleSubmit {
+  title: string;
+  description: string;
+  startTime: string;
+  dueDate: string;
+}
+
+export function useAddCalendarEvent({
+  dateValue,
+  timeValue,
+}: {
+  dateValue: Date;
+  timeValue: Value;
+}) {
   const dispatch = useDispatch();
   const calendarEventToAdd = useSelector(selectCalendarEventToAdd);
   const [submitted, setSubmitted] = useState(false);
-  const [dateValue, setDateValue] = useState(new Date());
-  const [timeValue, setTimeValue] = useState(""); // useState('10:00');
   const [message, setMessage] = useState("");
 
   useEffect(() => {
     const storedCalendarEventToAdd = JSON.parse(
-      localStorage.getItem("calendarEventToAdd")
+      localStorage.getItem("calendarEventToAdd") as string
     );
     if (storedCalendarEventToAdd) {
       dispatch(setCalendarEventToAdd(storedCalendarEventToAdd));
@@ -52,19 +66,20 @@ export function useAddCalendarEvent() {
     start: "",
   };
 
-  const saveCalendarEvent = (event) => {
+  const saveCalendarEvent = (event: UseFormHandleSubmit) => {
     if (!(dateValue instanceof Date) || isNaN(dateValue.getTime())) {
       setMessage("Please provide a valid date.");
       return;
     }
     const data = {
+      id: null,
       title: event.title,
       description: event.description,
       status: false,
-      dueDate: dateValue,
+      dueDate: dateValue.toISOString(), // function as required by CalendarEvent
       start: timeValue,
     };
-    dispatch(addCalendarEvent(data));
+    dispatch(addCalendarEvent(data as ICalendarEvent));
     localStorage.removeItem("calendarEventToAdd");
     setMessage(CALENDAR_EVENT_SUCCESS_MESSAGE);
   };

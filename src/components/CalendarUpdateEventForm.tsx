@@ -1,4 +1,4 @@
-import { useState, memo } from "react";
+import React, { useState, memo } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import TimePicker from "react-time-picker";
@@ -8,10 +8,20 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import DatePicker from "react-date-picker";
 import { useForm } from "react-hook-form";
-import { selectCurrentCalendarEvent, selectMessage } from "../redux/selectors";
-import { useUpdateCalendarEvent } from "./useUpdateCalendarEvent";
-import EventFormInput from "./EventFormInput";
-import FormInputValidationError from "./FormInputValidationError";
+import { useUpdateCalendarEvent } from "./useUpdateCalendarEvent.ts";
+import EventFormInput from "./EventFormInput.tsx";
+import FormInputValidationError from "./FormInputValidationError.tsx";
+import {
+  selectCurrentCalendarEvent,
+  selectMessage,
+} from "../redux/selectors/index.ts";
+
+interface UseFormHandleSubmit {
+  title: string;
+  description: string;
+  startTime: string;
+  dueDate: string;
+}
 
 const CalendarUpdateEventForm = memo(() => {
   const navigate = useNavigate();
@@ -28,7 +38,8 @@ const CalendarUpdateEventForm = memo(() => {
   const [timeValue, onChangeTimeValue] = useState(
     currentCalendarEvent && currentCalendarEvent.start
       ? currentCalendarEvent.start
-      : new Date().toISOString().replace(/T.*$/, "") + "T12:00:00"
+      : // : new Date().toISOString().replace(/T.*$/, "") + "T12:00:00"
+        ""
   );
 
   const defaultValues = {
@@ -42,19 +53,19 @@ const CalendarUpdateEventForm = memo(() => {
     updateCalendarEventStatusUnderEdit,
     updateCalendarEventUnderEdit,
     deleteCalendarEventUnderEdit,
-  } = useUpdateCalendarEvent(dateValue, timeValue);
+  } = useUpdateCalendarEvent({ dateValue: dateValue.toISOString(), timeValue });
 
   const {
     register,
     handleSubmit,
     formState: { errors, isValid },
-  } = useForm(
-    { defaultValues: defaultValues },
-    // { mode: "onBlur", reValidateMode: "onBlur" }
-    { mode: "all", reValidateMode: "all" }
-  );
+  } = useForm<UseFormHandleSubmit>({
+    defaultValues: defaultValues,
+    mode: "all",
+    reValidateMode: "onBlur",
+  });
 
-  const getEditorStyle = (fieldError) => {
+  const getEditorStyle = (fieldError: any) => {
     return fieldError ? "border: solid 1px red" : "display: block";
   };
 
@@ -62,7 +73,13 @@ const CalendarUpdateEventForm = memo(() => {
     <>
       <form
         // noValidate
-        onSubmit={handleSubmit(updateCalendarEventUnderEdit)}
+        onSubmit={handleSubmit((data) => {
+          updateCalendarEventUnderEdit({
+            ...data,
+            dueDate: dateValue.toISOString(),
+            startTime: timeValue,
+          });
+        })}
       >
         <div className="form-group">
           <EventFormInput
@@ -76,7 +93,11 @@ const CalendarUpdateEventForm = memo(() => {
             minLengthMsg="The title must be at least 5 characters"
             register={register}
           />
-          <FormInputValidationError fieldError={errors.title} />
+          <FormInputValidationError
+            fieldError={
+              errors.title ? { message: errors.title.message ?? "" } : undefined
+            }
+          />
         </div>
         <div className="form-group">
           <EventFormInput
@@ -90,7 +111,13 @@ const CalendarUpdateEventForm = memo(() => {
             minLengthMsg="The description must be at least 10 characters"
             register={register}
           />
-          <FormInputValidationError fieldError={errors.description} />
+          <FormInputValidationError
+            fieldError={
+              errors.description
+                ? { message: errors.description.message ?? "" }
+                : undefined
+            }
+          />
         </div>
 
         <div className="form-group">
@@ -116,14 +143,14 @@ const CalendarUpdateEventForm = memo(() => {
         {currentCalendarEvent.status ? (
           <button
             className="btn btn-primary mr-2"
-            onClick={() => updateCalendarEventStatusUnderEdit(false)}
+            onClick={() => updateCalendarEventStatusUnderEdit(null)}
           >
             Mark Pending
           </button>
         ) : (
           <button
             className="btn btn-primary mr-2"
-            onClick={() => updateCalendarEventStatusUnderEdit(true)}
+            onClick={() => updateCalendarEventStatusUnderEdit(undefined)}
           >
             Mark Done
           </button>

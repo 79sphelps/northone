@@ -1,25 +1,25 @@
-import { useState, useRef, memo } from "react";
+import React, { useState, useRef, memo } from "react";
 import { useSelector } from "react-redux";
 import "react-time-picker/dist/TimePicker.css";
 import "react-clock/dist/Clock.css";
-import { selectCalendarEvents, selectCurrentIndex } from "../redux/selectors";
-import CalendarList from "./CalendarList";
-import CalendarListDetail from "./CalendarListDetail";
-import CalendarEventModal from "./CalendarEventModal";
-import Calendar from "./Calendar";
-import CalendarSearchBox from "./CalendarSearchBox";
-import { useCalendarEvents } from "./useCalendarEvents";
-import { useCalendarEventData } from "./useCalendarEventData";
+import CalendarList from "./CalendarList.tsx";
+import CalendarListDetail from "./CalendarListDetail.tsx";
+import CalendarEventModal from "./CalendarEventModal.tsx";
+import Calendar from "./Calendar.tsx";
+import CalendarSearchBox from "./CalendarSearchBox.tsx";
+import { useCalendarEvents } from "./useCalendarEvents.ts";
+import { useCalendarEventData } from "./useCalendarEventData.ts";
+import { selectCalendarEvents, selectCurrentIndex } from "../redux/selectors/index.ts";
 
 const CalendarEvents = memo(() => {
   const [show, setShow] = useState(false);
-  const datePicker = useRef({ isOpen: false });
+  // const datePicker = useRef({ isOpen: false });
   const calendarEvents = useSelector(selectCalendarEvents);
   const currentIndex = useSelector(selectCurrentIndex);
 
   useCalendarEventData();
   const { setActiveCalendarEvent, handleDateSelect, handleEventClick } =
-    useCalendarEvents(setShow);
+    useCalendarEvents({ setShow });
 
   return (
     <div className="list row">
@@ -29,7 +29,8 @@ const CalendarEvents = memo(() => {
         setActiveCalendarEvent={setActiveCalendarEvent}
         currentIndex={currentIndex}
       />
-      <CalendarListDetail datePicker={datePicker} />
+      {/* <CalendarListDetail datePicker={datePicker} /> */}
+      <CalendarListDetail />
       <Calendar
         calendarEvents={calendarEvents}
         handleDateSelect={handleDateSelect}

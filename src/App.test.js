@@ -6,6 +6,7 @@ import '@testing-library/jest-dom'
 import App from './App';
 import * as reactRedux from 'react-redux';
 import { createStore } from "redux";
+import { call, put } from "redux-saga/effects";
 import reducers from "./redux/reducers";
 import rootReducer from './redux/reducers';
 import { 
@@ -18,84 +19,35 @@ import {
   selectSubmitted,
 } from './redux/selectors';
 import { formatDate } from "./redux/utils";
+import { actionTypes } from './redux/constants/action.types';
 import { 
   getSearchTitle,
   setSearchTitle,
   findByTitle,
   findByTitleSuccessful,
-
   setCurrentIndex,  
   getCurrentIndex,
-
   setMessage,
   getMessage,
-
   setSubmitted,
   getSubmitted,
-
   setCurrentCalendarEvent,
   getCurrentCalendarEvent,
-
   setCalendarEventToAdd,
   getCalendarEventToAdd,
-
   getCalendarEvent,
-
   setCalendarEvents,
   getCalendarEvents,
   getCalendarEventsSuccessful,
-
   deleteCalendarEvent,
   deleteCalendarEventSuccessful,
   deleteCalendarEvents,
   deleteCalendarEventsSuccessful,
-
   updateCalendarEvent,
   updateCalendarEventSuccessful,
-
   addCalendarEvent,
   addCalendarEventSuccessful,
-
 } from "./redux/actions";
-import {
-  GET_SEARCH_TITLE,         // DONE
-  SET_SEARCH_TITLE,         // DONE
-  // FIND_BY_TITLE,
-  FIND_BY_TITLE_SUCCESSFUL, // DONE
-  API_ERRORED,            // DONE 
-  IS_FETCHING,            // DONE
-  IS_ADDING,              // DONE
-  IS_UPDATING,            // DONE
-  IS_DELETING,            // DONE
-  IS_DELETING_ALL,
-  IS_FINDING,             // DONE
-  SET_CURRENT_CALENDAR_EVENT, // DONE
-  GET_CURRENT_CALENDAR_EVENT, // DONE
-  SET_CALENDAR_EVENT_TO_ADD,  // DONE
-  GET_CALENDAR_EVENT_TO_ADD,  // DONE
-  SET_CURRENT_INDEX,        // DONE
-  GET_CURRENT_INDEX,        // DONE
-  SET_MESSAGE,              // DONE
-  GET_MESSAGE,              // DONE
-  SET_SUBMITTED,            // DONE 
-  GET_SUBMITTED,            // DONE
-  SET_CALENDAR_EVENTS,
-  GET_CALENDAR_EVENTS,
-  GET_CALENDAR_EVENT,
-  GET_CALENDAR_EVENTS_SUCCESSFUL,
-  GET_CALENDAR_EVENT_SUCCESSFUL,
-  ADD_CALENDAR_EVENT,               // DONE
-  ADD_CALENDAR_EVENT_SUCCESSFUL,    // DONE
-  UPDATE_CALENDAR_EVENT,            // DONE
-  UPDATE_CALENDAR_EVENT_SUCCESSFUL, // DONE
-  DELETE_CALENDAR_EVENT,            // DONE 
-  DELETE_CALENDAR_EVENT_SUCCESSFUL, // DONE
-  DELETE_CALENDAR_EVENTS,
-  DELETE_CALENDAR_EVENTS_SUCCESSFUL,
-  FIND_BY_TITLE,              // DONE
-} from "./redux/constants/action.types";
-
-import { call, put } from "redux-saga/effects";
 import { 
   findByTitleWorkerSaga,
   getCalendarEventsWorkerSaga, 
@@ -185,10 +137,11 @@ describe('MyComponent', () => {
   //   // verify navigation to "no match" route
   //   expect(screen.getByText(/Page Not Found/i)).toBeInTheDocument()
   // })
-
 }); 
 
+// --------------------------------------------------------------------------
 // ACTION TESTS
+// --------------------------------------------------------------------------
 
 describe('action creators', () => {
   // const useSelectorMock = jest.spyOn(reactRedux, 'useSelector')
@@ -201,9 +154,9 @@ describe('action creators', () => {
 
   it('should set search title successfully', () => {
     const title = "My New Title"
-    const expectedAction = { type: SET_SEARCH_TITLE, payload: title };
+    const expectedAction = { type: actionTypes.SET_SEARCH_TITLE, payload: title };
     expect(setSearchTitle(title)).toEqual(expectedAction);
-    expect(getSearchTitle()).toEqual({ type: GET_SEARCH_TITLE });
+    expect(getSearchTitle()).toEqual({ type: actionTypes.GET_SEARCH_TITLE });
   });
 
   it('should find by title successfully', () => {
@@ -214,29 +167,29 @@ describe('action creators', () => {
       status: false,
       dueDate: formatDate(new Date()),
     };
-    const expectedAction = { type: FIND_BY_TITLE_SUCCESSFUL, payload: event };
+    const expectedAction = { type: actionTypes.FIND_BY_TITLE_SUCCESSFUL, payload: event };
     expect(findByTitleSuccessful(event)).toEqual(expectedAction);
   });
 
   it('should set and get current index successfully', () => {
     const index = "1"
-    const expectedAction = { type: SET_CURRENT_INDEX, payload: index };
+    const expectedAction = { type: actionTypes.SET_CURRENT_INDEX, payload: index };
     expect(setCurrentIndex(index)).toEqual(expectedAction);
-    expect(getCurrentIndex()).toEqual({ type: GET_CURRENT_INDEX });
+    expect(getCurrentIndex()).toEqual({ type: actionTypes.GET_CURRENT_INDEX });
   });
 
   it('should set and get submitted status successfully', () => {
     const submitted = true
-    const expectedAction = { type: SET_SUBMITTED, payload: submitted };
+    const expectedAction = { type: actionTypes.SET_SUBMITTED, payload: submitted };
     expect(setSubmitted(submitted)).toEqual(expectedAction);
-    expect(getSubmitted()).toEqual({ type: GET_SUBMITTED });
+    expect(getSubmitted()).toEqual({ type: actionTypes.GET_SUBMITTED });
   });
 
   it('should set and get the message successfully', () => {
     const message = "My test message";
-    const expectedAction = { type: SET_MESSAGE, payload: message };
+    const expectedAction = { type: actionTypes.SET_MESSAGE, payload: message };
     expect(setMessage(message)).toEqual(expectedAction);
-    expect(getMessage()).toEqual({ type: GET_MESSAGE });
+    expect(getMessage()).toEqual({ type: actionTypes.GET_MESSAGE });
   });
 
   it('should set current calendar event successfully', () => {
@@ -247,9 +200,9 @@ describe('action creators', () => {
       status: false,
       dueDate: formatDate(new Date()),
     };
-    const expectedAction = { type: SET_CURRENT_CALENDAR_EVENT, payload: event };
+    const expectedAction = { type: actionTypes.SET_CURRENT_CALENDAR_EVENT, payload: event };
     expect(setCurrentCalendarEvent(event)).toEqual(expectedAction);
-    expect(getCurrentCalendarEvent()).toEqual({ type: GET_CURRENT_CALENDAR_EVENT });
+    expect(getCurrentCalendarEvent()).toEqual({ type: actionTypes.GET_CURRENT_CALENDAR_EVENT });
   });
 
   it('should set current "calendar event to add" successfully', () => {
@@ -260,12 +213,10 @@ describe('action creators', () => {
       status: false,
       dueDate: formatDate(new Date()),
     };
-    const expectedAction = { type: SET_CALENDAR_EVENT_TO_ADD, payload: event };
+    const expectedAction = { type: actionTypes.SET_CALENDAR_EVENT_TO_ADD, payload: event };
     expect(setCalendarEventToAdd(event)).toEqual(expectedAction);
-    expect(getCalendarEventToAdd()).toEqual({ type: GET_CALENDAR_EVENT_TO_ADD });
+    expect(getCalendarEventToAdd()).toEqual({ type: actionTypes.GET_CALENDAR_EVENT_TO_ADD });
   });
-
-
 
   it('should set calendar events successfully', () => {
     const events = [
@@ -290,30 +241,16 @@ describe('action creators', () => {
         status: false,
         dueDate: formatDate(new Date()),
       }
-    ]
+    ];
 
     const store = makeTestStore(reducers);
     store.dispatch(setCalendarEvents(events));
     expect(store.getState().calendarEvents).toEqual(events);
   });
 
+  // --------------------------------------------------------------------------  
   // SAGAS
-
-  /*
-  IS_FETCHING,
-  IS_ADDING,
-  IS_UPDATING,
-  IS_DELETING,
-  IS_DELETING_ALL,
-  IS_FINDING,
-
-      yield put({ type: IS_FINDING });
-      const payload = yield call(findByTitle, action.payload);
-      yield put({ type: FIND_BY_TITLE_SUCCESSFUL, payload });
-  
-      yield put({ type: SET_CURRENT_CALENDAR_EVENT, payload: null });
-      yield put({ type: SET_CURRENT_INDEX, payload: -1 });
-*/
+  // --------------------------------------------------------------------------
 
   it('should find a calendar event by title successfully', () => {
     const event = {
@@ -324,52 +261,54 @@ describe('action creators', () => {
       dueDate: formatDate(new Date()),
     };
 
-    const iterator = addCalendarEventWorkerSaga({ type: ADD_CALENDAR_EVENT, payload: event });
+    const iterator = addCalendarEventWorkerSaga({ type: actionTypes.ADD_CALENDAR_EVENT, payload: event });
 
-    const expectedAction1 = { type: IS_ADDING };
+    const expectedAction1 = { type: actionTypes.IS_ADDING };
     expect(iterator.next().value).toEqual(put(expectedAction1));
 
     expect(JSON.stringify(iterator.next().value)).toEqual(JSON.stringify(call(addCalendarEvent, event)));
 
-    const expectedAction2 = { type: ADD_CALENDAR_EVENT_SUCCESSFUL, payload: undefined };
+    const expectedAction2 = { type: actionTypes.ADD_CALENDAR_EVENT_SUCCESSFUL, payload: undefined };
     expect(iterator.next().value).toEqual(put(expectedAction2));
 
-    const expectedAction3 = { type: SET_SUBMITTED, payload: true };
+    const expectedAction3 = { type: actionTypes.SET_SUBMITTED, payload: true };
     expect(iterator.next().value).toEqual(put(expectedAction3));
 
-    const expectedAction4 = { type: SET_CALENDAR_EVENT_TO_ADD, payload: null };
+    const expectedAction4 = { type: actionTypes.SET_CALENDAR_EVENT_TO_ADD, payload: null };
     expect(iterator.next().value).toEqual(put(expectedAction4));
 
-    // --------------------------------------------------
+    // --------------------------------------------------------------------------
 
-    const iterator2 = findByTitleWorkerSaga({ type: FIND_BY_TITLE, payload: "My New Title" });
+    const iterator2 = findByTitleWorkerSaga({ type: actionTypes.FIND_BY_TITLE, payload: "My New Title" });
+    // const iterator2 = findByTitleWorkerSaga({ type: actionTypes.FIND_BY_TITLE, payload: event });
 
-    const expectedAction5 = { type: IS_FINDING };
+    const expectedAction5 = { type: actionTypes.IS_FINDING };
     expect(iterator2.next().value).toEqual(put(expectedAction5));
 
-    expect(JSON.stringify(iterator2.next().value)).toEqual(JSON.stringify(call(findByTitle, "My New Title")));
+    // expect(JSON.stringify(iterator2.next().value)).toEqual(JSON.stringify(call(findByTitle, "My New Title")));
+    expect(JSON.stringify(iterator2.next().value)).toEqual(JSON.stringify(call(findByTitle, event.title)));
 
-    const expectedAction6 = { type: FIND_BY_TITLE_SUCCESSFUL, payload: undefined };
+    const expectedAction6 = { type: actionTypes.FIND_BY_TITLE_SUCCESSFUL, payload: undefined };
     expect(iterator2.next().value).toEqual(put(expectedAction6));
 
-    const expectedAction7 = { type: SET_CURRENT_CALENDAR_EVENT, payload: null };
+    const expectedAction7 = { type: actionTypes.SET_CURRENT_CALENDAR_EVENT, payload: null };
     expect(iterator2.next().value).toEqual(put(expectedAction7));
 
-    const expectedAction8 = { type: SET_CURRENT_INDEX, payload: -1 };
+    const expectedAction8 = { type: actionTypes.SET_CURRENT_INDEX, payload: -1 };
     expect(iterator2.next().value).toEqual(put(expectedAction8));
 
     expect(iterator2.next().done).toEqual(true);
   });
 
   it('should get calendar events successfully', () => {
-    const iterator = getCalendarEventsWorkerSaga({ type: GET_CALENDAR_EVENTS });
+    const iterator = getCalendarEventsWorkerSaga({ type: actionTypes.GET_CALENDAR_EVENTS });
 
-    const expectedAction1 = { type: IS_FETCHING };
+    const expectedAction1 = { type: actionTypes.IS_FETCHING };
     expect(iterator.next().value).toEqual(put(expectedAction1));
 
     expect(JSON.stringify(iterator.next().value)).toEqual(JSON.stringify(call(getCalendarEvents)));
 
-    const expectedAction2 = { type: GET_CALENDAR_EVENTS_SUCCESSFUL, payload: undefined };
+    const expectedAction2 = { type: actionTypes.GET_CALENDAR_EVENTS_SUCCESSFUL, payload: undefined };
     expect(iterator.next().value).toEqual(put(expectedAction2));
 
     expect(iterator.next().done).toEqual(true);
@@ -384,20 +323,20 @@ describe('action creators', () => {
       dueDate: formatDate(new Date()),
     };
 
-    const iterator = addCalendarEventWorkerSaga({ type: ADD_CALENDAR_EVENT, payload: event });
+    const iterator = addCalendarEventWorkerSaga({ type: actionTypes.ADD_CALENDAR_EVENT, payload: event });
 
-    const expectedAction1 = { type: IS_ADDING };
+    const expectedAction1 = { type: actionTypes.IS_ADDING };
     expect(iterator.next().value).toEqual(put(expectedAction1));
 
     expect(JSON.stringify(iterator.next().value)).toEqual(JSON.stringify(call(addCalendarEvent, event)));
 
-    const expectedAction2 = { type: ADD_CALENDAR_EVENT_SUCCESSFUL, payload: undefined };
+    const expectedAction2 = { type: actionTypes.ADD_CALENDAR_EVENT_SUCCESSFUL, payload: undefined };
     expect(iterator.next().value).toEqual(put(expectedAction2));
 
-    const expectedAction3 = { type: SET_SUBMITTED, payload: true };
+    const expectedAction3 = { type: actionTypes.SET_SUBMITTED, payload: true };
     expect(iterator.next().value).toEqual(put(expectedAction3));
 
-    const expectedAction4 = { type: SET_CALENDAR_EVENT_TO_ADD, payload: null };
+    const expectedAction4 = { type: actionTypes.SET_CALENDAR_EVENT_TO_ADD, payload: null };
     expect(iterator.next().value).toEqual(put(expectedAction4));
 
     expect(iterator.next().done).toEqual(true);
@@ -412,14 +351,14 @@ describe('action creators', () => {
       dueDate: formatDate(new Date()),
     };
 
-    const iterator = addCalendarEventWorkerSaga({ type: ADD_CALENDAR_EVENT, payload: event });
+    const iterator = addCalendarEventWorkerSaga({ type: actionTypes.ADD_CALENDAR_EVENT, payload: event });
 
-    const expectedAction1 = { type: IS_ADDING };
+    const expectedAction1 = { type: actionTypes.IS_ADDING };
     expect(iterator.next().value).toEqual(put(expectedAction1));
 
     expect(JSON.stringify(iterator.next().value)).toEqual(JSON.stringify(call(addCalendarEvent, event)));
 
-    const expectedAction2 = { type: API_ERRORED, payload: "some error" };
+    const expectedAction2 = { type: actionTypes.API_ERRORED, payload: "some error" };
 
     expect(iterator.throw("some error").value).toEqual(put(expectedAction2));
 
@@ -435,25 +374,25 @@ describe('action creators', () => {
       dueDate: formatDate(new Date()),
     };
 
-    const iterator = addCalendarEventWorkerSaga({ type: ADD_CALENDAR_EVENT, payload: event });
+    const iterator = addCalendarEventWorkerSaga({ type: actionTypes.ADD_CALENDAR_EVENT, payload: event });
 
-    const expectedAction1 = { type: IS_ADDING };
+    const expectedAction1 = { type: actionTypes.IS_ADDING };
     expect(iterator.next().value).toEqual(put(expectedAction1));
 
     expect(JSON.stringify(iterator.next().value)).toEqual(JSON.stringify(call(addCalendarEvent, event)));
 
-    const expectedAction2 = { type: ADD_CALENDAR_EVENT_SUCCESSFUL, payload: undefined };
+    const expectedAction2 = { type: actionTypes.ADD_CALENDAR_EVENT_SUCCESSFUL, payload: undefined };
     expect(iterator.next().value).toEqual(put(expectedAction2));
 
-    const expectedAction3 = { type: SET_SUBMITTED, payload: true };
+    const expectedAction3 = { type: actionTypes.SET_SUBMITTED, payload: true };
     expect(iterator.next().value).toEqual(put(expectedAction3));
 
-    const expectedAction4 = { type: SET_CALENDAR_EVENT_TO_ADD, payload: null };
+    const expectedAction4 = { type: actionTypes.SET_CALENDAR_EVENT_TO_ADD, payload: null };
     expect(iterator.next().value).toEqual(put(expectedAction4));
 
     // expect(iterator.next().done).toEqual(true);
 
-    // --------------------------------------------------
+    // --------------------------------------------------------------------------
 
     const updatedEvent = {
       id: "012345",
@@ -463,22 +402,22 @@ describe('action creators', () => {
       dueDate: formatDate(new Date()),
     }
 
-    const iterator2 = updateCalendarEventWorkerSaga({ type: UPDATE_CALENDAR_EVENT, payload: updatedEvent })
+    const iterator2 = updateCalendarEventWorkerSaga({ type: actionTypes.UPDATE_CALENDAR_EVENT, payload: updatedEvent })
 
-    const expectedAction5 = { type: IS_UPDATING };
+    const expectedAction5 = { type: actionTypes.IS_UPDATING };
     expect(iterator2.next().value).toEqual(put(expectedAction5));
 
     expect(JSON.stringify(iterator2.next().value)).toEqual(JSON.stringify(call(updateCalendarEvent, updatedEvent)));
 
-    const expectedAction6 = { type: UPDATE_CALENDAR_EVENT_SUCCESSFUL, payload: updatedEvent };
+    const expectedAction6 = { type: actionTypes.UPDATE_CALENDAR_EVENT_SUCCESSFUL, payload: updatedEvent };
     expect(iterator2.next().value).toEqual(put(expectedAction6));
 
-    const expectedAction7 = { type: SET_CURRENT_CALENDAR_EVENT, payload: undefined };
+    const expectedAction7 = { type: actionTypes.SET_CURRENT_CALENDAR_EVENT, payload: updatedEvent };
     expect(iterator2.next().value).toEqual(put(expectedAction7));
 
     const message = "The calendar event was updated successfully!";
 
-    const expectedAction8 = { type: SET_MESSAGE, payload: message };
+    const expectedAction8 = { type: actionTypes.SET_MESSAGE, payload: message };
     expect(iterator2.next().value).toEqual(put(expectedAction8));
 
     expect(iterator2.next().done).toEqual(true);
@@ -493,47 +432,50 @@ describe('action creators', () => {
       dueDate: formatDate(new Date()),
     };
 
-    const iterator = addCalendarEventWorkerSaga({ type: ADD_CALENDAR_EVENT, payload: event });
+    const iterator = addCalendarEventWorkerSaga({ type: actionTypes.ADD_CALENDAR_EVENT, payload: event });
 
-    const expectedAction1 = { type: IS_ADDING };
+    const expectedAction1 = { type: actionTypes.IS_ADDING };
     expect(iterator.next().value).toEqual(put(expectedAction1));
 
     expect(JSON.stringify(iterator.next().value)).toEqual(JSON.stringify(call(addCalendarEvent, event)));
 
-    const expectedAction2 = { type: ADD_CALENDAR_EVENT_SUCCESSFUL, payload: undefined };
+    const expectedAction2 = { type: actionTypes.ADD_CALENDAR_EVENT_SUCCESSFUL, payload: undefined };
     expect(iterator.next().value).toEqual(put(expectedAction2));
 
-    const expectedAction3 = { type: SET_SUBMITTED, payload: true };
+    const expectedAction3 = { type: actionTypes.SET_SUBMITTED, payload: true };
     expect(iterator.next().value).toEqual(put(expectedAction3));
 
-    const expectedAction4 = { type: SET_CALENDAR_EVENT_TO_ADD, payload: null };
+    const expectedAction4 = { type: actionTypes.SET_CALENDAR_EVENT_TO_ADD, payload: null };
     expect(iterator.next().value).toEqual(put(expectedAction4));
 
     // expect(iterator.next().done).toEqual(true);
 
-    // --------------------------------------------------
+    // --------------------------------------------------------------------------
 
-    const iterator2 = deleteCalendarEventWorkerSaga({ type: DELETE_CALENDAR_EVENT, payload: event })
+    const iterator2 = deleteCalendarEventWorkerSaga({ type: actionTypes.DELETE_CALENDAR_EVENT, payload: event })
 
-    const expectedAction5 = { type: IS_DELETING };
+    const expectedAction5 = { type: actionTypes.IS_DELETING };
     expect(iterator2.next().value).toEqual(put(expectedAction5));
 
     expect(JSON.stringify(iterator2.next().value)).toEqual(JSON.stringify(call(deleteCalendarEvent, "012345")));
+    // expect(JSON.stringify(iterator2.next().value)).toEqual(JSON.stringify(call(deleteCalendarEvent, event)));
 
-    const expectedAction6 = { type: DELETE_CALENDAR_EVENT_SUCCESSFUL, payload: event };
+    const expectedAction6 = { type: actionTypes.DELETE_CALENDAR_EVENT_SUCCESSFUL, payload: event };
     expect(iterator2.next().value).toEqual(put(expectedAction6));
 
     const message = "The calendar event was deleted successfully!";
-    const expectedAction7 = { type: SET_MESSAGE, payload: message };
+    const expectedAction7 = { type: actionTypes.SET_MESSAGE, payload: message };
     expect(iterator2.next().value).toEqual(put(expectedAction7));
-    const expectedAction8 = { type: SET_CURRENT_CALENDAR_EVENT, payload: null };
+    const expectedAction8 = { type: actionTypes.SET_CURRENT_CALENDAR_EVENT, payload: null };
     expect(iterator2.next().value).toEqual(put(expectedAction8));
-    const expectedAction9 = { type: SET_CURRENT_INDEX, payload: -1 };
+    const expectedAction9 = { type: actionTypes.SET_CURRENT_INDEX, payload: -1 };
     expect(iterator2.next().value).toEqual(put(expectedAction9));
     expect(iterator2.next().done).toEqual(true);
   });
 
+  // --------------------------------------------------------------------------  
   // REDUCERS
+  // --------------------------------------------------------------------------
 
   const initialState = {
     calendarEvents: [],
@@ -557,37 +499,37 @@ describe('action creators', () => {
   });
 
   it('should handle the IS_FETCHING action', () => {
-    const action = { type: IS_FETCHING };
+    const action = { type: actionTypes.IS_FETCHING };
     const expectedState = { ...initialState, isLoading: true };
     expect(rootReducer(initialState, action)).toEqual(expectedState);
   });
 
   it('should handle the IS_ADDING action', () => {
-    const action = { type: IS_ADDING };
+    const action = { type: actionTypes.IS_ADDING };
     const expectedState = { ...initialState, isAdding: true };
     expect(rootReducer(initialState, action)).toEqual(expectedState);
   });
 
   it('should handle the IS_UPDATING action', () => {
-    const action = { type: IS_UPDATING };
+    const action = { type: actionTypes.IS_UPDATING };
     const expectedState = { ...initialState, isUpdating: true };
     expect(rootReducer(initialState, action)).toEqual(expectedState);
   });
 
   it('should handle the IS_DELETING action', () => {
-    const action = { type: IS_DELETING };
+    const action = { type: actionTypes.IS_DELETING };
     const expectedState = { ...initialState, isDeleting: true };
     expect(rootReducer(initialState, action)).toEqual(expectedState);
   });
 
   it('should handle the IS_DELETING_ALL action', () => {
-    const action = { type: IS_DELETING_ALL }; 
+    const action = { type: actionTypes.IS_DELETING_ALL }; 
     const expectedState = { ...initialState, isDeletingAll: true };
     expect(rootReducer(initialState, action)).toEqual(expectedState);
   });
 
   it('should handle the IS_FINDING action', () => {
-    const action = { type: IS_FINDING }; 
+    const action = { type: actionTypes.IS_FINDING }; 
     const expectedState = { ...initialState, isFinding: true };
     expect(rootReducer(initialState, action)).toEqual(expectedState);
   });
@@ -603,13 +545,15 @@ describe('action creators', () => {
       }
     ]
 
-    const action = { type: GET_CALENDAR_EVENTS_SUCCESSFUL, payload: eventList };
+    const action = { type: actionTypes.GET_CALENDAR_EVENTS_SUCCESSFUL, payload: eventList };
     const expectedState = { ...initialState, isLoading: false, calendarEvents: eventList };
     expect(rootReducer(initialState, action)).toEqual(expectedState);
   });
 
+  // --------------------------------------------------------------------------
   // SELECTORS
-
+  // --------------------------------------------------------------------------
+  
   const exampleState = {
     calendarEvents: [
       {

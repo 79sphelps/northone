@@ -1,15 +1,47 @@
-import { memo } from "react";
+import React, { memo } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
-import { formatDate } from "../redux/utils";
+import { formatDate } from "../redux/utils/index.ts";
 
-const Calendar = memo(
+interface CalendarProps {
+  calendarEvents: Array<EventObj>;
+  handleDateSelect: (selectInfo: any) => void;
+  handleEventClick: (clickInfo: any) => void;
+}
+
+type EventObj = {
+  title: string | undefined;
+  date: string | undefined;
+  start: string | undefined;
+  id: string | undefined;
+  _id: string | undefined;
+  createdAt: string | undefined;
+  description: string | undefined;
+  dueDate: string;
+  status: boolean | undefined;
+  updatedAt: string | undefined;
+  start2: string | undefined;
+};
+
+const Calendar: React.FC<CalendarProps> = memo(
   ({ calendarEvents, handleDateSelect, handleEventClick }) => {
-    const mapCalendarEventEventsToCalendar = (arr = []) => {
+    const mapCalendarEventEventsToCalendar = (arr: Array<EventObj> = []) => {
       const result = arr.map((obj) => {
-        const res = {};
+        const res: EventObj = {
+          title: undefined,
+          date: undefined,
+          start: undefined,
+          id: undefined,
+          _id: undefined,
+          createdAt: undefined,
+          description: undefined,
+          dueDate: "",
+          status: undefined,
+          updatedAt: undefined,
+          start2: undefined,
+        };
         res["title"] = obj["title"];
         res["date"] = formatDate(obj["dueDate"]);
         res["start"] = obj["start"]
@@ -27,7 +59,7 @@ const Calendar = memo(
       return result;
     };
 
-    const renderEventContent = (eventInfo) => {
+    const renderEventContent = (eventInfo: any) => {
       return (
         <>
           <b>{eventInfo.timeText}</b>

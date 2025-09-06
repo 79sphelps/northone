@@ -1,27 +1,6 @@
-import {
-  SET_CURRENT_CALENDAR_EVENT,
-  SET_CALENDAR_EVENT_TO_ADD,
-  SET_SEARCH_TITLE,
-  SET_CURRENT_INDEX,
-  SET_MESSAGE,
-  SET_SUBMITTED,
-  SET_CALENDAR_EVENTS,
-  // DATA_LOADED,
-  IS_FETCHING,
-  IS_ADDING,
-  IS_DELETING,
-  IS_DELETING_ALL,
-  IS_FINDING,
-  IS_UPDATING,
-  API_ERRORED,
-  GET_CALENDAR_EVENTS_SUCCESSFUL,
-  DELETE_CALENDAR_EVENTS_SUCCESSFUL,
-  UPDATE_CALENDAR_EVENT_SUCCESSFUL,
-  DELETE_CALENDAR_EVENT_SUCCESSFUL,
-  ADD_CALENDAR_EVENT_SUCCESSFUL,
-  FIND_BY_TITLE_SUCCESSFUL,
-} from "../constants/action.types";
-import { deepCopy } from '../utils';
+import { actionTypes } from "../constants/action.types";
+import { deepCopy } from '../utils/index.ts';
+import { ICalendarEvent } from "../actions";
 
 const initialState = {
   calendarEvents: [],
@@ -40,87 +19,119 @@ const initialState = {
   isFinding: false,
 };
 
-function rootReducer(state = initialState, action) {
-  let mappings = null;
+interface CalendarEventToAdd {
+  [key: string]: any;
+}
+
+export interface RootState {
+  calendarEvents: ICalendarEvent[];
+  currentCalendarEvent: ICalendarEvent | null;
+  calendarEventToAdd: CalendarEventToAdd | null;
+  searchTitle: string;
+  currentIndex: number;
+  message: string;
+  submitted: boolean;
+  error: string;
+  isLoading: boolean;
+  isAdding: boolean;
+  isUpdating: boolean;
+  isDeleting: boolean;
+  isDeletingAll: boolean;
+  isFinding: boolean;
+}
+
+interface Action<T = any> {
+  type: string;
+  payload?: T;
+}
+
+function rootReducer(
+  state: RootState = initialState,
+  action: Action
+): RootState {
+  let mappings: ICalendarEvent[] | null = null;
 
   switch (action.type) {
-    case SET_CURRENT_CALENDAR_EVENT:
+    case actionTypes.SET_CURRENT_CALENDAR_EVENT:
       if (!action.payload) return { ...state, currentCalendarEvent: null };
       return {
         ...state,
         currentCalendarEvent: { ...state.currentCalendarEvent, ...action.payload }
       };
 
-    case SET_CALENDAR_EVENT_TO_ADD:
+    case actionTypes.SET_CALENDAR_EVENT_TO_ADD:
       if (!action.payload) return { ...state, calendarEventToAdd: null };
       return { ...state, calendarEventToAdd: action.payload };
 
-    case SET_SEARCH_TITLE:
+    case actionTypes.SET_SEARCH_TITLE:
       return { ...state, searchTitle: action.payload };
 
-    case FIND_BY_TITLE_SUCCESSFUL:
+    case actionTypes.FIND_BY_TITLE_SUCCESSFUL:
       return { ...state, isFinding: false, calendarEvents: action.payload };
 
-    case SET_CURRENT_INDEX:
+    case actionTypes.SET_CURRENT_INDEX:
       return { ...state, currentIndex: action.payload };
 
-    case SET_MESSAGE:
+    case actionTypes.SET_MESSAGE:
       return { ...state, message: action.payload };
 
-    case SET_SUBMITTED:
+    case actionTypes.SET_SUBMITTED:
       return { ...state, submitted: action.payload };
 
-    case SET_CALENDAR_EVENTS:
+    case actionTypes.SET_CALENDAR_EVENTS:
       return { ...state, calendarEvents: action.payload };
 
-    case GET_CALENDAR_EVENTS_SUCCESSFUL:
+    case actionTypes.GET_CALENDAR_EVENTS_SUCCESSFUL:
       return { ...state, isLoading: false, calendarEvents: action.payload };
 
-    case ADD_CALENDAR_EVENT_SUCCESSFUL:
+    case actionTypes.ADD_CALENDAR_EVENT_SUCCESSFUL:
       return { ...state, isAdding: false, calendarEvents: state.calendarEvents.concat(action.payload) };
 
-    case UPDATE_CALENDAR_EVENT_SUCCESSFUL:
+    case actionTypes.UPDATE_CALENDAR_EVENT_SUCCESSFUL:
       mappings = deepCopy(state.calendarEvents);
+
+      if (!mappings) return { ...state, isUpdating: false };
       const idx = mappings.findIndex((t) => t._id === action.payload.id);
 
       if (mappings && mappings[idx]) {
-        let calendarEvent = action.payload.calendarEvent;
-        calendarEvent.dueDate = calendarEvent.dueDate.toISOString();
+        // let calendarEvent = action.payload.calendarEvent;
+        let calendarEvent = action.payload;
+        // calendarEvent.dueDate = calendarEvent.dueDate.toISOString();
         delete calendarEvent.id;
         mappings[idx] = { ...mappings[idx], ...calendarEvent };
       }
 
       return { ...state, isUpdating: false, calendarEvents: mappings };
 
-    case DELETE_CALENDAR_EVENT_SUCCESSFUL:
+    case actionTypes.DELETE_CALENDAR_EVENT_SUCCESSFUL:
       mappings = state.calendarEvents.filter((t) => t._id !== action.payload.id);
       return { ...state, isDeleting: false, calendarEvents: mappings };
 
-    case DELETE_CALENDAR_EVENTS_SUCCESSFUL:
+    case actionTypes.DELETE_CALENDAR_EVENTS_SUCCESSFUL:
       return { ...state, isDeletingAll: false, calendarEvents: action.payload };
 
     // case DATA_LOADED:
     //   return { ...state, isLoading: false };
     
-    case IS_FETCHING:
+    case actionTypes.IS_FETCHING:
       return { ...state, isLoading: true };
 
-    case IS_ADDING:
+    case actionTypes.IS_ADDING:
       return { ...state, isAdding: true };
 
-    case IS_UPDATING:
+    case actionTypes.IS_UPDATING:
       return { ...state, isUpdating: true };
 
-    case IS_DELETING:
+    case actionTypes.IS_DELETING:
       return { ...state, isDeleting: true };
 
-    case IS_DELETING_ALL:
+    case actionTypes.IS_DELETING_ALL:
       return { ...state, isDeletingAll: true };
 
-    case IS_FINDING:
+    case actionTypes.IS_FINDING:
       return { ...state, isFinding: true };
 
-    case API_ERRORED:
+    case actionTypes.API_ERRORED:
       // return { ...state, error: state.error = 'yes' }
       return { ...state, error: action.payload };
 
