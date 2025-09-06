@@ -28,7 +28,7 @@ const CalendarUpdateEventForm = memo(() => {
   const currentCalendarEvent = useSelector(selectCurrentCalendarEvent);
   const message = useSelector(selectMessage);
 
-  const [dateValue, onChange] = useState(
+  const [dateValue, onChange] = useState<any>(
     new Date(
       currentCalendarEvent && currentCalendarEvent.dueDate
         ? currentCalendarEvent.dueDate
@@ -58,7 +58,8 @@ const CalendarUpdateEventForm = memo(() => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid },
+    // formState: { errors, isValid },
+    formState: { errors },
   } = useForm<UseFormHandleSubmit>({
     defaultValues: defaultValues,
     mode: "all",

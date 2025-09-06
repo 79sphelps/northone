@@ -17,7 +17,8 @@ export interface ISetCurrentCalendarEvent {
   payload: ICalendarEvent | null;
 }
 
-const setCurrentCalendarEvent = (payload: ISetCurrentCalendarEvent['payload']): ISetCurrentCalendarEvent => {
+// const setCurrentCalendarEvent = (payload: ISetCurrentCalendarEvent['payload']): ISetCurrentCalendarEvent => {
+const setCurrentCalendarEvent = (payload: ISetCurrentCalendarEvent['payload']) => {
   return { type: actionTypes.SET_CURRENT_CALENDAR_EVENT, payload };
 };
 
@@ -30,7 +31,8 @@ export interface ISetCalendarEventToAdd {
   payload: ICalendarEvent;
 }
 
-const setCalendarEventToAdd = (payload: ISetCalendarEventToAdd['payload']): ISetCalendarEventToAdd => {
+// const setCalendarEventToAdd = (payload: ISetCalendarEventToAdd['payload']): ISetCalendarEventToAdd => {
+const setCalendarEventToAdd = (payload: ISetCalendarEventToAdd['payload']) => {
   return { type: actionTypes.SET_CALENDAR_EVENT_TO_ADD, payload };
 };
 
@@ -43,7 +45,8 @@ export interface IFindByTitle {
   payload: string;
 }
 
-const findByTitle = (payload: IFindByTitle['payload']): IFindByTitle => {
+// const findByTitle = (payload: IFindByTitle['payload']): IFindByTitle => {
+const findByTitle = (payload: IFindByTitle['payload']) => {
   return { type: actionTypes.FIND_BY_TITLE, payload };
 };
 
@@ -52,7 +55,8 @@ export interface IFindByTitleSuccessful {
   payload: string;
 }
 
-const findByTitleSuccessful = (payload: IFindByTitleSuccessful['payload']): IFindByTitleSuccessful => {
+// const findByTitleSuccessful = (payload: IFindByTitleSuccessful['payload']): IFindByTitleSuccessful => {
+const findByTitleSuccessful = (payload: IFindByTitleSuccessful['payload']) => {
   return { type: actionTypes.FIND_BY_TITLE_SUCCESSFUL, payload };
 };
 
@@ -61,7 +65,8 @@ export interface ISetSearchTitle {
   payload: string;
 };
 
-const setSearchTitle = (payload: ISetSearchTitle['payload']): ISetSearchTitle => {
+// const setSearchTitle = (payload: ISetSearchTitle['payload']): ISetSearchTitle => {
+const setSearchTitle = (payload: ISetSearchTitle['payload']) => {
   return { type: actionTypes.SET_SEARCH_TITLE, payload };
 };
 
@@ -74,7 +79,8 @@ export interface ISetCurrentIndex {
   payload: Number;
 };
 
-const setCurrentIndex = (payload: ISetCurrentIndex['payload']): ISetCurrentIndex => {
+// const setCurrentIndex = (payload: ISetCurrentIndex['payload']): ISetCurrentIndex => {
+const setCurrentIndex = (payload: ISetCurrentIndex['payload']) => {
   return { type: actionTypes.SET_CURRENT_INDEX, payload };
 };
 
@@ -87,7 +93,8 @@ export interface ISetMessage {
   payload: string;
 };
 
-const setMessage = (payload: ISetMessage['payload']): ISetMessage => {
+// const setMessage = (payload: ISetMessage['payload']): ISetMessage => {
+const setMessage = (payload: ISetMessage['payload']) => {
   return { type: actionTypes.SET_MESSAGE, payload };
 };
 
@@ -100,7 +107,8 @@ export interface ISetSubmitted {
   payload: boolean;
 };
 
-const setSubmitted = (payload: ISetSubmitted['payload']): ISetSubmitted => {
+// const setSubmitted = (payload: ISetSubmitted['payload']): ISetSubmitted => {
+const setSubmitted = (payload: ISetSubmitted['payload']) => {
   return { type: actionTypes.SET_SUBMITTED, payload };
 };
 
@@ -113,7 +121,8 @@ export interface ISetCalendarEvents {
   payload: Array<ICalendarEvent>;
 }
 
-const setCalendarEvents = (payload: ISetCalendarEvents['payload']): ISetCalendarEvents => {
+// const setCalendarEvents = (payload: ISetCalendarEvents['payload']): ISetCalendarEvents => {
+const setCalendarEvents = (payload: ISetCalendarEvents['payload']) => {
   return { type: actionTypes.SET_CALENDAR_EVENTS, payload };
 };
 
@@ -130,7 +139,8 @@ export interface IGetCalendarEvent {
   payload: ICalendarEvent;
 };
 
-const getCalendarEvent = (payload: IGetCalendarEvent['payload']): IGetCalendarEvent => {
+// const getCalendarEvent = (payload: IGetCalendarEvent['payload']): IGetCalendarEvent => {
+const getCalendarEvent = (payload: IGetCalendarEvent['payload']) => {
   return { type: actionTypes.GET_CALENDAR_EVENT, payload };
 };
 
@@ -143,7 +153,8 @@ export interface IAddCalendarEvent {
   payload: ICalendarEvent;
 };
 
-const addCalendarEvent = (payload: IAddCalendarEvent['payload']): IAddCalendarEvent => {
+// const addCalendarEvent = (payload: IAddCalendarEvent['payload']): IAddCalendarEvent => {
+const addCalendarEvent = (payload: IAddCalendarEvent['payload']) => {
   return { type: actionTypes.ADD_CALENDAR_EVENT, payload };
 };
 
@@ -152,7 +163,8 @@ export interface IAddCalendarEventSuccessful {
   payload: ICalendarEvent;
 }
 
-const addCalendarEventSuccessful = (payload: IAddCalendarEventSuccessful['payload']): IAddCalendarEventSuccessful => {
+// const addCalendarEventSuccessful = (payload: IAddCalendarEventSuccessful['payload']): IAddCalendarEventSuccessful => {
+const addCalendarEventSuccessful = (payload: IAddCalendarEventSuccessful['payload']) => {
   return { type: actionTypes.ADD_CALENDAR_EVENT_SUCCESSFUL, payload };
 };
 
@@ -161,7 +173,8 @@ export interface IUpdateCalendarEvent {
   payload: ICalendarEvent;
 };
 
-const updateCalendarEvent = (payload: IUpdateCalendarEvent['payload']): IUpdateCalendarEvent => {
+// const updateCalendarEvent = (payload: IUpdateCalendarEvent['payload']): IUpdateCalendarEvent => {
+const updateCalendarEvent = (payload: IUpdateCalendarEvent['payload']) => {
   return { type: actionTypes.UPDATE_CALENDAR_EVENT, payload };
 };
 
@@ -170,7 +183,8 @@ export interface IUpdateCalendarEventSuccessful {
   payload: ICalendarEvent;
 }
 
-const updateCalendarEventSuccessful = (payload: IUpdateCalendarEventSuccessful['payload']): IUpdateCalendarEventSuccessful => {
+// const updateCalendarEventSuccessful = (payload: IUpdateCalendarEventSuccessful['payload']): IUpdateCalendarEventSuccessful => {
+const updateCalendarEventSuccessful = (payload: IUpdateCalendarEventSuccessful['payload']) => {
   return { type: actionTypes.UPDATE_CALENDAR_EVENT_SUCCESSFUL, payload };
 };
 
@@ -179,7 +193,8 @@ export interface IDeleteCalendarEvent {
   payload: string;
 };
 
-const deleteCalendarEvent = (payload: IDeleteCalendarEvent['payload']): IDeleteCalendarEvent => {
+// const deleteCalendarEvent = (payload: IDeleteCalendarEvent['payload']): IDeleteCalendarEvent => {
+const deleteCalendarEvent = (payload: IDeleteCalendarEvent['payload']) => {
   return { type: actionTypes.DELETE_CALENDAR_EVENT, payload };
 };
 
@@ -192,7 +207,8 @@ export interface IDeleteCalendarEventSuccessful {
   payload: DeleteCalendarEventSuccessfulPayload;
 };
 
-const deleteCalendarEventSuccessful = (payload: IDeleteCalendarEventSuccessful['payload']): IDeleteCalendarEventSuccessful => {
+// const deleteCalendarEventSuccessful = (payload: IDeleteCalendarEventSuccessful['payload']): IDeleteCalendarEventSuccessful => {
+const deleteCalendarEventSuccessful = (payload: IDeleteCalendarEventSuccessful['payload']) => {
   return { type: actionTypes.DELETE_CALENDAR_EVENT_SUCCESSFUL, payload };
 };
 
@@ -209,7 +225,8 @@ export interface IDeleteCalendarEventsSuccessful {
   payload: DeleteCalendarEventsSuccessfulPayload;
 };
 
-const deleteCalendarEventsSuccessful = (payload: IDeleteCalendarEventsSuccessful['payload']): IDeleteCalendarEventsSuccessful => {
+// const deleteCalendarEventsSuccessful = (payload: IDeleteCalendarEventsSuccessful['payload']): IDeleteCalendarEventsSuccessful => {
+const deleteCalendarEventsSuccessful = (payload: IDeleteCalendarEventsSuccessful['payload']) => {
   return { type: actionTypes.DELETE_CALENDAR_EVENTS_SUCCESSFUL, payload };
 };
 
@@ -222,7 +239,8 @@ export interface IApiErrored {
   payload: ApiErroredPayload;
 };
 
-const apiErrored = (payload: IApiErrored['payload']): IApiErrored => {
+// const apiErrored = (payload: IApiErrored['payload']): IApiErrored => {
+const apiErrored = (payload: IApiErrored['payload']) => {
   return { type: actionTypes.API_ERRORED, payload };
 };
 

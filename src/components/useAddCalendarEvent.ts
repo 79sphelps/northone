@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "react-time-picker/dist/TimePicker.css";
 import "react-clock/dist/Clock.css";
-import { Value } from "react-time-picker/dist/cjs/shared/types";
+// import { Value } from "react-time-picker/dist/cjs/shared/types";
 import { addCalendarEvent, setCalendarEventToAdd } from "../redux/actions";
 import { selectCalendarEventToAdd } from "../redux/selectors";
 import { formatDate } from "../redux/utils";
@@ -23,7 +23,8 @@ export function useAddCalendarEvent({
   timeValue,
 }: {
   dateValue: Date;
-  timeValue: Value;
+  // timeValue: Value;
+  timeValue: any;
 }) {
   const dispatch = useDispatch();
   const calendarEventToAdd = useSelector(selectCalendarEventToAdd);

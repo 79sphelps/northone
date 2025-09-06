@@ -16,7 +16,7 @@ const CalendarEventModal: React.FC<CalendarEventModalProps> = memo(
   ({ show, setShow }) => {
     const { handleClose, saveNewEvent, handleEventChange, newEvent } =
       useCalendarEventModal({ setShow });
-    const [dateValue, onChange] = useState(new Date());
+    const [dateValue, onChange] = useState<any>(new Date());
     const [timeValue, onChangeTimeValue] = useState<any>(""); // useState('10:00');
 
     return (

@@ -4,7 +4,7 @@ import "react-time-picker/dist/TimePicker.css";
 import "react-clock/dist/Clock.css";
 import DatePicker from "react-date-picker";
 import { useForm } from "react-hook-form";
-import { Value } from "react-time-picker/dist/cjs/shared/types";
+// import { Value } from "react-time-picker/dist/cjs/shared/types";
 import EventFormInput from "./EventFormInput.tsx";
 import FormInputValidationError from "./FormInputValidationError.tsx";
 
@@ -25,11 +25,14 @@ interface FormProps {
     startTime: string;
     dueDate: string;
   };
-  onChangeDateValue: (date: Date) => void;
+  // onChangeDateValue: (date: Date) => void;
+  onChangeDateValue: (date: any) => void;
   // onChangeTimeValue: (time: string) => void;
-  onChangeTimeValue: (value: Value) => void;
+  // onChangeTimeValue: (value: Value) => void;
+  onChangeTimeValue: (value: any) => void;
   dateValue: Date;
-  timeValue: Value;
+  // timeValue: Value;
+  timeValue: any;
 }
 
 const CalendarEventForm: React.FC<FormProps> = memo(
@@ -45,7 +48,8 @@ const CalendarEventForm: React.FC<FormProps> = memo(
     const {
       register,
       handleSubmit,
-      formState: { errors, isValid },
+      // formState: { errors, isValid },
+      formState: { errors },
     } = useForm({
       defaultValues: defaultValues,
       mode: "all",
