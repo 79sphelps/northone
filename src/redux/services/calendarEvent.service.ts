@@ -1,5 +1,6 @@
 import api from "./api.ts";
 import { errorHandler, isAxiosError } from './errorHandler.ts';
+import { ICalendarEvent } from "../actions/index.ts";
 
 const GET_CALENDAR_EVENTS_ENDPOINT = `/api/calendarEvents`;
 
@@ -30,7 +31,7 @@ class CalendarEventDataService {
     }
   }
 
-  addCalendarEvent(data: any) {
+  addCalendarEvent(data: ICalendarEvent) {
     try {
       return api.post(GET_CALENDAR_EVENTS_ENDPOINT, data);
     } catch (error) {
@@ -43,10 +44,8 @@ class CalendarEventDataService {
     }
   }
 
-  // updateCalendarEvent(id: string, data: any) {
-  updateCalendarEvent(data: any) {
+  updateCalendarEvent(data: ICalendarEvent) {
     try {
-      // return api.put(`${GET_CALENDAR_EVENTS_ENDPOINT}/${id}`, data);
       return api.put(`${GET_CALENDAR_EVENTS_ENDPOINT}/${data.id}`, data);
     } catch (error) {
       if (isAxiosError(error)) {

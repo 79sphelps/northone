@@ -7,22 +7,11 @@ import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { selectCurrentCalendarEvent } from "../redux/selectors/index.ts";
 import 'react-date-picker/dist/DatePicker.css';
 import 'react-calendar/dist/Calendar.css';
+import { ICalendarEvent } from "../redux/actions/index.ts";
 
-// interface CalendarListDetailProps {
-//   datePicker: any;
-// }
 
-interface CurrentCalendarEvent {
-  _id: string;
-  title: string;
-  description: string;
-  status: boolean;
-  dueDate: string;
-}
-
-// const CalendarListDetail: React.FC<CalendarListDetailProps> = () => {
 const CalendarListDetail: React.FC = () => {
-  const currentCalendarEvent: CurrentCalendarEvent = useSelector(selectCurrentCalendarEvent);
+  const currentCalendarEvent: ICalendarEvent | null = useSelector(selectCurrentCalendarEvent);
   return (
     <div className="col-md-6">
       {currentCalendarEvent ? (
@@ -59,7 +48,8 @@ const CalendarListDetail: React.FC = () => {
             <DatePicker
               isOpen={false}
               // ref={datePicker}
-              value={new Date(currentCalendarEvent.dueDate)}
+              // value={new Date(currentCalendarEvent.dueDate)}
+              value={currentCalendarEvent.dueDate ? new Date(currentCalendarEvent.dueDate) : null }
             />
           </div>
           <Link

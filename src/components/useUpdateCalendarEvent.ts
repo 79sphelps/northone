@@ -40,6 +40,7 @@ export function useUpdateCalendarEvent({
   };
 
   const updateCalendarEventStatusUnderEdit = (status = null) => {
+    if (!currentCalendarEvent || !currentCalendarEvent._id) return;
     if (status !== null) {
       currentCalendarEvent.status = status;
     }
@@ -53,11 +54,11 @@ export function useUpdateCalendarEvent({
 
   const updateCalendarEventUnderEdit = (event: any) => {
     // event.preventDefault();
+    if (!currentCalendarEvent || !currentCalendarEvent._id) return;
     const updatedEvent = {
-      ...currentCalendarEvent,
+      ...event,
       dueDate: dateValue,
       start: timeValue,
-      // Add other fields from the form if needed
     };
     dispatch(
       updateCalendarEvent({
@@ -68,6 +69,7 @@ export function useUpdateCalendarEvent({
   };
 
   const deleteCalendarEventUnderEdit = () => {
+    if (!currentCalendarEvent || !currentCalendarEvent._id) return;
     dispatch(deleteCalendarEvent(currentCalendarEvent._id));
     navigate("/calendar-events"); // props.history.push("/calendar-events");
   };

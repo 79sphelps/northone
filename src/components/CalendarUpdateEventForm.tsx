@@ -7,7 +7,7 @@ import "react-clock/dist/Clock.css";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import DatePicker from "react-date-picker";
-import { useForm } from "react-hook-form";
+import { useForm, FieldError } from "react-hook-form";
 import { useUpdateCalendarEvent } from "./useUpdateCalendarEvent.ts";
 import EventFormInput from "./EventFormInput.tsx";
 import FormInputValidationError from "./FormInputValidationError.tsx";
@@ -17,10 +17,10 @@ import {
 } from "../redux/selectors/index.ts";
 
 interface UseFormHandleSubmit {
-  title: string;
-  description: string;
-  startTime: string;
-  dueDate: string;
+  title: string | null | undefined;
+  description: string | null | undefined;
+  startTime: string | null | undefined;
+  dueDate: string | null | undefined;
 }
 
 const CalendarUpdateEventForm = memo(() => {
@@ -35,7 +35,7 @@ const CalendarUpdateEventForm = memo(() => {
         : new Date()
     )
   );
-  const [timeValue, onChangeTimeValue] = useState(
+  const [timeValue, onChangeTimeValue] = useState<string | null>(
     currentCalendarEvent && currentCalendarEvent.start
       ? currentCalendarEvent.start
       : // : new Date().toISOString().replace(/T.*$/, "") + "T12:00:00"
@@ -53,7 +53,7 @@ const CalendarUpdateEventForm = memo(() => {
     updateCalendarEventStatusUnderEdit,
     updateCalendarEventUnderEdit,
     deleteCalendarEventUnderEdit,
-  } = useUpdateCalendarEvent({ dateValue: dateValue.toISOString(), timeValue });
+  } = useUpdateCalendarEvent({ dateValue: dateValue.toISOString(), timeValue : timeValue || "" });
 
   const {
     register,
@@ -66,7 +66,7 @@ const CalendarUpdateEventForm = memo(() => {
     reValidateMode: "onBlur",
   });
 
-  const getEditorStyle = (fieldError: any) => {
+  const getEditorStyle = (fieldError: FieldError | undefined) => {
     return fieldError ? "border: solid 1px red" : "display: block";
   };
 
@@ -88,7 +88,7 @@ const CalendarUpdateEventForm = memo(() => {
             name="Title"
             className={getEditorStyle(errors.title)}
             id="title"
-            placeholder={currentCalendarEvent.title}
+            placeholder={currentCalendarEvent?.title || ""}
             requiredMsg="You must enter a valid title"
             minLength={5}
             minLengthMsg="The title must be at least 5 characters"
@@ -106,7 +106,7 @@ const CalendarUpdateEventForm = memo(() => {
             name="Description"
             className={getEditorStyle(errors.description)}
             id="description"
-            placeholder={currentCalendarEvent.description}
+            placeholder={currentCalendarEvent?.description || ""}
             requiredMsg="You must enter a valid description"
             minLength={10}
             minLengthMsg="The description must be at least 10 characters"
@@ -125,7 +125,7 @@ const CalendarUpdateEventForm = memo(() => {
           <label>
             <strong>Status: </strong>{" "}
           </label>
-          {currentCalendarEvent.status ? "Done" : "Pending"}
+          {currentCalendarEvent?.status ? "Done" : "Pending"}
         </div>
 
         <div className="form-group">
@@ -141,7 +141,7 @@ const CalendarUpdateEventForm = memo(() => {
           <TimePicker onChange={onChangeTimeValue} value={timeValue} />
         </div>
 
-        {currentCalendarEvent.status ? (
+        {currentCalendarEvent?.status ? (
           <button
             className="btn btn-primary mr-2"
             onClick={() => updateCalendarEventStatusUnderEdit(null)}

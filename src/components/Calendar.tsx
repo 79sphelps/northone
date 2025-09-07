@@ -4,9 +4,11 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import { formatDate } from "../redux/utils/index.ts";
+import { ICalendarEvent } from "../redux/actions/index.ts";
 
 interface CalendarProps {
-  calendarEvents: Array<EventObj>;
+  // calendarEvents: Array<EventObj>;
+  calendarEvents: Array<ICalendarEvent>;
   handleDateSelect: (selectInfo: any) => void;
   handleEventClick: (clickInfo: any) => void;
 }
@@ -28,8 +30,10 @@ type EventObj = {
 const Calendar: React.FC<CalendarProps> = memo(
   ({ calendarEvents, handleDateSelect, handleEventClick }) => {
     const mapCalendarEventEventsToCalendar = (arr: Array<EventObj> = []) => {
+    // const mapCalendarEventEventsToCalendar = (arr: Array<ICalendarEvent> = []) => {
       const result = arr.map((obj) => {
         const res: EventObj = {
+        // const res: ICalendarEvent = {
           title: undefined,
           date: undefined,
           start: undefined,
@@ -76,7 +80,8 @@ const Calendar: React.FC<CalendarProps> = memo(
             // plugins={[dayGridPlugin]}
             initialView="dayGridMonth"
             weekends={true}
-            events={mapCalendarEventEventsToCalendar(calendarEvents)}
+            // events={mapCalendarEventEventsToCalendar(calendarEvents)}
+            events={mapCalendarEventEventsToCalendar(calendarEvents as Array<EventObj>)}
             // events={INITIAL_EVENTS}
             headerToolbar={{
               left: "prev,next today",

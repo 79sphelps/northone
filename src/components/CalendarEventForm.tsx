@@ -3,7 +3,7 @@ import TimePicker from "react-time-picker";
 import "react-time-picker/dist/TimePicker.css";
 import "react-clock/dist/Clock.css";
 import DatePicker from "react-date-picker";
-import { useForm } from "react-hook-form";
+import { useForm, FieldError } from "react-hook-form";
 // import { Value } from "react-time-picker/dist/cjs/shared/types";
 import EventFormInput from "./EventFormInput.tsx";
 import FormInputValidationError from "./FormInputValidationError.tsx";
@@ -14,6 +14,10 @@ interface UseFormHandleSubmit {
   startTime: string;
   dueDate: string;
 }
+
+// type ValuePiece = Date | null;
+
+// type Value = ValuePiece | [ValuePiece, ValuePiece];
 
 interface FormProps {
   // onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
@@ -32,7 +36,7 @@ interface FormProps {
   onChangeTimeValue: (value: any) => void;
   dateValue: Date;
   // timeValue: Value;
-  timeValue: any;
+  timeValue: string;
 }
 
 const CalendarEventForm: React.FC<FormProps> = memo(
@@ -56,7 +60,7 @@ const CalendarEventForm: React.FC<FormProps> = memo(
       reValidateMode: "onBlur",
     });
 
-    const getEditorStyle = (fieldError: any) => {
+    const getEditorStyle = (fieldError: FieldError | undefined) => {
       return fieldError ? "border: solid 1px red" : "display: block";
     };
 

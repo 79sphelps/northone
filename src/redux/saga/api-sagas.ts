@@ -2,6 +2,7 @@ import { takeEvery, call, put } from "redux-saga/effects";
 import CalendarEventDataService from "../services/calendarEvent.service.ts";
 import { actionTypes } from "../constants/action.types.ts";
 import { ICalendarEvent } from "../actions";
+import { AxiosError, AxiosResponse } from "axios";
 
 /*
 redux-saga is a library that aims to make application side effects (i.e. asynchronous things like data
@@ -78,7 +79,12 @@ export function* deleteCalendarEventsWorkerSaga() {
   }
 }
 
-export function* findByTitleWorkerSaga(action: any) {
+interface IFindByTitle {
+  type: string;
+  payload: string;
+}
+
+export function* findByTitleWorkerSaga(action: IFindByTitle) {
   try {
     yield put({ type: actionTypes.IS_FINDING });
     const payload: ICalendarEvent = yield call(findByTitle, action.payload);
@@ -94,7 +100,7 @@ export function* findByTitleWorkerSaga(action: any) {
 export function* updateCalendarEventWorkerSaga(action: IAction) {
   try {
     yield put({ type: actionTypes.IS_UPDATING });
-    yield call(updateCalendarEvent, action.payload);
+    yield call(updateCalendarEvent, action.payload as ICalendarEvent);
     const payload = action.payload;
     yield put({ type: actionTypes.UPDATE_CALENDAR_EVENT_SUCCESSFUL, payload });
     // let calendarEvent = action.payload.calendarEvent;
@@ -131,7 +137,7 @@ export function* deleteCalendarEventWorkerSaga(action: IDeleteCalendarEvent) {
 export function* addCalendarEventWorkerSaga(action: IAction) {
   try {
     yield put({ type: actionTypes.IS_ADDING });
-    const payload: ICalendarEvent = yield call(addCalendarEvent, action.payload);
+    const payload: ICalendarEvent = yield call(addCalendarEvent, action.payload as ICalendarEvent);
     yield put({ type: actionTypes.ADD_CALENDAR_EVENT_SUCCESSFUL, payload });
     yield put({ type: actionTypes.SET_SUBMITTED, payload: true });
     yield put({ type: actionTypes.SET_CALENDAR_EVENT_TO_ADD, payload: null });
@@ -146,8 +152,8 @@ const getCalendarEvents = () => {
     return [];
   }
   return res
-    .then((response: any) => response.data)
-    .catch((e: any) => console.log(e));
+    .then((response: AxiosResponse<any, any>) => response.data)
+    .catch((e: AxiosError<unknown | any>) => console.log(e));
 };
 
 // const getCalendarEvent = (id) => {
@@ -156,36 +162,35 @@ const getCalendarEvents = () => {
 //     .catch((e) => console.log(e));
 // };
 
-const addCalendarEvent = (data: any) => {
+const addCalendarEvent = (data: ICalendarEvent) => {
   const res = CalendarEventDataService.addCalendarEvent(data)
   if (!res) {
     return [];
   }
   return res
-    .then((response: any) => response.data)
-    .catch((e: any) => console.log(e));
+    .then((response: AxiosResponse<any, any>) => response.data)
+    .catch((e: AxiosError<unknown | any>) => console.log(e));
 };
 
-const updateCalendarEvent = (payload: any) => {
+const updateCalendarEvent = (payload: ICalendarEvent) => {
   // const res = CalendarEventDataService.updateCalendarEvent(payload.id, payload.calendarEvent)
   const res = CalendarEventDataService.updateCalendarEvent(payload)
   if (!res) {
     return [];
   }
   return res
-    .then((response: any) => response.data)
-    .catch((e: any) => console.log(e));
+    .then((response: AxiosResponse<any, any>) => response.data)
+    .catch((e: AxiosError<unknown | any>) => console.log(e));
 };
 
 const deleteCalendarEvent = (id: string) => {
-  console.log('deleteCalendarEvent id', id);
   const res = CalendarEventDataService.deleteCalendarEvent(id)
   if (!res) {
     return [];
   }
   return res
-    .then((response: any) => response.data)
-    .catch((e: any) => console.log(e));
+    .then((response: AxiosResponse<any, any>) => response.data)
+    .catch((e: AxiosError<unknown | any>) => console.log(e));
 };
 
 const deleteCalendarEvents = () => {
@@ -194,8 +199,8 @@ const deleteCalendarEvents = () => {
     return [];
   }
   return res
-    .then((response: any) => response.data)
-    .catch((e: any) => console.log(e));
+    .then((response: AxiosResponse<any, any>) => response.data)
+    .catch((e: AxiosError<unknown | any>) => console.log(e));
 };
 
 const findByTitle = (title: string) => {
@@ -204,6 +209,6 @@ const findByTitle = (title: string) => {
     return [];
   }
   return res  
-    .then((response: any) => response.data)
-    .catch((e: any) => console.log(e));
+    .then((response: AxiosResponse<any, any>) => response.data)
+    .catch((e: AxiosError<unknown | any>) => console.log(e));
 };

@@ -1,15 +1,10 @@
 import React, { memo } from "react";
 import { useCalendarList } from "./useCalendarList.ts";
+import { ICalendarEvent } from "../redux/actions/index.ts";
 
 interface CalendarListProps {
-  calendarEvents: Array<{
-    id: number;
-    title: string;
-    description: string;
-    startTime: string;
-    dueDate: string;
-  }>;
-  setActiveCalendarEvent: (calendarEvent: any, index: number) => void;
+  calendarEvents: ICalendarEvent[];
+  setActiveCalendarEvent: (calendarEvent: ICalendarEvent, index: number) => void;
   currentIndex: number;
 }
 

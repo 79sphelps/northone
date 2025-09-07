@@ -5,6 +5,26 @@ import { setCurrentIndex, setCurrentCalendarEvent } from "../redux/actions";
 import { selectCurrentIndex } from "../redux/selectors";
 import { ICalendarEvent } from "../redux/actions";
 
+export interface ClickInfoEvent {
+  id: string;
+  title: string;
+  status?: boolean | null;
+  extendedProps: {
+    description: string;
+    dueDate: string;
+    start2: string;
+  };
+}
+
+export interface ClickInfo {
+  event: ClickInfoEvent;
+}
+
+interface DatePickerRef {
+  isOpen: boolean;
+  openCalendar?: () => void;
+}
+
 export function useCalendarEvents({
   setShow,
 }: {
@@ -14,11 +34,6 @@ export function useCalendarEvents({
   const dispatch = useDispatch();
   const datePicker = useRef<DatePickerRef>({ isOpen: false });
   const currentIndex = useSelector(selectCurrentIndex);
-
-  interface DatePickerRef {
-    isOpen: boolean;
-    openCalendar?: () => void;
-  }
 
   const setActiveCalendarEvent = (
     calendarEvent: ICalendarEvent,
@@ -36,21 +51,6 @@ export function useCalendarEvents({
   const handleDateSelect = () => {
     setShow(true);
   };
-
-  interface ClickInfoEvent {
-    id: string;
-    title: string;
-    status?: boolean | null;
-    extendedProps: {
-      description: string;
-      dueDate: string;
-      start2: string;
-    };
-  }
-
-  interface ClickInfo {
-    event: ClickInfoEvent;
-  }
 
   const handleEventClick = (clickInfo: ClickInfo): void => {
     let calendarEvent: ICalendarEvent = {
