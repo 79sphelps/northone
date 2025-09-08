@@ -333,6 +333,11 @@ describe('action creators', () => {
     const expectedAction2 = { type: actionTypes.ADD_CALENDAR_EVENT_SUCCESSFUL, payload: undefined };
     expect(iterator.next().value).toEqual(put(expectedAction2));
 
+    const message = "The calendar event was added successfully!";
+
+    const expectedAction8 = { type: actionTypes.SET_MESSAGE, payload: message };
+    expect(iterator.next().value).toEqual(put(expectedAction8));
+
     const expectedAction3 = { type: actionTypes.SET_SUBMITTED, payload: true };
     expect(iterator.next().value).toEqual(put(expectedAction3));
 

@@ -9,7 +9,6 @@ import 'react-date-picker/dist/DatePicker.css';
 import 'react-calendar/dist/Calendar.css';
 import { ICalendarEvent } from "../redux/actions/index.ts";
 
-
 const CalendarListDetail: React.FC = () => {
   const currentCalendarEvent: ICalendarEvent | null = useSelector(selectCurrentCalendarEvent);
   return (

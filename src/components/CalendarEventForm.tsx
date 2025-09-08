@@ -16,7 +16,6 @@ interface UseFormHandleSubmit {
 }
 
 // type ValuePiece = Date | null;
-
 // type Value = ValuePiece | [ValuePiece, ValuePiece];
 
 interface FormProps {
@@ -31,7 +30,6 @@ interface FormProps {
   };
   // onChangeDateValue: (date: Date) => void;
   onChangeDateValue: (date: any) => void;
-  // onChangeTimeValue: (time: string) => void;
   // onChangeTimeValue: (value: Value) => void;
   onChangeTimeValue: (value: any) => void;
   dateValue: Date;

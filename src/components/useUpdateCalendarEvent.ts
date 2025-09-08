@@ -46,7 +46,7 @@ export function useUpdateCalendarEvent({
     }
     dispatch(
       updateCalendarEvent({
-        id: currentCalendarEvent._id,
+        // id: currentCalendarEvent._id,
         ...currentCalendarEvent,
       })
     );

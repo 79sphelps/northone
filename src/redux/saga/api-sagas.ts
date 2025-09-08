@@ -139,6 +139,8 @@ export function* addCalendarEventWorkerSaga(action: IAction) {
     yield put({ type: actionTypes.IS_ADDING });
     const payload: ICalendarEvent = yield call(addCalendarEvent, action.payload as ICalendarEvent);
     yield put({ type: actionTypes.ADD_CALENDAR_EVENT_SUCCESSFUL, payload });
+    const message = "The calendar event was added successfully!";
+    yield put({ type: actionTypes.SET_MESSAGE, payload: message });
     yield put({ type: actionTypes.SET_SUBMITTED, payload: true });
     yield put({ type: actionTypes.SET_CALENDAR_EVENT_TO_ADD, payload: null });
   } catch (e) {

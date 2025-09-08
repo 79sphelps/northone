@@ -2,14 +2,10 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "react-time-picker/dist/TimePicker.css";
 import "react-clock/dist/Clock.css";
-// import { Value } from "react-time-picker/dist/cjs/shared/types";
 import { addCalendarEvent, setCalendarEventToAdd } from "../redux/actions";
 import { selectCalendarEventToAdd } from "../redux/selectors";
 import { formatDate } from "../redux/utils";
 import { ICalendarEvent } from "../redux/actions";
-
-const CALENDAR_EVENT_SUCCESS_MESSAGE =
-  "CalendarEvent item created successfully!";
 
 interface UseFormHandleSubmit {
   title: string;
@@ -23,7 +19,6 @@ export function useAddCalendarEvent({
   timeValue,
 }: {
   dateValue: Date;
-  // timeValue: Value;
   timeValue: any;
 }) {
   const dispatch = useDispatch();
@@ -82,7 +77,6 @@ export function useAddCalendarEvent({
     };
     dispatch(addCalendarEvent(data as ICalendarEvent));
     localStorage.removeItem("calendarEventToAdd");
-    setMessage(CALENDAR_EVENT_SUCCESS_MESSAGE);
   };
 
   const newCalendarEvent = () => {
