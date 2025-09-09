@@ -271,6 +271,11 @@ describe('action creators', () => {
     const expectedAction2 = { type: actionTypes.ADD_CALENDAR_EVENT_SUCCESSFUL, payload: undefined };
     expect(iterator.next().value).toEqual(put(expectedAction2));
 
+    const message = "The calendar event was added successfully!";
+
+    const expectedAction9 = { type: actionTypes.SET_MESSAGE, payload: message };
+    expect(iterator.next().value).toEqual(put(expectedAction9));
+
     const expectedAction3 = { type: actionTypes.SET_SUBMITTED, payload: true };
     expect(iterator.next().value).toEqual(put(expectedAction3));
 
@@ -389,6 +394,11 @@ describe('action creators', () => {
     const expectedAction2 = { type: actionTypes.ADD_CALENDAR_EVENT_SUCCESSFUL, payload: undefined };
     expect(iterator.next().value).toEqual(put(expectedAction2));
 
+    const message0 = "The calendar event was added successfully!";
+
+    const expectedAction9 = { type: actionTypes.SET_MESSAGE, payload: message0 };
+    expect(iterator.next().value).toEqual(put(expectedAction9));
+
     const expectedAction3 = { type: actionTypes.SET_SUBMITTED, payload: true };
     expect(iterator.next().value).toEqual(put(expectedAction3));
 
@@ -447,6 +457,11 @@ describe('action creators', () => {
     const expectedAction2 = { type: actionTypes.ADD_CALENDAR_EVENT_SUCCESSFUL, payload: undefined };
     expect(iterator.next().value).toEqual(put(expectedAction2));
 
+    const message0 = "The calendar event was added successfully!";
+
+    const expectedAction10 = { type: actionTypes.SET_MESSAGE, payload: message0 };
+    expect(iterator.next().value).toEqual(put(expectedAction10));    
+
     const expectedAction3 = { type: actionTypes.SET_SUBMITTED, payload: true };
     expect(iterator.next().value).toEqual(put(expectedAction3));
 
@@ -457,7 +472,8 @@ describe('action creators', () => {
 
     // --------------------------------------------------------------------------
 
-    const iterator2 = deleteCalendarEventWorkerSaga({ type: actionTypes.DELETE_CALENDAR_EVENT, payload: event })
+    // const iterator2 = deleteCalendarEventWorkerSaga({ type: actionTypes.DELETE_CALENDAR_EVENT, payload: event })
+    const iterator2 = deleteCalendarEventWorkerSaga({ type: actionTypes.DELETE_CALENDAR_EVENT, payload: event.id })
 
     const expectedAction5 = { type: actionTypes.IS_DELETING };
     expect(iterator2.next().value).toEqual(put(expectedAction5));
@@ -465,7 +481,8 @@ describe('action creators', () => {
     expect(JSON.stringify(iterator2.next().value)).toEqual(JSON.stringify(call(deleteCalendarEvent, "012345")));
     // expect(JSON.stringify(iterator2.next().value)).toEqual(JSON.stringify(call(deleteCalendarEvent, event)));
 
-    const expectedAction6 = { type: actionTypes.DELETE_CALENDAR_EVENT_SUCCESSFUL, payload: event };
+    // const expectedAction6 = { type: actionTypes.DELETE_CALENDAR_EVENT_SUCCESSFUL, payload: event };
+    const expectedAction6 = { type: actionTypes.DELETE_CALENDAR_EVENT_SUCCESSFUL, payload: event.id };
     expect(iterator2.next().value).toEqual(put(expectedAction6));
 
     const message = "The calendar event was deleted successfully!";

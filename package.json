@@ -36,7 +36,8 @@
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.62.0",
     "react-redux": "^9.2.0",
-    "react-router-dom": "^7.8.2",
+    "react-router": "^6.27.0",
+    "react-router-dom": "^6.27.0",
     "react-scripts": "^5.0.1",
     "react-time-picker": "^8.0.2",
     "redux": "^5.0.1",
@@ -54,7 +55,7 @@
     "start_backup": "cross-env NODE_ENV=production node src/server.js",
     "start-local": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --runInBand",
+    "test": "react-scripts test --transformIgnorePatterns",
     "eject": "react-scripts eject",
     "heroku-postbuild": "npm run build"
   },
