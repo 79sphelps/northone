@@ -1,7 +1,6 @@
-import { render, fireEvent, screen, waitFor } from '@testing-library/react'; 
+import { render, screen } from '@testing-library/react'; 
 import userEvent from '@testing-library/user-event'
 import '@testing-library/jest-dom'
-// import {LocationDisplay} from './App'
 // import {BrowserRouter, MemoryRouter} from 'react-router-dom'
 import App from './App';
 import * as reactRedux from 'react-redux';
@@ -35,18 +34,18 @@ import {
   getCurrentCalendarEvent,
   setCalendarEventToAdd,
   getCalendarEventToAdd,
-  getCalendarEvent,
+  // getCalendarEvent,
   setCalendarEvents,
   getCalendarEvents,
-  getCalendarEventsSuccessful,
+  // getCalendarEventsSuccessful,
   deleteCalendarEvent,
-  deleteCalendarEventSuccessful,
-  deleteCalendarEvents,
-  deleteCalendarEventsSuccessful,
+  // deleteCalendarEventSuccessful,
+  // deleteCalendarEvents,
+  // deleteCalendarEventsSuccessful,
   updateCalendarEvent,
-  updateCalendarEventSuccessful,
+  // updateCalendarEventSuccessful,
   addCalendarEvent,
-  addCalendarEventSuccessful,
+  // addCalendarEventSuccessful,
 } from "./redux/actions";
 import { 
   findByTitleWorkerSaga,
@@ -54,7 +53,7 @@ import {
   addCalendarEventWorkerSaga, 
   updateCalendarEventWorkerSaga, 
   deleteCalendarEventWorkerSaga,
-  deleteCalendarEventsWorkerSaga
+  // deleteCalendarEventsWorkerSaga
 } from "./redux/saga/api-sagas";
 
 function makeTestStore(opts = {}) {

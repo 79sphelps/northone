@@ -13,8 +13,9 @@ const CalendarList: React.FC<CalendarListProps> = memo(
     const { removeAllCalendarEvents } = useCalendarList();
 
     return (
-      <div className="col-md-6">
-        <h4>Calendar Events</h4>
+      <>
+      <h4>Calendar Events</h4>
+      <div className="col-md-6" style={{ height: '200px', overflow: 'scroll', marginBottom: '20px' }}>
         <ul className="list-group">
           {calendarEvents &&
             calendarEvents.map((calendarEvent, index) => (
@@ -30,13 +31,14 @@ const CalendarList: React.FC<CalendarListProps> = memo(
               </li>
             ))}
         </ul>
-        <button
-          className="m-3 btn btn-sm btn-danger"
+      </div>
+      {/* <button
+          className="col-md-6 m-3 btn btn-sm btn-danger"
           onClick={() => removeAllCalendarEvents()}
         >
           Remove All
-        </button>
-      </div>
+      </button> */}
+      </>
     );
   }
 );

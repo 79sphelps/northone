@@ -33,7 +33,7 @@ const App = () => {
     <Router>
       <div>
         <nav className="navbar navbar-expand navbar-dark bg-dark">
-          <a href="/" className="navbar-brand">
+          <a href="/" className="navbar-brand" style={{ marginLeft: "10px" }}>
             <FontAwesomeIcon icon={faHome} />
           </a>
           <div className="navbar-nav mr-auto">

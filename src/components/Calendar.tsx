@@ -73,7 +73,7 @@ const Calendar: React.FC<CalendarProps> = memo(
     };
 
     return (
-      <div className="col-md-12" id="calendar">
+      <div className="col-md-12 mb-5" id="calendar">
         {calendarEvents ? (
           <FullCalendar
             plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
