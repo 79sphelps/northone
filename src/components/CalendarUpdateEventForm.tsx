@@ -1,5 +1,5 @@
 import React, { useState, memo } from "react";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../redux/selectors";
 import { useNavigate } from "react-router-dom";
 import TimePicker from "react-time-picker";
 import "react-time-picker/dist/TimePicker.css";
@@ -25,8 +25,8 @@ interface UseFormHandleSubmit {
 
 const CalendarUpdateEventForm = memo(() => {
   const navigate = useNavigate();
-  const currentCalendarEvent = useSelector(selectCurrentCalendarEvent);
-  const message = useSelector(selectMessage);
+  const currentCalendarEvent = useAppSelector(selectCurrentCalendarEvent);
+  const message = useAppSelector(selectMessage);
 
   const [dateValue, onChange] = useState<any>(
     new Date(

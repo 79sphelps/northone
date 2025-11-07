@@ -1,10 +1,10 @@
 import React, { memo } from "react";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../redux/selectors";
 import CalendarUpdateEventForm from "./CalendarUpdateEventForm";
 import { selectCurrentCalendarEvent } from "../redux/selectors/index.ts";
 
 const UpdateCalendarEvent = memo(() => {
-  const currentCalendarEvent = useSelector(selectCurrentCalendarEvent);
+  const currentCalendarEvent = useAppSelector(selectCurrentCalendarEvent);
   return (
     <div>
       {currentCalendarEvent ? (

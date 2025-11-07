@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../redux/selectors";
 import DatePicker from "react-date-picker";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -10,7 +10,7 @@ import 'react-calendar/dist/Calendar.css';
 import { ICalendarEvent } from "../redux/actions/index.ts";
 
 const CalendarListDetail: React.FC = () => {
-  const currentCalendarEvent: ICalendarEvent | null = useSelector(selectCurrentCalendarEvent);
+  const currentCalendarEvent: ICalendarEvent | null = useAppSelector(selectCurrentCalendarEvent);
   return (
     <div className="col-md-6">
       {currentCalendarEvent ? (

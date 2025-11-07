@@ -1,5 +1,6 @@
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { useAppSelector } from "../redux/selectors";
 import { useNavigate } from "react-router-dom";
 import {
   setCurrentCalendarEvent,
@@ -20,7 +21,7 @@ export function useUpdateCalendarEvent({
 }: UseUpdateCalendarEventParams) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const currentCalendarEvent = useSelector(selectCurrentCalendarEvent);
+  const currentCalendarEvent = useAppSelector(selectCurrentCalendarEvent);
 
   useEffect(() => {
     clearMessage();

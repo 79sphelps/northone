@@ -1,5 +1,5 @@
 import React, { useState, memo } from "react";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../redux/selectors";
 import "react-time-picker/dist/TimePicker.css";
 import "react-clock/dist/Clock.css";
 import CalendarList from "./CalendarList.tsx";
@@ -14,8 +14,8 @@ import { selectCalendarEvents, selectCurrentIndex } from "../redux/selectors/ind
 const CalendarEvents = memo(() => {
   const [show, setShow] = useState(false);
   // const datePicker = useRef({ isOpen: false });
-  const calendarEvents = useSelector(selectCalendarEvents);
-  const currentIndex = useSelector(selectCurrentIndex);
+  const calendarEvents = useAppSelector(selectCalendarEvents);
+  const currentIndex = useAppSelector(selectCurrentIndex);
 
   useCalendarEventData();
   const { setActiveCalendarEvent, handleDateSelect, handleEventClick } =

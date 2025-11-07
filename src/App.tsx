@@ -18,12 +18,12 @@ import { ToastContainer, toast } from 'react-toastify';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
-export const LocationDisplay = () => {
+export const LocationDisplay = (): React.JSX.Element => {
   const location = useLocation();
   return <div data-testid="location-display">{location.pathname}</div>;
 };
 
-const App = () => {
+const App = (): React.JSX.Element => {
   const dispatch = useDispatch();
   const initializeCalendarEventToAdd = () => {
     dispatch(setSubmitted(false));

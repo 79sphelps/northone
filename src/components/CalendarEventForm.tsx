@@ -1,5 +1,6 @@
 import React, { memo } from "react";
 import TimePicker from "react-time-picker";
+import { useNavigate } from "react-router-dom";
 import "react-time-picker/dist/TimePicker.css";
 import "react-clock/dist/Clock.css";
 import DatePicker from "react-date-picker";
@@ -47,6 +48,7 @@ const CalendarEventForm: React.FC<FormProps> = memo(
     dateValue,
     timeValue,
   }) => {
+    const navigate = useNavigate();
     const {
       register,
       handleSubmit,
@@ -124,6 +126,12 @@ const CalendarEventForm: React.FC<FormProps> = memo(
             // onClick={() => updateCalendarEventUnderEdit()}
           >
             Submit
+          </button>
+          <button
+            className="btn btn-danger mr-2"
+            onClick={() => navigate("/calendar-events")} // onClick={() => props.history.push("/calendar-events")}
+          >
+            Cancel
           </button>
           {message !== "" ? <div>{message}</div> : null}
         </div>
