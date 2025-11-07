@@ -6,7 +6,7 @@ import {
   BrowserRouter as Router,
   useLocation,
 } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "./redux/store/index.ts";
 import { faHome, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AddCalendarEvent from "./components/AddCalendarEvent";
@@ -24,7 +24,7 @@ export const LocationDisplay = (): React.JSX.Element => {
 };
 
 const App = (): React.JSX.Element => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const initializeCalendarEventToAdd = () => {
     dispatch(setSubmitted(false));
     dispatch(setMessage(""));

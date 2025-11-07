@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "../redux/store/index.ts";
 import {
   getCalendarEvents,
   deleteCalendarEvents,
@@ -7,7 +7,7 @@ import {
 } from "../redux/actions";
 
 export function useCalendarList() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const retrieveCalendarEvents = () => {
     dispatch(getCalendarEvents());

@@ -1,9 +1,9 @@
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "../redux/store/index.ts";
 import { getCalendarEvents } from "../redux/actions";
 
 export function useCalendarEventData() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     retrieveCalendarEvents();

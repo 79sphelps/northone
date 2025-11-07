@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "../redux/store/index.ts";
 import { addCalendarEvent } from "../redux/actions";
 import { formatDate } from "../redux/utils";
 
@@ -8,7 +8,7 @@ export function useCalendarEventModal({
 }: {
   setShow: (show: boolean) => void;
 }) {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [dateValue, setDateValue] = useState(new Date() as unknown as string); // to satisfy type requirement
   const [timeValue, setTimeValue] = useState(""); // useState('10:00');
 

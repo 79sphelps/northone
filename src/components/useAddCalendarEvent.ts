@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "../redux/store/index.ts";
 import { useAppSelector } from "../redux/selectors";
 import "react-time-picker/dist/TimePicker.css";
 import "react-clock/dist/Clock.css";
@@ -22,7 +22,7 @@ export function useAddCalendarEvent({
   dateValue: Date;
   timeValue: any;
 }) {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const calendarEventToAdd = useAppSelector(selectCalendarEventToAdd);
   const [submitted, setSubmitted] = useState(false);
   const [message, setMessage] = useState("");

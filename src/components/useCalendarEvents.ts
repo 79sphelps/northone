@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "../redux/store/index.ts";
 import { useAppSelector } from "../redux/selectors";
 import { setCurrentIndex, setCurrentCalendarEvent } from "../redux/actions";
 import { selectCurrentIndex } from "../redux/selectors";
@@ -32,7 +32,7 @@ export function useCalendarEvents({
   setShow: (show: boolean) => void;
 }) {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const datePicker = useRef<DatePickerRef>({ isOpen: false });
   const currentIndex = useAppSelector(selectCurrentIndex);
 
