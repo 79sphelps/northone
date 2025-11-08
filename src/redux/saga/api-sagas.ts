@@ -149,12 +149,12 @@ export function* addCalendarEventWorkerSaga(action: IAction) {
 }
 
 const getCalendarEvents = () => {
-  const res = CalendarEventDataService.getCalendarEvents()
+  const res = CalendarEventDataService.getCalendarEvents();
   if (!res) {
     return [];
   }
   return res
-    .then((response: AxiosResponse<any, any>) => response.data)
+    .then((response: AxiosResponse<any, any>) => response.data as ICalendarEvent[])
     .catch((e: AxiosError<unknown | any>) => console.log(e));
 };
 
@@ -165,18 +165,18 @@ const getCalendarEvents = () => {
 // };
 
 const addCalendarEvent = (data: ICalendarEvent) => {
-  const res = CalendarEventDataService.addCalendarEvent(data)
+  const res = CalendarEventDataService.addCalendarEvent(data);
   if (!res) {
     return [];
   }
   return res
-    .then((response: AxiosResponse<any, any>) => response.data)
+    .then((response: AxiosResponse<any, any>) => response.data as ICalendarEvent)
     .catch((e: AxiosError<unknown | any>) => console.log(e));
 };
 
 const updateCalendarEvent = (payload: ICalendarEvent) => {
   // const res = CalendarEventDataService.updateCalendarEvent(payload.id, payload.calendarEvent)
-  const res = CalendarEventDataService.updateCalendarEvent(payload)
+  const res = CalendarEventDataService.updateCalendarEvent(payload);
   if (!res) {
     return [];
   }
@@ -186,7 +186,7 @@ const updateCalendarEvent = (payload: ICalendarEvent) => {
 };
 
 const deleteCalendarEvent = (id: string) => {
-  const res = CalendarEventDataService.deleteCalendarEvent(id)
+  const res = CalendarEventDataService.deleteCalendarEvent(id);
   if (!res) {
     return [];
   }
@@ -196,7 +196,7 @@ const deleteCalendarEvent = (id: string) => {
 };
 
 const deleteCalendarEvents = () => {
-  const res = CalendarEventDataService.deleteCalendarEvents()
+  const res = CalendarEventDataService.deleteCalendarEvents();
   if (!res) {
     return [];
   }
@@ -206,7 +206,7 @@ const deleteCalendarEvents = () => {
 };
 
 const findByTitle = (title: string) => {
-  const res = CalendarEventDataService.findByTitle(title)
+  const res = CalendarEventDataService.findByTitle(title);
   if (!res) {
     return [];
   }

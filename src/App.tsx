@@ -18,19 +18,21 @@ import { ToastContainer, toast } from 'react-toastify';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
-export const LocationDisplay = (): React.JSX.Element => {
+export const LocationDisplay = () => {
   const location = useLocation();
   return <div data-testid="location-display">{location.pathname}</div>;
 };
 
-const App = (): React.JSX.Element => {
+const App = () => {
   const dispatch = useAppDispatch();
   const initializeCalendarEventToAdd = () => {
     dispatch(setSubmitted(false));
     dispatch(setMessage(""));
   };
 
-  useEffect((): any => toast.info("Because the backend uses the free tier of Render.com, it may take up to 30+ seconds to wake up the server on the first request. Annoying, yes, but...free has a cost, LOL."), []);
+  useEffect((): any => { 
+    toast.info("Because the backend uses the free tier of Render.com, it may take up to 30+ seconds to wake up the server on the first request. Annoying, yes, but...free has a cost, LOL.")
+  }, []);
 
   return (
     <Router>
