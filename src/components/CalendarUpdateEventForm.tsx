@@ -144,14 +144,14 @@ const CalendarUpdateEventForm = memo(() => {
         {currentCalendarEvent?.status ? (
           <button
             className="btn btn-primary mr-2"
-            onClick={() => updateCalendarEventStatusUnderEdit(null)}
+            onClick={() => updateCalendarEventStatusUnderEdit(false)}
           >
             Mark Pending
           </button>
         ) : (
           <button
             className="btn btn-primary mr-2"
-            onClick={() => updateCalendarEventStatusUnderEdit(undefined)}
+            onClick={() => updateCalendarEventStatusUnderEdit(true)}
           >
             Mark Done
           </button>

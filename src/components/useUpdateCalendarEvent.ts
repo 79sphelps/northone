@@ -40,7 +40,7 @@ export function useUpdateCalendarEvent({
     }
   };
 
-  const updateCalendarEventStatusUnderEdit = (status = null) => {
+  const updateCalendarEventStatusUnderEdit = (status: boolean) => {
     if (!currentCalendarEvent || !currentCalendarEvent._id) return;
     if (status !== null) {
       currentCalendarEvent.status = status;
