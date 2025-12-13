@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 import { useAppDispatch } from "../redux/store/index.ts";
 import { useAppSelector } from "../redux/selectors";
-import { faSearch, faCancel, faTrash, faRemove } from "@fortawesome/free-solid-svg-icons";
+import { faSearch, faRemove } from "@fortawesome/free-solid-svg-icons"; // faCancel, faTrash, 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { setSearchTitle, findByTitle, getCalendarEvents } from "../redux/actions";
 import { selectSearchTitle } from "../redux/selectors/index.ts";

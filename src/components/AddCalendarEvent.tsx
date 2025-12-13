@@ -4,18 +4,38 @@ import { useAppSelector } from "../redux/selectors";
 import CalendarEventForm from "./CalendarEventForm.tsx";
 import { useAddCalendarEvent } from "./useAddCalendarEvent.ts";
 import { selectCalendarEventToAdd } from "../redux/selectors/index.ts";
+import { ICalendarEventToAdd } from "../redux/reducers/index.ts";
+import { UseFormHandleSubmit } from "./useAddCalendarEvent.ts";
 
 // type ValuePiece = Date | null;
 // type Value = ValuePiece | [ValuePiece, ValuePiece];
 
-const AddCalendarEvent = memo(() => {
-  const CalendarEventToAdd = useAppSelector(selectCalendarEventToAdd);
-  const [dateValue, setDateValue] = useState(new Date());
-  const [timeValue, setTimeValue] = useState(""); // useState('10:00');
-  const { saveCalendarEvent, newCalendarEvent, message, submitted } =
-    useAddCalendarEvent({ dateValue, timeValue });
+export interface IDefaultCalendarEventValues {
+  title: string | null | undefined;
+  description: string | null | undefined;
+  startTime: string | null | undefined;
+  dueDate: string | null | undefined;
+}
 
-  const defaultValues = {
+const AddCalendarEvent = memo(() => {
+  const CalendarEventToAdd: ICalendarEventToAdd | null = useAppSelector(
+    selectCalendarEventToAdd
+  );
+  const [dateValue, setDateValue] = useState<Date>(new Date());
+  const [timeValue, setTimeValue] = useState<string>(""); // useState('10:00');
+  const {
+    saveCalendarEvent,
+    newCalendarEvent,
+    message,
+    submitted,
+  }: {
+    saveCalendarEvent: (event: UseFormHandleSubmit) => void;
+    newCalendarEvent: () => void;
+    message: string;
+    submitted: boolean;
+  } = useAddCalendarEvent({ dateValue, timeValue });
+
+  const defaultValues: IDefaultCalendarEventValues = {
     title: "",
     description: "",
     startTime: "",

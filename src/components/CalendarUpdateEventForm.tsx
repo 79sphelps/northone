@@ -15,8 +15,10 @@ import {
   selectCurrentCalendarEvent,
   selectMessage,
 } from "../redux/selectors/index.ts";
+import { ICalendarEvent } from "../redux/actions/index.ts";
+import { IDefaultCalendarEventValues } from "./AddCalendarEvent.tsx";
 
-interface UseFormHandleSubmit {
+interface IUseFormHandleSubmit {
   title: string | null | undefined;
   description: string | null | undefined;
   startTime: string | null | undefined;
@@ -25,13 +27,14 @@ interface UseFormHandleSubmit {
 
 const CalendarUpdateEventForm = memo(() => {
   const navigate = useNavigate();
-  const currentCalendarEvent = useAppSelector(selectCurrentCalendarEvent);
-  const message = useAppSelector(selectMessage);
+  const currentCalendarEvent: ICalendarEvent | null = useAppSelector(selectCurrentCalendarEvent);
+  const message: string = useAppSelector(selectMessage);
 
-  const [dateValue, onChange] = useState<any>(
+  const [dateValue, onChange] = useState<string | Date>(
     new Date(
       currentCalendarEvent && currentCalendarEvent.dueDate
-        ? currentCalendarEvent.dueDate
+        // ? currentCalendarEvent.dueDate
+        ? new Date(currentCalendarEvent.dueDate).toISOString()
         : new Date()
     )
   );
@@ -42,7 +45,7 @@ const CalendarUpdateEventForm = memo(() => {
         ""
   );
 
-  const defaultValues = {
+  const defaultValues: IDefaultCalendarEventValues = {
     title: currentCalendarEvent?.title,
     description: currentCalendarEvent?.description,
     startTime: currentCalendarEvent?.startTime,
@@ -53,14 +56,15 @@ const CalendarUpdateEventForm = memo(() => {
     updateCalendarEventStatusUnderEdit,
     updateCalendarEventUnderEdit,
     deleteCalendarEventUnderEdit,
-  } = useUpdateCalendarEvent({ dateValue: dateValue.toISOString(), timeValue : timeValue || "" });
+  // } = useUpdateCalendarEvent({ dateValue: dateValue.toISOString(), timeValue : timeValue || "" });
+  } = useUpdateCalendarEvent({ dateValue: dateValue as string, timeValue : timeValue || "" });
 
   const {
     register,
     handleSubmit,
     // formState: { errors, isValid },
     formState: { errors },
-  } = useForm<UseFormHandleSubmit>({
+  } = useForm<IUseFormHandleSubmit>({
     defaultValues: defaultValues,
     mode: "all",
     reValidateMode: "onBlur",
@@ -77,7 +81,8 @@ const CalendarUpdateEventForm = memo(() => {
         onSubmit={handleSubmit((data) => {
           updateCalendarEventUnderEdit({
             ...data,
-            dueDate: dateValue.toISOString(),
+            // dueDate: dateValue.toISOString(),
+            dueDate: dateValue,
             startTime: timeValue,
           });
         })}
@@ -132,7 +137,7 @@ const CalendarUpdateEventForm = memo(() => {
           <label htmlFor="dueDate">
             <strong>Due Date: </strong>
           </label>{" "}
-          <DatePicker onChange={onChange} value={dateValue} />
+          <DatePicker onChange={onChange as () => void} value={dateValue} />
         </div>
         <div className="form-group">
           <label htmlFor="startTime">

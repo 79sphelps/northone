@@ -6,9 +6,8 @@ import interactionPlugin from "@fullcalendar/interaction";
 import { formatDate } from "../redux/utils/index.ts";
 import { ICalendarEvent } from "../redux/actions/index.ts";
 
-interface CalendarProps {
-  // calendarEvents: Array<EventObj>;
-  calendarEvents: Array<ICalendarEvent>;
+interface ICalendarProps {
+  calendarEvents: Array<ICalendarEvent>;       // calendarEvents: Array<EventObj>;
   handleDateSelect: (selectInfo: any) => void;
   handleEventClick: (clickInfo: any) => void;
 }
@@ -27,13 +26,12 @@ type EventObj = {
   start2: string | undefined;
 };
 
-const Calendar: React.FC<CalendarProps> = memo(
+const Calendar: React.FC<ICalendarProps> = memo(
   ({ calendarEvents, handleDateSelect, handleEventClick }) => {
-    const mapCalendarEventEventsToCalendar = (arr: Array<EventObj> = []) => {
+    const mapCalendarEventEventsToCalendar: (arr?: EventObj[]) => EventObj[] = (arr: Array<EventObj> = []) => {
     // const mapCalendarEventEventsToCalendar = (arr: Array<ICalendarEvent> = []) => {
       const result = arr.map((obj) => {
         const res: EventObj = {
-        // const res: ICalendarEvent = {
           title: undefined,
           date: undefined,
           start: undefined,
@@ -63,7 +61,7 @@ const Calendar: React.FC<CalendarProps> = memo(
       return result;
     };
 
-    const renderEventContent = (eventInfo: any) => {
+    const renderEventContent: (eventInfo: any) => React.JSX.Element = (eventInfo: any) => {
       return (
         <>
           <b>{eventInfo.timeText}</b>

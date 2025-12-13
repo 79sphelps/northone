@@ -4,10 +4,11 @@ import { useNavigate } from "react-router-dom";
 import "react-time-picker/dist/TimePicker.css";
 import "react-clock/dist/Clock.css";
 import DatePicker from "react-date-picker";
-import { useForm, FieldError } from "react-hook-form";
+import { useForm, FieldError, SubmitHandler } from "react-hook-form";
 // import { Value } from "react-time-picker/dist/cjs/shared/types";
 import EventFormInput from "./EventFormInput.tsx";
 import FormInputValidationError from "./FormInputValidationError.tsx";
+import { IDefaultCalendarEventValues } from './AddCalendarEvent.tsx';
 
 interface UseFormHandleSubmit {
   title: string;
@@ -20,22 +21,19 @@ interface UseFormHandleSubmit {
 // type Value = ValuePiece | [ValuePiece, ValuePiece];
 
 interface FormProps {
-  // onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
-  onSubmit: (event: UseFormHandleSubmit) => void;
+  onSubmit: (event: UseFormHandleSubmit) => void;  // (event: React.FormEvent<HTMLFormElement>) => void;
   message: string;
-  defaultValues: {
-    title: string;
-    description: string;
-    startTime: string;
-    dueDate: string;
-  };
-  // onChangeDateValue: (date: Date) => void;
-  onChangeDateValue: (date: any) => void;
-  // onChangeTimeValue: (value: Value) => void;
-  onChangeTimeValue: (value: any) => void;
+  // defaultValues: {
+  //   title: string;
+  //   description: string;
+  //   startTime: string;
+  //   dueDate: string;
+  // };
+  defaultValues: IDefaultCalendarEventValues;
+  onChangeDateValue: (date: any) => void;       // onChangeDateValue: (date: Date) => void;
+  onChangeTimeValue: (value: any) => void;      // onChangeTimeValue: (value: Value) => void;
   dateValue: Date;
-  // timeValue: Value;
-  timeValue: string;
+  timeValue: string;      // timeValue: Value;
 }
 
 const CalendarEventForm: React.FC<FormProps> = memo(
@@ -52,8 +50,7 @@ const CalendarEventForm: React.FC<FormProps> = memo(
     const {
       register,
       handleSubmit,
-      // formState: { errors, isValid },
-      formState: { errors },
+      formState: { errors },          // formState: { errors, isValid },
     } = useForm({
       defaultValues: defaultValues,
       mode: "all",
@@ -65,7 +62,7 @@ const CalendarEventForm: React.FC<FormProps> = memo(
     };
 
     return (
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit as SubmitHandler<IDefaultCalendarEventValues>)}>
         <div className="form-group">
           <EventFormInput
             htmlFor="title"

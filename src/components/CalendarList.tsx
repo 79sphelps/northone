@@ -13,7 +13,7 @@ interface CalendarListProps {
 
 const CalendarList: React.FC<CalendarListProps> = memo(
   ({ calendarEvents, setActiveCalendarEvent, currentIndex }) => {
-    const { removeAllCalendarEvents } = useCalendarList();
+    const { removeAllCalendarEvents }: { removeAllCalendarEvents: () => void } = useCalendarList();
 
     return (
       <>
@@ -38,12 +38,13 @@ const CalendarList: React.FC<CalendarListProps> = memo(
               ))}
           </ul>
         </div>
-        {/* <button
+        <button
           className="col-md-6 m-3 btn btn-sm btn-danger"
           onClick={() => removeAllCalendarEvents()}
+          disabled={true}
         >
           Remove All
-      </button> */}
+      </button>
       </>
     );
   }

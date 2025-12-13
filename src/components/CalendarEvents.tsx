@@ -10,12 +10,13 @@ import CalendarSearchBox from "./CalendarSearchBox.tsx";
 import { useCalendarEvents } from "./useCalendarEvents.ts";
 import { useCalendarEventData } from "./useCalendarEventData.ts";
 import { selectCalendarEvents, selectCurrentIndex } from "../redux/selectors/index.ts";
+import { ICalendarEvent } from "../redux/actions/index.ts";
 
 const CalendarEvents = memo(() => {
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState<boolean>(false);
   // const datePicker = useRef({ isOpen: false });
-  const calendarEvents = useAppSelector(selectCalendarEvents);
-  const currentIndex = useAppSelector(selectCurrentIndex);
+  const calendarEvents: ICalendarEvent[] = useAppSelector(selectCalendarEvents);
+  const currentIndex: number = useAppSelector(selectCurrentIndex);
 
   useCalendarEventData();
   const { setActiveCalendarEvent, handleDateSelect, handleEventClick } =

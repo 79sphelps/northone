@@ -19,14 +19,14 @@ const initialState = {
   isFinding: false,
 };
 
-interface CalendarEventToAdd {
+export interface ICalendarEventToAdd {
   [key: string]: any;
 }
 
 export interface RootState {
   calendarEvents: ICalendarEvent[];
   currentCalendarEvent: ICalendarEvent | null;
-  calendarEventToAdd: CalendarEventToAdd | null;
+  calendarEventToAdd: ICalendarEventToAdd | null;
   searchTitle: string;
   currentIndex: number;
   message: string;
