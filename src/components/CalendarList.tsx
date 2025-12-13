@@ -2,7 +2,7 @@ import React, { memo } from "react";
 import { useCalendarList } from "./useCalendarList.ts";
 import { ICalendarEvent } from "../redux/actions/index.ts";
 
-interface CalendarListProps {
+interface ICalendarListProps {
   calendarEvents: ICalendarEvent[];
   setActiveCalendarEvent: (
     calendarEvent: ICalendarEvent,
@@ -11,9 +11,10 @@ interface CalendarListProps {
   currentIndex: number;
 }
 
-const CalendarList: React.FC<CalendarListProps> = memo(
+const CalendarList: React.FC<ICalendarListProps> = memo(
   ({ calendarEvents, setActiveCalendarEvent, currentIndex }) => {
-    const { removeAllCalendarEvents }: { removeAllCalendarEvents: () => void } = useCalendarList();
+    const { removeAllCalendarEvents }: { removeAllCalendarEvents: () => void } =
+      useCalendarList();
 
     return (
       <>
@@ -44,7 +45,7 @@ const CalendarList: React.FC<CalendarListProps> = memo(
           disabled={true}
         >
           Remove All
-      </button>
+        </button>
       </>
     );
   }

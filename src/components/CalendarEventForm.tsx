@@ -10,7 +10,7 @@ import EventFormInput from "./EventFormInput.tsx";
 import FormInputValidationError from "./FormInputValidationError.tsx";
 import { IDefaultCalendarEventValues } from './AddCalendarEvent.tsx';
 
-interface UseFormHandleSubmit {
+interface IUseFormHandleSubmit {
   title: string;
   description: string;
   startTime: string;
@@ -20,8 +20,8 @@ interface UseFormHandleSubmit {
 // type ValuePiece = Date | null;
 // type Value = ValuePiece | [ValuePiece, ValuePiece];
 
-interface FormProps {
-  onSubmit: (event: UseFormHandleSubmit) => void;  // (event: React.FormEvent<HTMLFormElement>) => void;
+interface IFormProps {
+  onSubmit: (event: IUseFormHandleSubmit) => void;  // (event: React.FormEvent<HTMLFormElement>) => void;
   message: string;
   // defaultValues: {
   //   title: string;
@@ -33,10 +33,10 @@ interface FormProps {
   onChangeDateValue: (date: any) => void;       // onChangeDateValue: (date: Date) => void;
   onChangeTimeValue: (value: any) => void;      // onChangeTimeValue: (value: Value) => void;
   dateValue: Date;
-  timeValue: string;      // timeValue: Value;
+  timeValue: string;                            // timeValue: Value;
 }
 
-const CalendarEventForm: React.FC<FormProps> = memo(
+const CalendarEventForm: React.FC<IFormProps> = memo(
   ({
     onSubmit,
     message,

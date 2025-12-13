@@ -5,7 +5,7 @@ import CalendarEventForm from "./CalendarEventForm.tsx";
 import { useAddCalendarEvent } from "./useAddCalendarEvent.ts";
 import { selectCalendarEventToAdd } from "../redux/selectors/index.ts";
 import { ICalendarEventToAdd } from "../redux/reducers/index.ts";
-import { UseFormHandleSubmit } from "./useAddCalendarEvent.ts";
+import { IUseFormHandleSubmit } from "./useAddCalendarEvent.ts";
 
 // type ValuePiece = Date | null;
 // type Value = ValuePiece | [ValuePiece, ValuePiece];
@@ -17,8 +17,8 @@ export interface IDefaultCalendarEventValues {
   dueDate: string | null | undefined;
 }
 
-const AddCalendarEvent = memo(() => {
-  const CalendarEventToAdd: ICalendarEventToAdd | null = useAppSelector(
+const AddCalendarEvent: React.FC = memo(() => {
+  const calendarEventToAdd: ICalendarEventToAdd | null = useAppSelector(
     selectCalendarEventToAdd
   );
   const [dateValue, setDateValue] = useState<Date>(new Date());
@@ -29,7 +29,7 @@ const AddCalendarEvent = memo(() => {
     message,
     submitted,
   }: {
-    saveCalendarEvent: (event: UseFormHandleSubmit) => void;
+    saveCalendarEvent: (event: IUseFormHandleSubmit) => void;
     newCalendarEvent: () => void;
     message: string;
     submitted: boolean;
@@ -43,7 +43,7 @@ const AddCalendarEvent = memo(() => {
   };
   return (
     <div className="submit-form">
-      {submitted && CalendarEventToAdd ? (
+      {submitted && calendarEventToAdd ? (
         <div>
           <h4>The new calendar item was created successfully!</h4>
           <button

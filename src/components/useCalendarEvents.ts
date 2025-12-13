@@ -6,7 +6,7 @@ import { setCurrentIndex, setCurrentCalendarEvent } from "../redux/actions";
 import { selectCurrentIndex } from "../redux/selectors";
 import { ICalendarEvent } from "../redux/actions";
 
-export interface ClickInfoEvent {
+export interface IClickInfoEvent {
   id: string;
   title: string;
   status?: boolean | null;
@@ -17,8 +17,8 @@ export interface ClickInfoEvent {
   };
 }
 
-export interface ClickInfo {
-  event: ClickInfoEvent;
+export interface IClickInfo {
+  event: IClickInfoEvent;
 }
 
 interface DatePickerRef {
@@ -53,7 +53,7 @@ export function useCalendarEvents({
     setShow(true);
   };
 
-  const handleEventClick = (clickInfo: ClickInfo): void => {
+  const handleEventClick = (clickInfo: IClickInfo): void => {
     let calendarEvent: ICalendarEvent = {
       id: clickInfo.event.id,
       title: clickInfo.event.title,

@@ -1,6 +1,6 @@
 import React, { memo } from "react";
 
-interface FormProps {
+interface IFormProps {
   htmlFor: string;
   name: string;
   className: string;
@@ -12,7 +12,7 @@ interface FormProps {
   register: any;
 }
 
-const EventFormInput: React.FC<FormProps>  = memo(({
+const EventFormInput: React.FC<IFormProps>  = memo(({
   htmlFor,
   name,
   className,

@@ -7,8 +7,9 @@ import { addCalendarEvent, setCalendarEventToAdd } from "../redux/actions";
 import { selectCalendarEventToAdd } from "../redux/selectors";
 import { formatDate } from "../redux/utils";
 import { ICalendarEvent } from "../redux/actions";
-
-interface UseFormHandleSubmit {
+import { ICalendarEventToAdd } from "../redux/reducers/index.ts";
+import { INewEvent } from "./useCalendarEventModal.ts";
+export interface IUseFormHandleSubmit {
   title: string;
   description: string;
   startTime: string;
@@ -23,9 +24,11 @@ export function useAddCalendarEvent({
   timeValue: any;
 }) {
   const dispatch = useAppDispatch();
-  const calendarEventToAdd = useAppSelector(selectCalendarEventToAdd);
-  const [submitted, setSubmitted] = useState(false);
-  const [message, setMessage] = useState("");
+  const calendarEventToAdd: ICalendarEventToAdd | null = useAppSelector(
+    selectCalendarEventToAdd
+  );
+  const [submitted, setSubmitted] = useState<boolean>(false);
+  const [message, setMessage] = useState<string>("");
 
   useEffect(() => {
     const storedCalendarEventToAdd = JSON.parse(
@@ -54,7 +57,7 @@ export function useAddCalendarEvent({
     }
   }, [calendarEventToAdd]);
 
-  let initialCalendarEventState = {
+  let initialCalendarEventState: INewEvent = {
     id: null,
     title: "",
     description: "",
@@ -63,12 +66,12 @@ export function useAddCalendarEvent({
     start: "",
   };
 
-  const saveCalendarEvent = (event: UseFormHandleSubmit) => {
+  const saveCalendarEvent = (event: IUseFormHandleSubmit) => {
     if (!(dateValue instanceof Date) || isNaN(dateValue.getTime())) {
       setMessage("Please provide a valid date.");
       return;
     }
-    const data = {
+    const data: INewEvent = {
       id: null,
       title: event.title,
       description: event.description,
@@ -80,7 +83,7 @@ export function useAddCalendarEvent({
     localStorage.removeItem("calendarEventToAdd");
   };
 
-  const newCalendarEvent = () => {
+  const newCalendarEvent: () => void = () => {
     dispatch(setCalendarEventToAdd(initialCalendarEventState));
     setSubmitted(false);
     setMessage("");

@@ -6,18 +6,30 @@ import Modal from "react-bootstrap/Modal";
 import "react-time-picker/dist/TimePicker.css";
 import "react-clock/dist/Clock.css";
 import { useCalendarEventModal } from "./useCalendarEventModal.ts";
+import { INewEvent } from "./useCalendarEventModal.ts";
 
-interface CalendarEventModalProps {
+interface ICalendarEventModalProps {
   show: boolean;
   setShow: (show: boolean) => void;
 }
 
-const CalendarEventModal: React.FC<CalendarEventModalProps> = memo(
+const CalendarEventModal: React.FC<ICalendarEventModalProps> = memo(
   ({ show, setShow }) => {
-    const { handleClose, saveNewEvent, handleEventChange, newEvent } =
-      useCalendarEventModal({ setShow });
-    const [dateValue, onChange] = useState<any>(new Date());
-    const [timeValue, onChangeTimeValue] = useState<any>(""); // useState('10:00');
+    const {
+      handleClose,
+      saveNewEvent,
+      handleEventChange,
+      newEvent,
+    }: {
+      handleClose: () => void;
+      saveNewEvent: () => void;
+      handleEventChange: (v: React.ChangeEvent<HTMLInputElement>) => void;
+      newEvent: INewEvent;
+    } = useCalendarEventModal({ setShow });
+    // const [dateValue, onChange] = useState<any>(new Date());
+    const [dateValue, onChange] = useState<Date>(new Date());
+    // const [timeValue, onChangeTimeValue] = useState<any>(""); // useState('10:00');
+    const [timeValue, onChangeTimeValue] = useState<string>(""); // useState('10:00');
 
     return (
       <Modal
@@ -66,11 +78,17 @@ const CalendarEventModal: React.FC<CalendarEventModalProps> = memo(
               </div>
               <div className="form-group">
                 <label htmlFor="dueDate">Due Date:</label>{" "}
-                <DatePicker onChange={onChange} value={dateValue} />
+                <DatePicker
+                  onChange={onChange as (date: any) => void}
+                  value={dateValue}
+                />
               </div>
               <div>
                 <label htmlFor="dueDate">Time Start:</label>{" "}
-                <TimePicker onChange={onChangeTimeValue} value={timeValue} />
+                <TimePicker
+                  onChange={onChangeTimeValue as (value: any) => void}
+                  value={timeValue}
+                />
               </div>
               <div>
                 <button

@@ -25,16 +25,18 @@ interface IUseFormHandleSubmit {
   dueDate: string | null | undefined;
 }
 
-const CalendarUpdateEventForm = memo(() => {
+const CalendarUpdateEventForm: React.FC = memo(() => {
   const navigate = useNavigate();
-  const currentCalendarEvent: ICalendarEvent | null = useAppSelector(selectCurrentCalendarEvent);
+  const currentCalendarEvent: ICalendarEvent | null = useAppSelector(
+    selectCurrentCalendarEvent
+  );
   const message: string = useAppSelector(selectMessage);
 
   const [dateValue, onChange] = useState<string | Date>(
     new Date(
       currentCalendarEvent && currentCalendarEvent.dueDate
-        // ? currentCalendarEvent.dueDate
-        ? new Date(currentCalendarEvent.dueDate).toISOString()
+        ? // ? currentCalendarEvent.dueDate
+          new Date(currentCalendarEvent.dueDate).toISOString()
         : new Date()
     )
   );
@@ -56,8 +58,15 @@ const CalendarUpdateEventForm = memo(() => {
     updateCalendarEventStatusUnderEdit,
     updateCalendarEventUnderEdit,
     deleteCalendarEventUnderEdit,
-  // } = useUpdateCalendarEvent({ dateValue: dateValue.toISOString(), timeValue : timeValue || "" });
-  } = useUpdateCalendarEvent({ dateValue: dateValue as string, timeValue : timeValue || "" });
+  }: // } = useUpdateCalendarEvent({ dateValue: dateValue.toISOString(), timeValue : timeValue || "" });
+  {
+    updateCalendarEventStatusUnderEdit: (status: boolean) => void;
+    updateCalendarEventUnderEdit: (event: any) => void;
+    deleteCalendarEventUnderEdit: () => void;
+  } = useUpdateCalendarEvent({
+    dateValue: dateValue as string,
+    timeValue: timeValue || "",
+  });
 
   const {
     register,
@@ -70,8 +79,12 @@ const CalendarUpdateEventForm = memo(() => {
     reValidateMode: "onBlur",
   });
 
-  const getEditorStyle = (fieldError: FieldError | undefined) => {
-    return fieldError ? "border: solid 1px red" : "display: block";
+  const getEditorStyle: (fieldError: FieldError | undefined) => string = (
+    fieldError: FieldError | undefined
+  ) => {
+    return fieldError
+      ? ("border: solid 1px red" as string)
+      : ("display: block" as string);
   };
 
   return (

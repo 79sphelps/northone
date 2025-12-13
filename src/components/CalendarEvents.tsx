@@ -9,18 +9,32 @@ import Calendar from "./Calendar.tsx";
 import CalendarSearchBox from "./CalendarSearchBox.tsx";
 import { useCalendarEvents } from "./useCalendarEvents.ts";
 import { useCalendarEventData } from "./useCalendarEventData.ts";
-import { selectCalendarEvents, selectCurrentIndex } from "../redux/selectors/index.ts";
+import {
+  selectCalendarEvents,
+  selectCurrentIndex,
+} from "../redux/selectors/index.ts";
 import { ICalendarEvent } from "../redux/actions/index.ts";
+import { IClickInfo } from "./useCalendarEvents.ts";
 
-const CalendarEvents = memo(() => {
+const CalendarEvents: React.FC = memo(() => {
   const [show, setShow] = useState<boolean>(false);
   // const datePicker = useRef({ isOpen: false });
   const calendarEvents: ICalendarEvent[] = useAppSelector(selectCalendarEvents);
   const currentIndex: number = useAppSelector(selectCurrentIndex);
 
   useCalendarEventData();
-  const { setActiveCalendarEvent, handleDateSelect, handleEventClick } =
-    useCalendarEvents({ setShow });
+  const {
+    setActiveCalendarEvent,
+    handleDateSelect,
+    handleEventClick,
+  }: {
+    setActiveCalendarEvent: (
+      calendarEvent: ICalendarEvent,
+      index: number
+    ) => void;
+    handleDateSelect: () => void;
+    handleEventClick: (clickInfo: IClickInfo) => void;
+  } = useCalendarEvents({ setShow });
 
   return (
     <div className="list row">
