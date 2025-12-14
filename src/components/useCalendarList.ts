@@ -6,20 +6,22 @@ import {
   setCurrentCalendarEvent,
 } from "../redux/actions";
 
+type VoidReturn = () => void;
+
 export function useCalendarList() {
   const dispatch = useAppDispatch();
 
-  const retrieveCalendarEvents = () => {
+  const retrieveCalendarEvents: VoidReturn = () => {
     dispatch(getCalendarEvents());
   };
 
-  const refreshList = () => {
+  const refreshList: VoidReturn = () => {
     retrieveCalendarEvents();
     dispatch(setCurrentCalendarEvent(null));
     dispatch(setCurrentIndex(-1));
   };
 
-  const removeAllCalendarEvents = () => {
+  const removeAllCalendarEvents: VoidReturn= () => {
     dispatch(deleteCalendarEvents());
     refreshList();
   };

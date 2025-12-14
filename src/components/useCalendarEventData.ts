@@ -11,7 +11,7 @@ export function useCalendarEventData() {
     // eslint-disable-next-line
   }, []);
 
-  const retrieveCalendarEvents = () => {
+  const retrieveCalendarEvents: () => void = () => {
     dispatch(getCalendarEvents());
   };
 }

@@ -66,7 +66,9 @@ export function useAddCalendarEvent({
     start: "",
   };
 
-  const saveCalendarEvent = (event: IUseFormHandleSubmit) => {
+  const saveCalendarEvent: (event: IUseFormHandleSubmit) => void = (
+    event: IUseFormHandleSubmit
+  ) => {
     if (!(dateValue instanceof Date) || isNaN(dateValue.getTime())) {
       setMessage("Please provide a valid date.");
       return;

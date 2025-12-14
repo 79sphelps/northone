@@ -34,12 +34,12 @@ export function useCalendarEvents({
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const datePicker = useRef<DatePickerRef>({ isOpen: false });
-  const currentIndex = useAppSelector(selectCurrentIndex);
+  const currentIndex: number = useAppSelector(selectCurrentIndex);
 
-  const setActiveCalendarEvent = (
+  const setActiveCalendarEvent: (
     calendarEvent: ICalendarEvent,
     index: number
-  ): void => {
+  ) => void = (calendarEvent: ICalendarEvent, index: number): void => {
     dispatch(setCurrentCalendarEvent(calendarEvent));
     dispatch(setCurrentIndex(index));
     if (datePicker && datePicker.current && datePicker.current.openCalendar) {
@@ -49,11 +49,13 @@ export function useCalendarEvents({
     localStorage.setItem("currentIndex", JSON.stringify(currentIndex));
   };
 
-  const handleDateSelect = () => {
+  const handleDateSelect: () => void = () => {
     setShow(true);
   };
 
-  const handleEventClick = (clickInfo: IClickInfo): void => {
+  const handleEventClick: (clickInfo: IClickInfo) => void = (
+    clickInfo: IClickInfo
+  ): void => {
     let calendarEvent: ICalendarEvent = {
       id: clickInfo.event.id,
       title: clickInfo.event.title,

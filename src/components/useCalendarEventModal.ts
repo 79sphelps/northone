@@ -18,10 +18,12 @@ export function useCalendarEventModal({
   setShow: (show: boolean) => void;
 }) {
   const dispatch = useAppDispatch();
-  const [dateValue, setDateValue] = useState(new Date() as unknown as string); // to satisfy type requirement
-  const [timeValue, setTimeValue] = useState(""); // useState('10:00');
+  const [dateValue, setDateValue] = useState<string>(
+    new Date() as unknown as string
+  ); // to satisfy type requirement
+  const [timeValue, setTimeValue] = useState<string>(""); // useState('10:00');
 
-  const handleClose = () => setShow(false);
+  const handleClose: () => void = () => setShow(false);
 
   let initialEvent: INewEvent = {
     id: null,
@@ -31,7 +33,7 @@ export function useCalendarEventModal({
     dueDate: formatDate(new Date()) as unknown as string, // to satisfy type requirement
     start: "",
   };
-  const [newEvent, setNewEvent] = useState(initialEvent);
+  const [newEvent, setNewEvent] = useState<INewEvent>(initialEvent);
 
   const saveNewEvent = () => {
     var data: INewEvent = {
@@ -47,7 +49,9 @@ export function useCalendarEventModal({
     setNewEvent(initialEvent);
   };
 
-  const handleEventChange = (v: React.ChangeEvent<HTMLInputElement>) => {
+  const handleEventChange: (v: React.ChangeEvent<HTMLInputElement>) => void = (
+    v: React.ChangeEvent<HTMLInputElement>
+  ) => {
     v.preventDefault();
     const { name, value } = v.target;
     setNewEvent({ ...newEvent, [name]: value });
