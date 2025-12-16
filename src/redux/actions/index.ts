@@ -1,7 +1,7 @@
 import { actionTypes } from "../constants/action.types";
 
 export interface ICalendarEvent {
-    id: string | null | undefined,
+    // id: string | null | undefined,
     title: string | null | undefined,
     description: string | null | undefined,
     status: boolean | null | undefined,

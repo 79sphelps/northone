@@ -102,7 +102,7 @@ export function* findByTitleWorkerSaga(action: IFindByTitle) {
 export function* updateCalendarEventWorkerSaga(action: IAction) {
   try {
     yield put({ type: actionTypes.IS_UPDATING });
-    yield call(updateCalendarEvent, action.payload as ICalendarEvent);
+    yield call(updateCalendarEvent, action.payload as unknown as ICalendarEvent);
     const payload = action.payload;
     yield put({ type: actionTypes.UPDATE_CALENDAR_EVENT_SUCCESSFUL, payload });
     // let calendarEvent = action.payload.calendarEvent;
@@ -139,7 +139,7 @@ export function* deleteCalendarEventWorkerSaga(action: IDeleteCalendarEvent) {
 export function* addCalendarEventWorkerSaga(action: IAction) {
   try {
     yield put({ type: actionTypes.IS_ADDING });
-    const payload: ICalendarEvent = yield call(addCalendarEvent, action.payload as ICalendarEvent);
+    const payload: ICalendarEvent = yield call(addCalendarEvent, action.payload as unknown as ICalendarEvent);
     yield put({ type: actionTypes.ADD_CALENDAR_EVENT_SUCCESSFUL, payload });
     const message = "The calendar event was added successfully!";
     yield put({ type: actionTypes.SET_MESSAGE, payload: message });

@@ -45,6 +45,7 @@ const CalendarList: React.FC<ICalendarListProps> = memo(
                   className={
                     "list-group-item-action list-group-item " +
                     (index === currentIndex ? "active" : "")
+                    //  + `${ calendarEvent.status === 'Done' ? 'text-decoration-line-through' : 'none'}`
                   }
                   onClick={() => setActiveCalendarEvent(calendarEvent, index)}
                   key={index}

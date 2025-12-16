@@ -47,7 +47,7 @@ export function useUpdateCalendarEvent({
     }
     dispatch(
       updateCalendarEvent({
-        // id: currentCalendarEvent._id,
+        _id: currentCalendarEvent._id,
         ...currentCalendarEvent,
       })
     );
@@ -63,7 +63,8 @@ export function useUpdateCalendarEvent({
     };
     dispatch(
       updateCalendarEvent({
-        id: currentCalendarEvent._id,
+        // id: currentCalendarEvent._id,
+        _id: currentCalendarEvent._id,
         ...updatedEvent,
       })
     );

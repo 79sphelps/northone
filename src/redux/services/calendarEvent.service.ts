@@ -46,7 +46,7 @@ class CalendarEventDataService {
 
   updateCalendarEvent(data: ICalendarEvent) {
     try {
-      return api.put(`${GET_CALENDAR_EVENTS_ENDPOINT}/${data.id}`, data);
+      return api.put(`${GET_CALENDAR_EVENTS_ENDPOINT}/${data._id}`, data);
     } catch (error) {
       if (isAxiosError(error)) {
         const { message } = errorHandler(error);

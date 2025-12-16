@@ -43,7 +43,7 @@ export function useAddCalendarEvent({
   useEffect(() => {
     if (!calendarEventToAdd) {
       let calendarEventToAddObj = {
-        id: null,
+        // id: null,
         title: "",
         description: "",
         status: false,
@@ -58,7 +58,7 @@ export function useAddCalendarEvent({
   }, [calendarEventToAdd]);
 
   let initialCalendarEventState: INewEvent = {
-    id: null,
+    // id: null,
     title: "",
     description: "",
     status: false,
@@ -74,7 +74,7 @@ export function useAddCalendarEvent({
       return;
     }
     const data: INewEvent = {
-      id: null,
+      // id: null,
       title: event.title,
       description: event.description,
       status: false,

@@ -16,7 +16,7 @@ type EventObj = {
   title: string | undefined;
   date: string | undefined;
   start: string | undefined;
-  id: string | undefined;
+  // id: string | undefined;
   _id: string | undefined;
   createdAt: string | undefined;
   description: string | undefined;
@@ -35,7 +35,7 @@ const Calendar: React.FC<ICalendarProps> = memo(
           title: undefined,
           date: undefined,
           start: undefined,
-          id: undefined,
+          // id: undefined,
           _id: undefined,
           createdAt: undefined,
           description: undefined,
@@ -49,7 +49,7 @@ const Calendar: React.FC<ICalendarProps> = memo(
         res["start"] = obj["start"]
           ? res["date"] + "T" + obj["start"] + ":00"
           : res["date"] + "T12:00:00";
-        res["id"] = obj["_id"];
+        // res["id"] = obj["_id"];
         res["createdAt"] = obj["createdAt"];
         res["description"] = obj["description"];
         res["dueDate"] = obj["dueDate"];

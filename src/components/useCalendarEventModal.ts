@@ -4,7 +4,7 @@ import { addCalendarEvent } from "../redux/actions";
 import { formatDate } from "../redux/utils";
 
 export interface INewEvent {
-  id: string | null;
+  // id: string | null;
   title: string;
   description: string;
   status: boolean;
@@ -26,7 +26,7 @@ export function useCalendarEventModal({
   const handleClose: () => void = () => setShow(false);
 
   let initialEvent: INewEvent = {
-    id: null,
+    // id: null,
     title: "",
     description: "",
     status: false,
@@ -37,7 +37,7 @@ export function useCalendarEventModal({
 
   const saveNewEvent = () => {
     var data: INewEvent = {
-      id: newEvent.id, // or generate a new id if needed
+      // id: newEvent.id, // or generate a new id if needed
       title: newEvent.title,
       description: newEvent.description,
       status: false,
