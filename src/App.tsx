@@ -14,7 +14,7 @@ import UpdateCalendarEvent from "./components/UpdateCalendarEvent.tsx";
 import CalendarEvents from "./components/CalendarEvents.tsx";
 import NotFound from "./components/NotFound.tsx";
 import { setSubmitted, setMessage } from "./redux/actions";
-import { ToastContainer, toast } from 'react-toastify';
+// import { ToastContainer, toast } from 'react-toastify';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
@@ -30,9 +30,9 @@ const App = () => {
     dispatch(setMessage(""));
   };
 
-  useEffect((): any => { 
-    toast.info("Because the backend uses the free tier of Render.com, it may take up to 30+ seconds to wake up the server on the first request. Annoying, yes, but...free has a cost, LOL.")
-  }, []);
+  // useEffect((): any => { 
+  //   toast.info("Because the backend uses the free tier of Render.com, it may take up to 30+ seconds to wake up the server on the first request. Annoying, yes, but...free has a cost, LOL.")
+  // }, []);
 
   return (
     <Router>
@@ -59,7 +59,7 @@ const App = () => {
           </div>
         </nav>
 
-        <ToastContainer 
+        {/* <ToastContainer 
           position="top-center"
           autoClose={30000}
           hideProgressBar={false}
@@ -71,7 +71,7 @@ const App = () => {
           pauseOnHover
           theme="light"
           // transition={Bounce}
-        />
+        /> */}
 
         <div className="container mt-3">
           <Routes>

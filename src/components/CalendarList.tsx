@@ -19,12 +19,18 @@ const CalendarList: React.FC<ICalendarListProps> = memo(
     //   useCalendarList();
     const isLoading: boolean = useAppSelector(selectIsLoading);
 
-    if (isLoading)
+    if (isLoading) {
       return (
         <div className="is-loading">
-          *** Loading Calendar Data... ***
+          <p className="loading-text">
+            Loading Calendar Data...
+          </p>
+          <p className="loading-text-sm">
+            Because the backend uses the free tier of Render.com, it may take up to 30+ seconds to wake up the server on the first request.
+          </p>
         </div>
       );
+    }
 
     return (
       <>

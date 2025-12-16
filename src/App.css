@@ -65,14 +65,21 @@ ul li {
 
 .is-loading {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   border: 1px solid green;
   border-radius: 30px;
-  /* margin: 50px; */
-  /* padding: 50px; */
   width: 100%;
   height: 80vh;
+}
+
+.loading-text {
   font-size: 30px;
+  color: blue;
+}
+
+.loading-text-sm {
+  font-size: 20px;
   color: blue;
 }
