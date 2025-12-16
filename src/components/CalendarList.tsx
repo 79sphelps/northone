@@ -3,6 +3,7 @@ import React, { memo } from "react";
 import { useAppSelector } from "../redux/selectors";
 import { ICalendarEvent } from "../redux/actions/index.ts";
 import { selectIsLoading } from "../redux/selectors/index.ts";
+import Spinner from "react-bootstrap/Spinner";
 
 interface ICalendarListProps {
   calendarEvents: ICalendarEvent[];
@@ -22,11 +23,9 @@ const CalendarList: React.FC<ICalendarListProps> = memo(
     if (isLoading) {
       return (
         <div className="is-loading">
+          <Spinner animation="border" style={{ height: "200px" }}/>
           <p className="loading-text">
             Loading Calendar Data...
-          </p>
-          <p className="loading-text-sm">
-            Because the backend uses the free tier of Render.com, it may take up to 30+ seconds to wake up the server on the first request.
           </p>
         </div>
       );
