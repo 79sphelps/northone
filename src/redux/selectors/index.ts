@@ -42,6 +42,16 @@ const selectSubmitted = createSelector(
   (state: RootState) => state.submitted
 );
 
+const selectIsFinding = createSelector(
+  [getState],
+  (state: RootState) => state.isFinding
+);
+
+const selectIsLoading = createSelector(
+  [getState],
+  (state: RootState) => state.isLoading
+)
+
 export {
   selectCalendarEvents,
   selectCurrentCalendarEvent,
@@ -50,4 +60,6 @@ export {
   selectSearchTitle,
   selectMessage,
   selectSubmitted,
+  selectIsFinding,
+  selectIsLoading,
 };

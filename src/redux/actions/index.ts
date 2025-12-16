@@ -111,6 +111,34 @@ const getSubmitted = () => {
   return { type: actionTypes.GET_SUBMITTED };
 };
 
+export interface ISetIsFinding {
+  type: typeof actionTypes.SET_IS_FINDING;
+  payload: boolean;
+};
+
+const setIsFinding = (payload: ISetIsFinding['payload']) => {
+  return { type: actionTypes.SET_IS_FINDING, payload };
+};
+
+const getIsFinding = () => {
+  return { type: actionTypes.GET_IS_FINDING };
+};
+
+export interface ISetIsLoading {
+  type: typeof actionTypes.SET_IS_LOADING;
+  payload: boolean;
+};
+
+const setIsLoading = (payload: ISetIsLoading['payload']) => {
+  return { type: actionTypes.SET_IS_LOADING, payload };
+};
+
+const getIsLoading = () => {
+  return { type: actionTypes.GET_IS_LOADING };
+};
+
+
+
 export interface ISetCalendarEvents {
   type: typeof actionTypes.SET_CALENDAR_EVENTS;
   payload: Array<ICalendarEvent>;
@@ -243,6 +271,10 @@ export {
   getMessage,
   setSubmitted,
   getSubmitted,
+  getIsLoading,
+  setIsLoading,
+  getIsFinding,
+  setIsFinding,
   setCalendarEvents,
   getCalendarEvents,
   getCalendarEventsSuccessful,

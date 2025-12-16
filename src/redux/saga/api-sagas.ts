@@ -51,8 +51,10 @@ export default function* watcherSaga() {
 export function* getCalendarEventsWorkerSaga() {
   try {
     yield put({ type: actionTypes.IS_FETCHING });
+    yield put({ type: actionTypes.SET_IS_LOADING, payload: true })
     const payload: Array<ICalendarEvent> = yield call(getCalendarEvents);
     yield put({ type: actionTypes.GET_CALENDAR_EVENTS_SUCCESSFUL, payload });
+    yield put({ type: actionTypes.SET_IS_LOADING, payload: false });
   } catch (e) {
     yield put({ type: actionTypes.API_ERRORED, payload: e });
   }

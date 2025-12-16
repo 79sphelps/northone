@@ -1,6 +1,8 @@
 import React, { memo } from "react";
-import { useCalendarList } from "./useCalendarList.ts";
+// import { useCalendarList } from "./useCalendarList.ts";
+import { useAppSelector } from "../redux/selectors";
 import { ICalendarEvent } from "../redux/actions/index.ts";
+import { selectIsLoading } from "../redux/selectors/index.ts";
 
 interface ICalendarListProps {
   calendarEvents: ICalendarEvent[];
@@ -13,8 +15,16 @@ interface ICalendarListProps {
 
 const CalendarList: React.FC<ICalendarListProps> = memo(
   ({ calendarEvents, setActiveCalendarEvent, currentIndex }) => {
-    const { removeAllCalendarEvents }: { removeAllCalendarEvents: () => void } =
-      useCalendarList();
+    // const { removeAllCalendarEvents }: { removeAllCalendarEvents: () => void } =
+    //   useCalendarList();
+    const isLoading: boolean = useAppSelector(selectIsLoading);
+
+    if (isLoading)
+      return (
+        <div className="is-loading">
+          *** Loading Calendar Data... ***
+        </div>
+      );
 
     return (
       <>
@@ -39,13 +49,13 @@ const CalendarList: React.FC<ICalendarListProps> = memo(
               ))}
           </ul>
         </div>
-        <button
+        {/* <button
           className="col-md-6 m-3 btn btn-sm btn-danger"
           onClick={() => removeAllCalendarEvents()}
           disabled={true}
         >
           Remove All
-        </button>
+        </button> */}
       </>
     );
   }

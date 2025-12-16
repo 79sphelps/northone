@@ -113,8 +113,11 @@ function rootReducer(
     // case DATA_LOADED:
     //   return { ...state, isLoading: false };
     
-    case actionTypes.IS_FETCHING:
+    case actionTypes.IS_LOADING:
       return { ...state, isLoading: true };
+
+    case actionTypes.SET_IS_LOADING:
+      return { ...state, isLoading: action.payload };      
 
     case actionTypes.IS_ADDING:
       return { ...state, isAdding: true };
@@ -130,6 +133,9 @@ function rootReducer(
 
     case actionTypes.IS_FINDING:
       return { ...state, isFinding: true };
+
+    case actionTypes.SET_IS_FINDING:
+      return { ...state, isFinding: action.payload }
 
     case actionTypes.API_ERRORED:
       // return { ...state, error: state.error = 'yes' }
