@@ -9,6 +9,7 @@ import { formatDate } from "../redux/utils";
 import { ICalendarEvent } from "../redux/actions";
 import { ICalendarEventToAdd } from "../redux/reducers/index.ts";
 import { INewEvent } from "./useCalendarEventModal.ts";
+
 export interface IUseFormHandleSubmit {
   title: string;
   description: string;

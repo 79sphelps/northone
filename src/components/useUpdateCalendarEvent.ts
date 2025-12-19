@@ -31,7 +31,7 @@ export function useUpdateCalendarEvent({
 
   const clearMessage = () => dispatch(setMessage(""));
 
-  const checkLocalStorage = () => {
+  const checkLocalStorage: () => void = () => {
     if (!currentCalendarEvent) {
       const calendarEvent = localStorage.getItem("currentCalendarEvent");
       if (calendarEvent) {
@@ -40,7 +40,7 @@ export function useUpdateCalendarEvent({
     }
   };
 
-  const updateCalendarEventStatusUnderEdit = (status: boolean) => {
+  const updateCalendarEventStatusUnderEdit: (status: boolean) => void = (status: boolean) => {
     if (!currentCalendarEvent || !currentCalendarEvent._id) return;
     if (status !== null) {
       currentCalendarEvent.status = status;
@@ -53,7 +53,7 @@ export function useUpdateCalendarEvent({
     );
   };
 
-  const updateCalendarEventUnderEdit = (event: any) => {
+  const updateCalendarEventUnderEdit: (event: any) => void = (event: any) => {
     // event.preventDefault();
     if (!currentCalendarEvent || !currentCalendarEvent._id) return;
     const updatedEvent = {
@@ -70,7 +70,7 @@ export function useUpdateCalendarEvent({
     );
   };
 
-  const deleteCalendarEventUnderEdit = () => {
+  const deleteCalendarEventUnderEdit: () => void = () => {
     if (!currentCalendarEvent || !currentCalendarEvent._id) return;
     dispatch(deleteCalendarEvent(currentCalendarEvent._id));
     navigate("/calendar-events"); // props.history.push("/calendar-events");
