@@ -113,6 +113,9 @@ function rootReducer(
     // case DATA_LOADED:
     //   return { ...state, isLoading: false };
     
+    case actionTypes.IS_FETCHING:
+      return { ...state, isLoading: true };
+
     case actionTypes.IS_LOADING:
       return { ...state, isLoading: true };
 

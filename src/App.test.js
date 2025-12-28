@@ -310,10 +310,16 @@ describe('action creators', () => {
     const expectedAction1 = { type: actionTypes.IS_FETCHING };
     expect(iterator.next().value).toEqual(put(expectedAction1));
 
+    const expectedAction1b = { type: actionTypes.SET_IS_LOADING, payload: true };
+    expect(iterator.next().value).toEqual(put(expectedAction1b));
+
     expect(JSON.stringify(iterator.next().value)).toEqual(JSON.stringify(call(getCalendarEvents)));
 
     const expectedAction2 = { type: actionTypes.GET_CALENDAR_EVENTS_SUCCESSFUL, payload: undefined };
     expect(iterator.next().value).toEqual(put(expectedAction2));
+
+    const expectedAction2b = { type: actionTypes.SET_IS_LOADING, payload: false };
+    expect(iterator.next().value).toEqual(put(expectedAction2b));
 
     expect(iterator.next().done).toEqual(true);
   });
