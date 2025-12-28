@@ -22,7 +22,7 @@ const CalendarList: React.FC<ICalendarListProps> = memo(
 
     if (isLoading) {
       return (
-        <div className="is-loading">
+        <div className="is-loading" data-testid='calendar-list-events-loading-id'>
           <Spinner animation="border" style={{ height: "200px" }}/>
           <p className="loading-text">
             Loading Calendar Data...
@@ -32,13 +32,13 @@ const CalendarList: React.FC<ICalendarListProps> = memo(
     }
 
     return (
-      <>
-        <h4>Calendar Events</h4>
+      <div data-testid="calendar-list-id">
+        <h4 data-testid="calendar-list-header-id">Calendar Events</h4>
         <div
           className="col-md-6"
           style={{ height: "200px", overflow: "scroll", marginBottom: "20px" }}
         >
-          <ul className="list-group">
+          <ul className="list-group" aria-labelledby="calendar-events-heading" aria-label="calendar events">
             {calendarEvents &&
               calendarEvents.map((calendarEvent, index) => (
                 <li
@@ -62,7 +62,7 @@ const CalendarList: React.FC<ICalendarListProps> = memo(
         >
           Remove All
         </button> */}
-      </>
+      </div>
     );
   }
 );

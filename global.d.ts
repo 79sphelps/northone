@@ -1,4 +1,11 @@
 
+declare var NavBar: any;
+
+declare module "NavBar" {
+    export = NavBar;
+}
+
+
 declare var AddCalendarEvent: any;
 
 declare module "AddCalendarEvent" {

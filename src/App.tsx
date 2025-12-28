@@ -1,78 +1,38 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   Route,
   Routes,
-  Link,
   BrowserRouter as Router,
   useLocation,
 } from "react-router-dom";
-import { useAppDispatch } from "./redux/store/index.ts";
-import { faHome, faPlus } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AddCalendarEvent from "./components/AddCalendarEvent";
 import UpdateCalendarEvent from "./components/UpdateCalendarEvent.tsx";
 import CalendarEvents from "./components/CalendarEvents.tsx";
+import NavBar from "./components/NavBar.tsx";
 import NotFound from "./components/NotFound.tsx";
 import { setSubmitted, setMessage } from "./redux/actions";
-// import { ToastContainer, toast } from 'react-toastify';
+import { useAppDispatch } from "./redux/store/index.ts";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
+// import ToastMessage from "./components/ToastContainer.tsx";
 
 export const LocationDisplay = () => {
   const location = useLocation();
   return <div data-testid="location-display">{location.pathname}</div>;
 };
 
-const App = () => {
+const App: React.FC = () => {
   const dispatch = useAppDispatch();
-  const initializeCalendarEventToAdd = () => {
+  const initializeCalendarEventToAdd: () => void = () => {
     dispatch(setSubmitted(false));
     dispatch(setMessage(""));
   };
 
-  // useEffect((): any => { 
-  //   toast.info("Because the backend uses the free tier of Render.com, it may take up to 30+ seconds to wake up the server on the first request. Annoying, yes, but...free has a cost, LOL.")
-  // }, []);
-
   return (
     <Router>
       <div>
-        <nav className="navbar navbar-expand navbar-dark bg-dark">
-          <a href="/" className="navbar-brand" style={{ marginLeft: "10px" }}>
-            <FontAwesomeIcon icon={faHome} />
-          </a>
-          <div className="navbar-nav mr-auto">
-            <li className="nav-item">
-              <Link to={"/"} className="nav-link">
-                Calendar Events
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link
-                to={"/add"}
-                className="nav-link"
-                onClick={() => initializeCalendarEventToAdd()}
-              >
-                Add <FontAwesomeIcon icon={faPlus} />
-              </Link>
-            </li>
-          </div>
-        </nav>
-
-        {/* <ToastContainer 
-          position="top-center"
-          autoClose={30000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick={false}
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="light"
-          // transition={Bounce}
-        /> */}
-
+        <NavBar initializeCalendarEventToAdd={initializeCalendarEventToAdd} />
+        {/* <ToastMessage /> */}
         <div className="container mt-3">
           <Routes>
             <Route path={"/"} element={<CalendarEvents />} />

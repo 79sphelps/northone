@@ -32,11 +32,12 @@ const CalendarSearchBox: React.FC = memo(() => {
   };
 
   return (
-    <div className="col-md-8" style={{ margin: "0 auto" }}>
+    <div className="col-md-8" style={{ margin: "0 auto" }} data-testid="search-box-id">
       <div className="input-group mb-3">
         <input
           type="text"
           className="form-control"
+          data-testid="search-input-id"
           placeholder="Search by title"
           value={searchTitle}
           onChange={(searchTitle) => onChangeSearchTitle(searchTitle)}
@@ -45,6 +46,7 @@ const CalendarSearchBox: React.FC = memo(() => {
           <button
             className="btn btn-outline-secondary"
             type="button"
+            data-testid="search-btn-id"
             onClick={() => findItemByTitle()}
           >
             <FontAwesomeIcon icon={faSearch} />
@@ -52,6 +54,7 @@ const CalendarSearchBox: React.FC = memo(() => {
           <button
             className="btn btn-outline-secondary"
             type="button"
+            data-testid="search-cancel-btn-id"
             onClick={handleClearSearch}
           >
             <FontAwesomeIcon icon={faRemove} />

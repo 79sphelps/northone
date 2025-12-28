@@ -12,6 +12,7 @@ import { useCalendarEventData } from "./useCalendarEventData.ts";
 import {
   selectCalendarEvents,
   selectCurrentIndex,
+  selectIsLoading,
 } from "../redux/selectors/index.ts";
 import { ICalendarEvent } from "../redux/actions/index.ts";
 import { IClickInfo } from "./useCalendarEvents.ts";
@@ -21,6 +22,7 @@ const CalendarEvents: React.FC = memo(() => {
   // const datePicker = useRef({ isOpen: false });
   const calendarEvents: ICalendarEvent[] = useAppSelector(selectCalendarEvents);
   const currentIndex: number = useAppSelector(selectCurrentIndex);
+  const isLoading: boolean = useAppSelector(selectIsLoading);
 
   useCalendarEventData();
   const {
@@ -45,13 +47,17 @@ const CalendarEvents: React.FC = memo(() => {
         currentIndex={currentIndex}
       />
       {/* <CalendarListDetail datePicker={datePicker} /> */}
-      <CalendarListDetail />
-      <Calendar
-        calendarEvents={calendarEvents}
-        handleDateSelect={handleDateSelect}
-        handleEventClick={handleEventClick}
-      />
-      <CalendarEventModal show={show} setShow={setShow} />
+      {!isLoading && (
+        <>
+          <CalendarListDetail />
+          <Calendar
+            calendarEvents={calendarEvents}
+            handleDateSelect={handleDateSelect}
+            handleEventClick={handleEventClick}
+          />
+          <CalendarEventModal show={show} setShow={setShow} />
+        </>
+      )}
     </div>
   );
 });
