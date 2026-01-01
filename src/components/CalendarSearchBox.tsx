@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { memo, useEffect, useRef } from "react";
 import { useAppDispatch } from "../redux/store/index.ts";
 import { useAppSelector } from "../redux/selectors";
 import { faSearch, faRemove } from "@fortawesome/free-solid-svg-icons"; // faCancel, faTrash,
@@ -35,6 +35,8 @@ const CalendarSearchBox: React.FC = memo(() => {
     <div className="col-md-8" style={{ margin: "0 auto" }} data-testid="search-box-id">
       <div className="input-group mb-3">
         <input
+          tabIndex={4}
+          aria-label="Search Box"
           type="text"
           className="form-control"
           data-testid="search-input-id"
@@ -44,6 +46,9 @@ const CalendarSearchBox: React.FC = memo(() => {
         />
         <div className="input-group-append">
           <button
+            tabIndex={5}
+            role="button"
+            aria-label="Search Button"
             className="btn btn-outline-secondary"
             type="button"
             data-testid="search-btn-id"
@@ -52,6 +57,9 @@ const CalendarSearchBox: React.FC = memo(() => {
             <FontAwesomeIcon icon={faSearch} />
           </button>
           <button
+            tabIndex={6}
+            role="button"
+            aria-label="Search Cancel"
             className="btn btn-outline-secondary"
             type="button"
             data-testid="search-cancel-btn-id"

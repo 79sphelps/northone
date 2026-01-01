@@ -161,6 +161,8 @@ const CalendarUpdateEventForm: React.FC = memo(() => {
 
         {currentCalendarEvent?.status ? (
           <button
+            role="button"
+            aria-label="Mark calendar event as pending"
             className="btn btn-primary mr-2"
             onClick={() => updateCalendarEventStatusUnderEdit(false)}
           >
@@ -168,6 +170,8 @@ const CalendarUpdateEventForm: React.FC = memo(() => {
           </button>
         ) : (
           <button
+            role="button"
+            aria-label="Mark calendar event as done"
             className="btn btn-primary mr-2"
             onClick={() => updateCalendarEventStatusUnderEdit(true)}
           >
@@ -176,12 +180,16 @@ const CalendarUpdateEventForm: React.FC = memo(() => {
         )}
 
         <button
+          role="button"
+          aria-label="Delete calendar event"
           className="btn btn-danger mr-2"
           onClick={() => deleteCalendarEventUnderEdit()}
         >
           Delete <FontAwesomeIcon icon={faTrash} />
         </button>
         <button
+          role="button"
+          aria-label="Update calendar event"
           type="submit"
           className="btn btn-success mr-2"
           // disabled={!isValid}
@@ -195,6 +203,8 @@ const CalendarUpdateEventForm: React.FC = memo(() => {
           Update
         </button>
         <button
+          role="button"
+          aria-label="Cancel update calendar event action"    
           className="btn btn-danger mr-2"
           onClick={() => navigate("/calendar-events")} // onClick={() => props.history.push("/calendar-events")}
         >

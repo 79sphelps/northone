@@ -27,6 +27,7 @@ const EventFormInput: React.FC<IFormProps>  = memo(({
     <>
       <label htmlFor={htmlFor}>{name}: </label>{" "}
       <input
+        aria-label={name}
         name={name}
         className={className}
         style={{

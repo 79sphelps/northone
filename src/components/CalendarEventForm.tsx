@@ -112,6 +112,8 @@ const CalendarEventForm: React.FC<IFormProps> = memo(
         </div>
         <div>
           <button
+            role="button"
+            aria-label="Submit add calendar event"
             type="submit"
             className="btn btn-success mr-2"
             // disabled={!isValid}
@@ -125,6 +127,8 @@ const CalendarEventForm: React.FC<IFormProps> = memo(
             Submit
           </button>
           <button
+            role="button"
+            aria-label="Cancel add calendar event"
             className="btn btn-danger mr-2"
             onClick={() => navigate("/calendar-events")} // onClick={() => props.history.push("/calendar-events")}
           >
