@@ -4,13 +4,15 @@ import DatePicker from "react-date-picker";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
-import { selectCurrentCalendarEvent } from "../redux/selectors/index.ts";
+import { selectCurrentCalendarEvent, selectIsLoading } from "../redux/selectors/index.ts";
 import 'react-date-picker/dist/DatePicker.css';
 import 'react-calendar/dist/Calendar.css';
 import { ICalendarEvent } from "../redux/actions/index.ts";
 
 const CalendarListDetail: React.FC = () => {
   const currentCalendarEvent: ICalendarEvent | null = useAppSelector(selectCurrentCalendarEvent);
+  const isLoading: boolean = useAppSelector(selectIsLoading);
+
   return (
     <div className="calendar-list-detail col-md-6">
       {currentCalendarEvent ? (

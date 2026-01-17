@@ -126,14 +126,55 @@ ul li {
 }
 
 .form-group-margin-top {
-  margin-top: 5px;
+  margin-top: 15px;
+  margin-bottom: 15px;
 }
 
 .form-group-due-date-margin-top, .form-group-start-time-margin-top {
-  margin-bottom: 5px;
+  margin-bottom: 15px;
 }
 
 .mark-status-btn, .delete-btn, .update-btn, .cancel-btn, .add-btn {
   margin: 5px;
-  padding: 5px;
+  padding: 10px;
+}
+
+.calendar-list-header-and-filter {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-left {
+  display: flex;
+  margin-left: 20px;
+}
+
+.nav-center {
+  display: flex;
+  color: white;
+  font-size: 25px;
+
+}
+
+.nav-right {
+  display: flex;
+  color: slateblue;
+  font-size: 25px;
+  margin-right: 20px;
+}
+
+.add-calendar-event-form, .edit-calendar-event-form {
+  border: 1px solid slateblue;
+  margin: 30px;
+  border-radius: 30px;
+  padding: 30px;
 }

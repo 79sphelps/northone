@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { memo, useState } from "react";
 // import { useCalendarList } from "./useCalendarList.ts";
 import { useAppSelector } from "../redux/selectors";
 import { ICalendarEvent } from "../redux/actions/index.ts";
@@ -19,6 +19,7 @@ const CalendarList: React.FC<ICalendarListProps> = memo(
     // const { removeAllCalendarEvents }: { removeAllCalendarEvents: () => void } =
     //   useCalendarList();
     const isLoading: boolean = useAppSelector(selectIsLoading);
+    const [filter, setFilter] = useState('all');
 
     if (isLoading) {
       return (
@@ -31,12 +32,27 @@ const CalendarList: React.FC<ICalendarListProps> = memo(
       );
     }
 
+    const handleFilter = (e: React.ChangeEvent<HTMLSelectElement>) => {
+      setFilter(e.target.value);
+    }
+
     return (
       <div className='calendar-events' data-testid="calendar-list-id">
-        <h4 data-testid="calendar-list-header-id">Calendar Events</h4>
+
+        <div className='calendar-list-header-and-filter'>
+          <h4 data-testid="calendar-list-header-id">Calendar Events</h4>
+          <select onChange={handleFilter}>
+            <option value='all'>All</option>
+            <option value='pending'>Not Started</option>
+            <option value='completed'>Done</option>
+          </select>
+        </div>
+
         <ul className="calendar-list list-group" aria-labelledby="calendar-events-heading" aria-label="calendar events">
           {calendarEvents &&
-            calendarEvents.map((calendarEvent, index) => (
+            calendarEvents
+              .filter(v => filter === 'pending' ? !v.status : filter === 'completed' ? v.status : v)
+              .map((calendarEvent, index) => (
               <li
                 className={
                   "list-item " + `${calendarEvent.status ? 'text-decoration-line-through' : 'none'}`

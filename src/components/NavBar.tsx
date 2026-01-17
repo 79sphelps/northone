@@ -10,27 +10,40 @@ interface INavBar {
 const NavBar: React.FC<INavBar> = ({ initializeCalendarEventToAdd }) => {
   return (
     <nav className="navbar navbar-expand navbar-dark bg-dark">
-      <a tabIndex={1} aria-label="This is the home page link" href="/" className="navbar-brand" style={{ marginLeft: "10px" }} data-testid="navbar-home-link-id">
-        <FontAwesomeIcon icon={faHome} />
-      </a>
-      <div className="navbar-nav mr-auto">
-        <li className="nav-item">
-          <Link tabIndex={2} aria-label="Load all calendar events" to={"/"} className="nav-link" data-testid="navbar-calendar-events-link-id">
-            Calendar Events
-          </Link>
-        </li>
-        <li className="nav-item">
-          <Link
-            tabIndex={3}
-            aria-label="Add a new calendar event"
-            to={"/add"}
-            className="nav-link"
-            data-testid="navbar-add-calendar-event-link-id"
-            onClick={() => initializeCalendarEventToAdd()}
-          >
-            Add <FontAwesomeIcon icon={faPlus} />
-          </Link>
-        </li>
+      <div className="nav-left">
+        <Link
+          tabIndex={1}
+          aria-label="This is the home page link"
+          to="/"
+          className="navbar-brand"
+          style={{ marginLeft: "10px" }}
+          data-testid="navbar-home-link-id"
+        >
+          <FontAwesomeIcon icon={faHome} />
+        </Link>
+      </div>
+      <div className="nav-center">
+        <Link
+          tabIndex={2}
+          aria-label="Load all calendar events"
+          to={"/"}
+          className="nav-link"
+          data-testid="navbar-calendar-events-link-id"
+        >
+          Calendar Events
+        </Link>
+      </div>
+      <div className="nav-right">
+        <Link
+          tabIndex={3}
+          aria-label="Add a new calendar event"
+          to={"/add"}
+          className="nav-link"
+          data-testid="navbar-add-calendar-event-link-id"
+          onClick={() => initializeCalendarEventToAdd()}
+        >
+          Add <FontAwesomeIcon icon={faPlus} />
+        </Link>
       </div>
     </nav>
   );

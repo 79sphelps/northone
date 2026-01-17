@@ -54,7 +54,7 @@ const AddCalendarEvent: React.FC = memo(() => {
           </button>
         </div>
       ) : (
-        <div>
+        <div className='add-calendar-event-form'>
           <h1>Add a New Calendar Event</h1>
           <CalendarEventForm
             onSubmit={saveCalendarEvent}

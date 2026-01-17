@@ -48,7 +48,7 @@ const CalendarEvents: React.FC = memo(() => {
         setActiveCalendarEvent={setActiveCalendarEvent}
         currentIndex={currentIndex}
       />
-      <CalendarListDetail />
+      {!isLoading && <CalendarListDetail /> }
       </div>
 
       {/* <CalendarListDetail datePicker={datePicker} /> */}

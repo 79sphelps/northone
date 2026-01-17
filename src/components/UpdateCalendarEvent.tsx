@@ -8,7 +8,7 @@ const UpdateCalendarEvent: React.FC = memo(() => {
   return (
     <div>
       {currentCalendarEvent ? (
-        <div className="edit-form">
+        <div className="edit-calendar-event-form">
           <h4>Calendar Event</h4>
           <CalendarUpdateEventForm />
         </div>
