@@ -63,7 +63,7 @@ const CalendarEventForm: React.FC<IFormProps> = memo(
 
     return (
       <form onSubmit={handleSubmit(onSubmit as SubmitHandler<IDefaultCalendarEventValues>)}>
-        <div className="form-group">
+        <div className="form-group form-group-margin-top">
           <EventFormInput
             htmlFor="title"
             name="Title"
@@ -83,7 +83,7 @@ const CalendarEventForm: React.FC<IFormProps> = memo(
             }
           />
         </div>
-        <div className="form-group">
+        <div className="form-group form-group-margin-top">
           <EventFormInput
             htmlFor="description"
             name="Description"
@@ -102,11 +102,11 @@ const CalendarEventForm: React.FC<IFormProps> = memo(
             }
           />
         </div>
-        <div className="form-group">
+        <div className="form-group form-group-due-date-margin-top">
           <label htmlFor="dueDate">Due Date:</label>{" "}
           <DatePicker onChange={onChangeDateValue} value={dateValue} />
         </div>
-        <div>
+        <div className='form-group-start-time-margin-top'>
           <label htmlFor="dueDate">Time Start:</label>{" "}
           <TimePicker onChange={onChangeTimeValue} value={timeValue} />
         </div>
@@ -115,7 +115,7 @@ const CalendarEventForm: React.FC<IFormProps> = memo(
             role="button"
             aria-label="Submit add calendar event"
             type="submit"
-            className="btn btn-success mr-2"
+            className="btn btn-success mr-2 add-btn"
             // disabled={!isValid}
             // style={{
             //   color: !isValid && "lightgrey",
@@ -129,7 +129,7 @@ const CalendarEventForm: React.FC<IFormProps> = memo(
           <button
             role="button"
             aria-label="Cancel add calendar event"
-            className="btn btn-danger mr-2"
+            className="btn btn-danger mr-2 cancel-btn"
             onClick={() => navigate("/calendar-events")} // onClick={() => props.history.push("/calendar-events")}
           >
             Cancel

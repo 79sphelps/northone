@@ -32,37 +32,56 @@ const CalendarList: React.FC<ICalendarListProps> = memo(
     }
 
     return (
-      <div data-testid="calendar-list-id">
+      <div className='calendar-events' data-testid="calendar-list-id">
         <h4 data-testid="calendar-list-header-id">Calendar Events</h4>
-        <div
-          className="col-md-6"
-          style={{ height: "200px", overflow: "scroll", marginBottom: "20px" }}
-        >
-          <ul className="list-group" aria-labelledby="calendar-events-heading" aria-label="calendar events">
-            {calendarEvents &&
-              calendarEvents.map((calendarEvent, index) => (
-                <li
-                  className={
-                    "list-group-item-action list-group-item " +
-                    (index === currentIndex ? "active" : "")
-                    //  + `${ calendarEvent.status === 'Done' ? 'text-decoration-line-through' : 'none'}`
-                  }
-                  onClick={() => setActiveCalendarEvent(calendarEvent, index)}
-                  key={index}
-                >
-                  {calendarEvent.title}
-                </li>
-              ))}
-          </ul>
-        </div>
-        {/* <button
-          className="col-md-6 m-3 btn btn-sm btn-danger"
-          onClick={() => removeAllCalendarEvents()}
-          disabled={true}
-        >
-          Remove All
-        </button> */}
+        <ul className="calendar-list list-group" aria-labelledby="calendar-events-heading" aria-label="calendar events">
+          {calendarEvents &&
+            calendarEvents.map((calendarEvent, index) => (
+              <li
+                className={
+                  "list-item " + `${calendarEvent.status ? 'text-decoration-line-through' : 'none'}`
+                }
+                onClick={() => setActiveCalendarEvent(calendarEvent, index)}
+                key={calendarEvent._id}
+              >
+                {calendarEvent.title}
+              </li>
+            ))}
+        </ul>
       </div>
+
+      // <div className='calendar-events' data-testid="calendar-list-id">
+      //   <h4 data-testid="calendar-list-header-id">Calendar Events</h4>
+      //   <div
+      //     className="col-md-6"
+      //     style={{ height: "200px", overflow: "scroll", marginBottom: "20px" }}
+      //   >
+      //     <ul className="list-group" aria-labelledby="calendar-events-heading" aria-label="calendar events">
+      //       {calendarEvents &&
+      //         calendarEvents.map((calendarEvent, index) => (
+      //           <li
+      //             className={
+      //               "list-group-item-action list-group-item " +
+      //               (index === currentIndex ? "active" : "")
+      //               //  + `${ calendarEvent.status === 'Done' ? 'text-decoration-line-through' : 'none'}`
+      //             }
+      //             onClick={() => setActiveCalendarEvent(calendarEvent, index)}
+      //             key={calendarEvent._id}
+      //           >
+      //             {calendarEvent.title}
+      //           </li>
+      //         ))}
+      //     </ul>
+      //   </div>
+
+      //   <button
+      //     className="col-md-6 m-3 btn btn-sm btn-danger"
+      //     onClick={() => removeAllCalendarEvents()}
+      //     disabled={true}
+      //   >
+      //     Remove All
+      //   </button>
+      // </div>
     );
   }
 );

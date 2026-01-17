@@ -12,7 +12,7 @@ import { ICalendarEvent } from "../redux/actions/index.ts";
 const CalendarListDetail: React.FC = () => {
   const currentCalendarEvent: ICalendarEvent | null = useAppSelector(selectCurrentCalendarEvent);
   return (
-    <div className="col-md-6">
+    <div className="calendar-list-detail col-md-6">
       {currentCalendarEvent ? (
         <div>
           <h4>Calendar Item</h4>

@@ -98,9 +98,10 @@ const CalendarUpdateEventForm: React.FC = memo(() => {
             dueDate: dateValue,
             startTime: timeValue,
           });
+          navigate('/');
         })}
       >
-        <div className="form-group">
+        <div className="form-group form-group-margin-top">
           <EventFormInput
             htmlFor="title"
             name="Title"
@@ -118,7 +119,7 @@ const CalendarUpdateEventForm: React.FC = memo(() => {
             }
           />
         </div>
-        <div className="form-group">
+        <div className="form-group form-group-margin-top">
           <EventFormInput
             htmlFor="description"
             name="Description"
@@ -139,20 +140,20 @@ const CalendarUpdateEventForm: React.FC = memo(() => {
           />
         </div>
 
-        <div className="form-group">
+        <div className="form-group form-group-margin-top">
           <label>
             <strong>Status: </strong>{" "}
           </label>
           {currentCalendarEvent?.status ? "Done" : "Pending"}
         </div>
 
-        <div className="form-group">
+        <div className="form-group form-group-due-date-margin-top">
           <label htmlFor="dueDate">
             <strong>Due Date: </strong>
           </label>{" "}
           <DatePicker onChange={onChange as () => void} value={dateValue} />
         </div>
-        <div className="form-group">
+        <div className="form-group form-group-start-time-margin-top">
           <label htmlFor="startTime">
             <strong>Start: </strong>
           </label>
@@ -163,7 +164,7 @@ const CalendarUpdateEventForm: React.FC = memo(() => {
           <button
             role="button"
             aria-label="Mark calendar event as pending"
-            className="btn btn-primary mr-2"
+            className="btn btn-primary mr-2 form-group-margin-top mark-status-btn"
             onClick={() => updateCalendarEventStatusUnderEdit(false)}
           >
             Mark Pending
@@ -172,7 +173,7 @@ const CalendarUpdateEventForm: React.FC = memo(() => {
           <button
             role="button"
             aria-label="Mark calendar event as done"
-            className="btn btn-primary mr-2"
+            className="btn btn-primary mr-2 form-group-margin-top mark-status-btn"
             onClick={() => updateCalendarEventStatusUnderEdit(true)}
           >
             Mark Done
@@ -182,7 +183,7 @@ const CalendarUpdateEventForm: React.FC = memo(() => {
         <button
           role="button"
           aria-label="Delete calendar event"
-          className="btn btn-danger mr-2"
+          className="btn btn-danger mr-2 form-group-margin-top delete-btn"
           onClick={() => deleteCalendarEventUnderEdit()}
         >
           Delete <FontAwesomeIcon icon={faTrash} />
@@ -191,7 +192,7 @@ const CalendarUpdateEventForm: React.FC = memo(() => {
           role="button"
           aria-label="Update calendar event"
           type="submit"
-          className="btn btn-success mr-2"
+          className="btn btn-success mr-2 form-group-margin-top update-btn"
           // disabled={!isValid}
           // style={{
           //   color: !isValid && "lightgrey",
@@ -205,7 +206,7 @@ const CalendarUpdateEventForm: React.FC = memo(() => {
         <button
           role="button"
           aria-label="Cancel update calendar event action"    
-          className="btn btn-danger mr-2"
+          className="btn btn-danger mr-2 form-group-margin-top cancel-btn"
           onClick={() => navigate("/calendar-events")} // onClick={() => props.history.push("/calendar-events")}
         >
           Cancel
