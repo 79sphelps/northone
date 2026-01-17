@@ -178,3 +178,12 @@ ul li {
   border-radius: 30px;
   padding: 30px;
 }
+
+.event-item {
+  display: flex;
+  flex-direction: row;
+}
+
+.event-item-checkbox {
+  margin-left: 10px;
+}
