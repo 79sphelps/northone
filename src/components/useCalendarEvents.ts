@@ -57,7 +57,7 @@ export function useCalendarEvents({
     clickInfo: IClickInfo
   ): void => {
     let calendarEvent: ICalendarEvent = {
-      id: clickInfo.event.id,
+      _id: clickInfo.event.id,
       title: clickInfo.event.title,
       description: clickInfo.event.extendedProps.description,
       status:
