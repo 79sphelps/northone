@@ -14,7 +14,8 @@ const CalendarListDetail: React.FC = () => {
   const isLoading: boolean = useAppSelector(selectIsLoading);
 
   return (
-    <div className="calendar-list-detail col-md-6">
+    // <div className="calendar-list-detail col-md-6">
+    <div className="calendar-list-detail">
       {currentCalendarEvent ? (
         <div>
           <h4>Calendar Item</h4>

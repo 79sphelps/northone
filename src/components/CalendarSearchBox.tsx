@@ -32,7 +32,7 @@ const CalendarSearchBox: React.FC = memo(() => {
   };
 
   return (
-    <div className="col-md-8" style={{ margin: "0 auto" }} data-testid="search-box-id">
+    <div className="calendar-event-search-box col-md-8" style={{ margin: "0 auto" }} data-testid="search-box-id">
       <div className="input-group mb-3">
         <input
           tabIndex={4}

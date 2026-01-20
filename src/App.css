@@ -91,6 +91,29 @@ ul li {
   align-items: center;
 }
 
+@media (max-width: 768px) {
+  .calendar-events-container {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+
+  .calendar-events {
+    flex: 100%;
+    margin-right: 0px !important;
+  }
+
+  .calendar-list-detail {
+    flex: 100%;
+    margin-left: 0px !important;
+  }
+}
+
+.calendar-event-search-box input:hover {
+  border: 1px solid dodgerblue;
+}
+
 .calendar-events {
   display: flex;
   flex-direction: column;
@@ -98,16 +121,27 @@ ul li {
   border: 1px solid tomato;
   border-radius: 20px;
   margin-bottom: 30px;
+  margin-right: 10px;
   padding: 30px;
+}
+
+.calendar-events:hover {
+  border: 1px solid slateblue;
+  border-radius: 20px;
 }
 
 .calendar-list-detail {
   display: flex;
   flex: 1;
-    border: 1px solid tomato;
+  border: 1px solid tomato;
   border-radius: 20px;
-  margin: 30px;
+  margin-left: 10px;
+  margin-bottom: 30px;
   padding: 30px;
+}
+
+.calendar-list-detail:hover {
+  border: 1px solid slateblue;
 }
 
 .calendar-list {
@@ -162,14 +196,21 @@ ul li {
   display: flex;
   color: white;
   font-size: 25px;
+}
 
+.nav-link:hover {
+  color: slateblue;
 }
 
 .nav-right {
   display: flex;
-  color: slateblue;
+  color: white;
   font-size: 25px;
   margin-right: 20px;
+}
+
+.nav-right:hover {
+  color: slateblue;
 }
 
 .add-calendar-event-form, .edit-calendar-event-form {
@@ -186,4 +227,19 @@ ul li {
 
 .event-item-checkbox {
   margin-left: 10px;
+}
+
+.page-not-found {
+  border: 1px solid dodgerblue;
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin: 30px;
+  padding: 30px;
+  font-size: 2rem;
+  box-shadow: 10px 10px 5px tomato;
+  text-shadow: 3px 3px 3px slateblue;
 }

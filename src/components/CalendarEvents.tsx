@@ -43,12 +43,12 @@ const CalendarEvents: React.FC = memo(() => {
       <CalendarSearchBox />
 
       <div className='calendar-events-container'>
-      <CalendarList
-        calendarEvents={calendarEvents}
-        setActiveCalendarEvent={setActiveCalendarEvent}
-        currentIndex={currentIndex}
-      />
-      {!isLoading && <CalendarListDetail /> }
+        <CalendarList
+          calendarEvents={calendarEvents}
+          setActiveCalendarEvent={setActiveCalendarEvent}
+          currentIndex={currentIndex}
+        />
+        {!isLoading && <CalendarListDetail /> }
       </div>
 
       {/* <CalendarListDetail datePicker={datePicker} /> */}
