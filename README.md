@@ -25,6 +25,7 @@ Developers learning Redux and side-effect management
 <li>
 Users needing basic calendar event visualization
 </li>
+</ul>
 </p>
 
 <p>
