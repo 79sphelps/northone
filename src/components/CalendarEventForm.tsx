@@ -23,12 +23,6 @@ interface IUseFormHandleSubmit {
 interface IFormProps {
   onSubmit: (event: IUseFormHandleSubmit) => void; // (event: React.FormEvent<HTMLFormElement>) => void;
   message: string;
-  // defaultValues: {
-  //   title: string;
-  //   description: string;
-  //   startTime: string;
-  //   dueDate: string;
-  // };
   defaultValues: IDefaultCalendarEventValues;
   onChangeDateValue: (date: any) => void; // onChangeDateValue: (date: Date) => void;
   onChangeTimeValue: (value: any) => void; // onChangeTimeValue: (value: Value) => void;
@@ -116,7 +110,6 @@ const CalendarEventForm: React.FC<IFormProps> = memo(
           </div>
           <div>
             <button
-              role="button"
               aria-label="Submit add calendar event"
               type="submit"
               className="btn btn-success mr-2 add-btn"
@@ -131,7 +124,6 @@ const CalendarEventForm: React.FC<IFormProps> = memo(
               Submit
             </button>
             <button
-              role="button"
               aria-label="Cancel add calendar event"
               className="btn btn-danger mr-2 cancel-btn"
               onClick={() => navigate("/calendar-events")} // onClick={() => props.history.push("/calendar-events")}

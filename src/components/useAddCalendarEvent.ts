@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../redux/store/index.ts";
 import { useAppSelector } from "../redux/selectors";
 import "react-time-picker/dist/TimePicker.css";
@@ -25,6 +26,7 @@ export function useAddCalendarEvent({
   timeValue: any;
 }) {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const calendarEventToAdd: ICalendarEventToAdd | null = useAppSelector(
     selectCalendarEventToAdd
   );
@@ -84,6 +86,7 @@ export function useAddCalendarEvent({
     };
     dispatch(addCalendarEvent(data as ICalendarEvent));
     localStorage.removeItem("calendarEventToAdd");
+    navigate('/');
   };
 
   const newCalendarEvent: () => void = () => {
