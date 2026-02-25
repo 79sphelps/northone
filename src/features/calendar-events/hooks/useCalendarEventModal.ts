@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { useAppDispatch } from "../redux/store/index.ts";
-import { addCalendarEvent } from "../redux/actions";
-import { formatDate } from "../redux/utils";
+import { useAppDispatch } from "../../../redux/store/index.ts";
+import { addCalendarEvent } from "../../../redux/actions/index.ts";
+import { formatDate } from "../../../redux/utils/index.ts";
 
 export interface INewEvent {
   // id: string | null;

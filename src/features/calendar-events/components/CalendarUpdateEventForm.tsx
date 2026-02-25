@@ -1,5 +1,5 @@
 import React, { useState, memo } from "react";
-import { useAppSelector } from "../redux/selectors";
+import { useAppSelector } from "../../../redux/selectors";
 import { useNavigate } from "react-router-dom";
 import TimePicker from "react-time-picker";
 import "react-time-picker/dist/TimePicker.css";
@@ -8,15 +8,15 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import DatePicker from "react-date-picker";
 import { useForm, FieldError } from "react-hook-form";
-import { useUpdateCalendarEvent } from "./useUpdateCalendarEvent.ts";
-import EventFormInput from "./EventFormInput.tsx";
-import FormInputValidationError from "./FormInputValidationError.tsx";
+import { useUpdateCalendarEvent } from "../hooks/useUpdateCalendarEvent.ts";
+import EventFormInput from "../../../shared/EventFormInput.tsx";
+import FormInputValidationError from "../../../shared/FormInputValidationError.tsx";
 import {
   selectCurrentCalendarEvent,
   selectMessage,
-} from "../redux/selectors/index.ts";
-import { ICalendarEvent } from "../redux/actions/index.ts";
-import { IDefaultCalendarEventValues } from "./AddCalendarEvent.tsx";
+} from "../../../redux/selectors/index.ts";
+import { ICalendarEvent } from "../../../redux/types.ts";
+import { IDefaultCalendarEventValues } from "../pages/AddCalendarEventPage.tsx";
 
 interface IUseFormHandleSubmit {
   title: string | null | undefined;

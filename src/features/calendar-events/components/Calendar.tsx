@@ -3,8 +3,8 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
-import { formatDate } from "../redux/utils/index.ts";
-import { ICalendarEvent } from "../redux/actions/index.ts";
+import { formatDate } from "../../../redux/utils/index.ts";
+import { ICalendarEvent } from "../../../redux/types.ts";
 
 interface ICalendarProps {
   calendarEvents: Array<ICalendarEvent>;       // calendarEvents: Array<EventObj>;

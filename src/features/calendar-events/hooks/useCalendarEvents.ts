@@ -1,10 +1,10 @@
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAppDispatch } from "../redux/store/index.ts";
-import { useAppSelector } from "../redux/selectors";
-import { setCurrentIndex, setCurrentCalendarEvent } from "../redux/actions";
-import { selectCurrentIndex } from "../redux/selectors";
-import { ICalendarEvent } from "../redux/actions";
+import { useAppDispatch } from "../../../redux/store/index.ts";
+import { useAppSelector } from "../../../redux/selectors/index.ts";
+import { setCurrentIndex, setCurrentCalendarEvent } from "../../../redux/actions/index.ts";
+import { selectCurrentIndex } from "../../../redux/selectors/index.ts";
+import { ICalendarEvent } from "../../../redux/actions/index.ts";
 
 export interface IClickInfoEvent {
   id: string;

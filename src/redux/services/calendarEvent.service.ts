@@ -1,101 +1,44 @@
-import api from "./api.ts";
-import { errorHandler, isAxiosError } from './errorHandler.ts';
-import { ICalendarEvent } from "../actions/index.ts";
+import api from "./api";
+import { ICalendarEvent } from "../types";
 
-const GET_CALENDAR_EVENTS_ENDPOINT = `/api/calendarEvents`;
+const ENDPOINT = "/api/calendarEvents";
 
-class CalendarEventDataService {
-  getCalendarEvents() {
-    try {
-      return api.get(GET_CALENDAR_EVENTS_ENDPOINT);
-    } catch (error) {
-      if (isAxiosError(error)) {
-        const { message } = errorHandler(error);
-          throw new Error(message);
-      } else {
-          // some other type of Error
-      }
-    }
-  }
+export const CalendarEventService = {
+  async getCalendarEvents(): Promise<ICalendarEvent[]> {
+    const { data } = await api.get<ICalendarEvent[]>(ENDPOINT);
+    return data;
+  },
 
-  getCalendarEvent(id: string) {
-    try {
-      return api.get(`${GET_CALENDAR_EVENTS_ENDPOINT}/${id}`);
-    } catch (error) {
-      if (isAxiosError(error)) {
-        const { message } = errorHandler(error);
-          throw new Error(message);
-      } else {
-          // some other type of Error
-      }
-    }
-  }
+  async getCalendarEvent(id: string): Promise<ICalendarEvent> {
+    const { data } = await api.get<ICalendarEvent>(`${ENDPOINT}/${id}`);
+    return data;
+  },
 
-  addCalendarEvent(data: ICalendarEvent) {
-    try {
-      return api.post(GET_CALENDAR_EVENTS_ENDPOINT, data);
-    } catch (error) {
-      if (isAxiosError(error)) {
-        const { message } = errorHandler(error);
-          throw new Error(message);
-      } else {
-          // some other type of Error
-      }
-    }
-  }
+  async addCalendarEvent(payload: ICalendarEvent): Promise<ICalendarEvent> {
+    const { data } = await api.post<ICalendarEvent>(ENDPOINT, payload);
+    return data;
+  },
 
-  updateCalendarEvent(data: ICalendarEvent) {
-    try {
-      return api.put(`${GET_CALENDAR_EVENTS_ENDPOINT}/${data._id}`, data);
-    } catch (error) {
-      if (isAxiosError(error)) {
-        const { message } = errorHandler(error);
-          throw new Error(message);
-      } else {
-          // some other type of Error
-      }
-    }
-  }
+  async updateCalendarEvent(payload: ICalendarEvent): Promise<ICalendarEvent> {
+    const { data } = await api.put<ICalendarEvent>(
+      `${ENDPOINT}/${payload._id}`,
+      payload
+    );
+    return data;
+  },
 
-  deleteCalendarEvent(id: string) {
-    try {
-      return api.delete(`${GET_CALENDAR_EVENTS_ENDPOINT}/${id}`);
-    } catch (error) {
-      if (isAxiosError(error)) {
-        const { message } = errorHandler(error);
-          throw new Error(message);
-      } else {
-          // some other type of Error
-      }
-    }
-  }
+  async deleteCalendarEvent(id: string): Promise<void> {
+    await api.delete(`${ENDPOINT}/${id}`);
+  },
 
-  deleteCalendarEvents() {
-    try {
-      return api.delete(GET_CALENDAR_EVENTS_ENDPOINT);
-    } catch (error) {
-      if (isAxiosError(error)) {
-        const { message } = errorHandler(error);
-          throw new Error(message);
-      } else {
-          // some other type of Error
-      }
-    }
-  }
+  async deleteCalendarEvents(): Promise<void> {
+    await api.delete(ENDPOINT);
+  },
 
-  findByTitle(title: string) {
-    try {
-      return api.get(`${GET_CALENDAR_EVENTS_ENDPOINT}?title=${title}`);
-    } catch (error) {
-      if (isAxiosError(error)) {
-        // console.log(error.response?.data.username);
-        const { message } = errorHandler(error);
-          throw new Error(message);
-      } else {
-          // some other type of Error
-      }
-    }
-  }
-}
-
-export default new CalendarEventDataService();
+  async findByTitle(title: string): Promise<ICalendarEvent[]> {
+    const { data } = await api.get<ICalendarEvent[]>(
+      `${ENDPOINT}?title=${encodeURIComponent(title)}`
+    );
+    return data;
+  },
+};

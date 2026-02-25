@@ -1,10 +1,10 @@
-import { useAppDispatch } from "../redux/store/index.ts";
+import { useAppDispatch } from "../../../redux/store/index.ts";
 import {
   getCalendarEvents,
   deleteCalendarEvents,
   setCurrentIndex,
   setCurrentCalendarEvent,
-} from "../redux/actions";
+} from "../../../redux/actions/index.ts";
 
 type VoidReturn = () => void;
 

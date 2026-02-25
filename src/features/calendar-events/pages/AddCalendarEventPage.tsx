@@ -1,14 +1,10 @@
 import React, { memo, useState } from "react";
-import { useAppSelector } from "../redux/selectors";
-// import { Value } from "react-time-picker/dist/cjs/shared/types";
-import CalendarEventForm from "./CalendarEventForm.tsx";
-import { useAddCalendarEvent } from "./useAddCalendarEvent.ts";
-import { selectCalendarEventToAdd } from "../redux/selectors/index.ts";
-import { ICalendarEventToAdd } from "../redux/reducers/index.ts";
-import { IUseFormHandleSubmit } from "./useAddCalendarEvent.ts";
-
-// type ValuePiece = Date | null;
-// type Value = ValuePiece | [ValuePiece, ValuePiece];
+import { useAppSelector } from "../../../redux/selectors/index.ts";
+import CalendarEventForm from "../components/CalendarEventForm.tsx";
+import { useAddCalendarEvent } from "../hooks/useAddCalendarEvent.ts";
+import { selectCalendarEventToAdd } from "../../../redux/selectors/index.ts";
+import { ICalendarEventToAdd } from "../../../redux/reducers/index.ts";
+import { IUseFormHandleSubmit } from "../hooks/useAddCalendarEvent.ts";
 
 export interface IDefaultCalendarEventValues {
   title: string | null | undefined;
@@ -17,7 +13,7 @@ export interface IDefaultCalendarEventValues {
   dueDate: string | null | undefined;
 }
 
-const AddCalendarEvent: React.FC = memo(() => {
+const AddCalendarEventPage: React.FC = memo(() => {
   const calendarEventToAdd: ICalendarEventToAdd | null = useAppSelector(
     selectCalendarEventToAdd
   );
@@ -72,4 +68,4 @@ const AddCalendarEvent: React.FC = memo(() => {
   );
 });
 
-export default AddCalendarEvent;
+export default AddCalendarEventPage;

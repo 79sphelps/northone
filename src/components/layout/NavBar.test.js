@@ -6,7 +6,7 @@ import {
   act,
 } from "@testing-library/react";
 import * as reactRedux from "react-redux";
-import App from "../App";
+import App from "../../App";
 // import NavBar from "./NavBar";
 
 jest.mock("react-redux", () => ({

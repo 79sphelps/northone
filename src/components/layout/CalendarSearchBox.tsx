@@ -1,14 +1,14 @@
 import React, { memo, useEffect, useRef } from "react";
-import { useAppDispatch } from "../redux/store/index.ts";
-import { useAppSelector } from "../redux/selectors";
+import { useAppDispatch } from "../../redux/store/index.ts";
+import { useAppSelector } from "../../redux/selectors/index.ts";
 import { faSearch, faRemove } from "@fortawesome/free-solid-svg-icons"; // faCancel, faTrash,
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   setSearchTitle,
   findByTitle,
   getCalendarEvents,
-} from "../redux/actions";
-import { selectSearchTitle } from "../redux/selectors/index.ts";
+} from "../../redux/actions/index.ts";
+import { selectSearchTitle } from "../../redux/selectors/index.ts";
 
 const CalendarSearchBox: React.FC = memo(() => {
   const dispatch = useAppDispatch();      // const dispatch = useDispatch();

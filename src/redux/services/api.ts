@@ -1,14 +1,32 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
-export default axios.create({
-  // baseURL: "http://localhost:8080",
-  // baseURL: '',
-  baseURL: 'https://northone-backend.onrender.com/',
+export interface ApiError {
+  message: string;
+  status?: number;
+}
+
+const api = axios.create({
+  baseURL: "https://northone-backend.onrender.com",
   headers: {
     "Content-Type": "application/json",
-    "Access-Control-Allow-Credentials": "true",
-    "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Methods": "GET,OPTIONS,PATCH,DELETE,POST,PUT",
-    "Access-Control-Allow-Headers": "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"
-  }
+  },
+  timeout: 10000,
 });
+
+// Normalize ALL errors here
+api.interceptors.response.use(
+  (response) => response,
+  (error: AxiosError<any>) => {
+    const normalizedError: ApiError = {
+      message:
+        error.response?.data?.message ||
+        error.message ||
+        "Unexpected error occurred",
+      status: error.response?.status,
+    };
+
+    return Promise.reject(normalizedError);
+  }
+);
+
+export default api;

@@ -1,14 +1,14 @@
 import { useEffect } from "react";
-import { useAppDispatch } from "../redux/store/index.ts";
-import { useAppSelector } from "../redux/selectors";
+import { useAppDispatch } from "../../../redux/store/index.ts";
+import { useAppSelector } from "../../../redux/selectors/index.ts";
 import { useNavigate } from "react-router-dom";
 import {
   setCurrentCalendarEvent,
   setMessage,
   updateCalendarEvent,
   deleteCalendarEvent,
-} from "../redux/actions";
-import { selectCurrentCalendarEvent } from "../redux/selectors";
+} from "../../../redux/actions/index.ts";
+import { selectCurrentCalendarEvent } from "../../../redux/selectors/index.ts";
 
 interface UseUpdateCalendarEventParams {
   dateValue: string; // or Date, depending on your usage

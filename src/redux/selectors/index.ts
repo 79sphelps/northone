@@ -1,65 +1,45 @@
-import { createSelector } from "reselect";
+import { TypedUseSelectorHook, useSelector } from "react-redux";
 import { RootState } from "../reducers";
-import { TypedUseSelectorHook, useSelector } from 'react-redux';
+import { createSelector } from "reselect";
 
+/*
+  Typed Hook
+*/
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
-// const getState = createSelector((state) => state, (state) => state);
-const getState = createSelector((state: RootState) => state, (state) => state);
+/*
+  Base Selectors (simple access — no memo needed)
+*/
 
-const selectCalendarEvents = createSelector(
-  [getState],
-  (state: RootState) => state.calendarEvents
+export const selectCalendarEvents = (state: RootState) =>
+  state.calendarEvents;
+
+export const selectCurrentCalendarEvent = (state: RootState) =>
+  state.currentCalendarEvent;
+
+export const selectCalendarEventToAdd = (state: RootState) =>
+  state.calendarEventToAdd;
+
+export const selectCurrentIndex = (state: RootState) =>
+  state.currentIndex;
+
+export const selectSearchTitle = (state: RootState) =>
+  state.searchTitle;
+
+export const selectMessage = (state: RootState) =>
+  state.message;
+
+export const selectSubmitted = (state: RootState) =>
+  state.submitted;
+
+export const selectIsFinding = (state: RootState) =>
+  state.isFinding;
+
+export const selectIsLoading = (state: RootState) =>
+  state.isLoading;
+
+
+export const selectSelectedCalendarEvent = createSelector(
+  [selectCalendarEvents, selectCurrentIndex],
+  (events, index) => (index >= 0 ? events[index] : null)
 );
-
-const selectCurrentCalendarEvent = createSelector(
-  [getState],
-  (state: RootState) => state.currentCalendarEvent
-);
-
-const selectCalendarEventToAdd = createSelector(
-  [getState],
-  (state: RootState) => state.calendarEventToAdd
-);
-
-const selectCurrentIndex = createSelector(
-  [getState],
-  (state: RootState) => state.currentIndex
-);
-
-const selectSearchTitle = createSelector(
-  [getState],
-  (state: RootState) => state.searchTitle
-);
-
-const selectMessage = createSelector(
-  [getState],
-  (state: RootState) => state.message
-);
-
-const selectSubmitted = createSelector(
-  [getState],
-  (state: RootState) => state.submitted
-);
-
-const selectIsFinding = createSelector(
-  [getState],
-  (state: RootState) => state.isFinding
-);
-
-const selectIsLoading = createSelector(
-  [getState],
-  (state: RootState) => state.isLoading
-)
-
-export {
-  selectCalendarEvents,
-  selectCurrentCalendarEvent,
-  selectCalendarEventToAdd,
-  selectCurrentIndex,
-  selectSearchTitle,
-  selectMessage,
-  selectSubmitted,
-  selectIsFinding,
-  selectIsLoading,
-};

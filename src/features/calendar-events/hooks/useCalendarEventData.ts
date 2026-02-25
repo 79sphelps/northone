@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import { useAppDispatch } from "../redux/store/index.ts";
-import { getCalendarEvents } from "../redux/actions";
+import { useAppDispatch } from "../../../redux/store/index.ts";
+import { getCalendarEvents } from "../../../redux/actions/index.ts";
 
 export function useCalendarEventData() {
   const dispatch = useAppDispatch();

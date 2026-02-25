@@ -5,8 +5,8 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import "react-time-picker/dist/TimePicker.css";
 import "react-clock/dist/Clock.css";
-import { useCalendarEventModal } from "./useCalendarEventModal.ts";
-import { INewEvent } from "./useCalendarEventModal.ts";
+import { useCalendarEventModal } from "../hooks/useCalendarEventModal.ts";
+import { INewEvent } from "../hooks/useCalendarEventModal.ts";
 
 interface ICalendarEventModalProps {
   show: boolean;

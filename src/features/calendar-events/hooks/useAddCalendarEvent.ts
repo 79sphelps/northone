@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAppDispatch } from "../redux/store/index.ts";
-import { useAppSelector } from "../redux/selectors";
+import { useAppDispatch } from "../../../redux/store/index.ts";
+import { useAppSelector } from "../../../redux/selectors/index.ts";
 import "react-time-picker/dist/TimePicker.css";
 import "react-clock/dist/Clock.css";
-import { addCalendarEvent, setCalendarEventToAdd } from "../redux/actions";
-import { selectCalendarEventToAdd } from "../redux/selectors";
-import { formatDate } from "../redux/utils";
-import { ICalendarEvent } from "../redux/actions";
-import { ICalendarEventToAdd } from "../redux/reducers/index.ts";
+import { addCalendarEvent, setCalendarEventToAdd } from "../../../redux/actions/index.ts";
+import { selectCalendarEventToAdd } from "../../../redux/selectors/index.ts";
+import { formatDate } from "../../../redux/utils/index.ts";
+import { ICalendarEvent } from "../../../redux/actions/index.ts";
+import { ICalendarEventToAdd } from "../../../redux/reducers/index.ts";
 import { INewEvent } from "./useCalendarEventModal.ts";
 
 export interface IUseFormHandleSubmit {

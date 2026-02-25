@@ -1,9 +1,9 @@
 import React, { memo } from "react";
-import { useAppSelector } from "../redux/selectors";
-import CalendarUpdateEventForm from "./CalendarUpdateEventForm";
-import { selectCurrentCalendarEvent } from "../redux/selectors/index.ts";
+import { useAppSelector } from "../../../redux/selectors/index.ts";
+import CalendarUpdateEventForm from "../components/CalendarUpdateEventForm.tsx";
+import { selectCurrentCalendarEvent } from "../../../redux/selectors/index.ts";
 
-const UpdateCalendarEvent: React.FC = memo(() => {
+const UpdateCalendarEventPage: React.FC = memo(() => {
   const currentCalendarEvent = useAppSelector(selectCurrentCalendarEvent);
   return (
     <div>
@@ -22,4 +22,4 @@ const UpdateCalendarEvent: React.FC = memo(() => {
   );
 });
 
-export default UpdateCalendarEvent;
+export default UpdateCalendarEventPage;

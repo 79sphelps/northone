@@ -1,0 +1,70 @@
+import React, { useState, memo } from "react";
+import { useAppSelector } from "../../../redux/selectors";
+import "react-time-picker/dist/TimePicker.css";
+import "react-clock/dist/Clock.css";
+import CalendarList from "./CalendarList.tsx";
+import CalendarListDetail from "./CalendarListDetail.tsx";
+import CalendarEventModal from "./CalendarEventModal.tsx";
+import Calendar from "./Calendar.tsx";
+import CalendarSearchBox from "../../../components/layout/CalendarSearchBox.tsx";
+import { useCalendarEvents } from "../hooks/useCalendarEvents.ts";
+import { useCalendarEventData } from "../hooks/useCalendarEventData.ts";
+import {
+  selectCalendarEvents,
+  selectCurrentIndex,
+  selectIsLoading,
+} from "../../../redux/selectors/index.ts";
+import { ICalendarEvent } from "../../../redux/types.ts";
+import { IClickInfo } from "../hooks/useCalendarEvents.ts";
+
+const CalendarEvents: React.FC = memo(() => {
+  const [show, setShow] = useState<boolean>(false);
+  // const datePicker = useRef({ isOpen: false });
+  const calendarEvents: ICalendarEvent[] = useAppSelector(selectCalendarEvents);
+  const currentIndex: number = useAppSelector(selectCurrentIndex);
+  const isLoading: boolean = useAppSelector(selectIsLoading);
+
+  useCalendarEventData();
+  const {
+    setActiveCalendarEvent,
+    handleDateSelect,
+    handleEventClick,
+  }: {
+    setActiveCalendarEvent: (
+      calendarEvent: ICalendarEvent,
+      index: number
+    ) => void;
+    handleDateSelect: () => void;
+    handleEventClick: (clickInfo: IClickInfo) => void;
+  } = useCalendarEvents({ setShow });
+
+  return (
+    <div className="list row">
+      <CalendarSearchBox />
+
+      <div className='calendar-events-container'>
+        <CalendarList
+          calendarEvents={calendarEvents}
+          setActiveCalendarEvent={setActiveCalendarEvent}
+          currentIndex={currentIndex}
+        />
+        {!isLoading && <CalendarListDetail /> }
+      </div>
+
+      {/* <CalendarListDetail datePicker={datePicker} /> */}
+      {!isLoading && (
+        <>
+          {/* <CalendarListDetail /> */}
+          <Calendar
+            calendarEvents={calendarEvents}
+            handleDateSelect={handleDateSelect}
+            handleEventClick={handleEventClick}
+          />
+          <CalendarEventModal show={show} setShow={setShow} />
+        </>
+      )}
+    </div>
+  );
+});
+
+export default CalendarEvents;

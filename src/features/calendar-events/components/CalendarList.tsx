@@ -1,13 +1,13 @@
 import React, { memo, useState } from "react";
 // import { useCalendarList } from "./useCalendarList.ts";
-import { useAppSelector } from "../redux/selectors";
-import { useAppDispatch } from "../redux/store/index.ts";
+import { useAppSelector } from "../../../redux/selectors";
+import { useAppDispatch } from "../../../redux/store/index.ts";
 import {
   getCalendarEvents,
-  ICalendarEvent,
   updateCalendarEvent,
-} from "../redux/actions/index.ts";
-import { selectIsLoading } from "../redux/selectors/index.ts";
+} from "../../../redux/actions/index.ts";
+import { ICalendarEvent } from "../../../redux/types.ts";
+import { selectIsLoading } from "../../../redux/selectors/index.ts";
 import Spinner from "react-bootstrap/Spinner";
 
 interface ICalendarListProps {

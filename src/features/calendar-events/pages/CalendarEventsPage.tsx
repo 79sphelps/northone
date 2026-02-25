@@ -1,23 +1,23 @@
 import React, { useState, memo } from "react";
-import { useAppSelector } from "../redux/selectors";
+import { useAppSelector } from "../../../redux/selectors";
 import "react-time-picker/dist/TimePicker.css";
 import "react-clock/dist/Clock.css";
-import CalendarList from "./CalendarList.tsx";
-import CalendarListDetail from "./CalendarListDetail.tsx";
-import CalendarEventModal from "./CalendarEventModal.tsx";
-import Calendar from "./Calendar.tsx";
-import CalendarSearchBox from "./CalendarSearchBox.tsx";
-import { useCalendarEvents } from "./useCalendarEvents.ts";
-import { useCalendarEventData } from "./useCalendarEventData.ts";
+import CalendarList from "../components/CalendarList.tsx";
+import CalendarListDetail from "../components/CalendarListDetail.tsx";
+import CalendarEventModal from "../components/CalendarEventModal.tsx";
+import Calendar from "../components/Calendar.tsx";
+import CalendarSearchBox from "../../../components/layout/CalendarSearchBox.tsx";
+import { useCalendarEvents } from "../hooks/useCalendarEvents.ts";
+import { useCalendarEventData } from "../hooks/useCalendarEventData.ts";
 import {
   selectCalendarEvents,
   selectCurrentIndex,
   selectIsLoading,
-} from "../redux/selectors/index.ts";
-import { ICalendarEvent } from "../redux/actions/index.ts";
-import { IClickInfo } from "./useCalendarEvents.ts";
+} from "../../../redux/selectors/index.ts";
+import { ICalendarEvent } from "../../../redux/actions/index.ts";
+import { IClickInfo } from "../hooks/useCalendarEvents.ts";
 
-const CalendarEvents: React.FC = memo(() => {
+const CalendarEventsPage: React.FC = memo(() => {
   const [show, setShow] = useState<boolean>(false);
   // const datePicker = useRef({ isOpen: false });
   const calendarEvents: ICalendarEvent[] = useAppSelector(selectCalendarEvents);
@@ -67,4 +67,4 @@ const CalendarEvents: React.FC = memo(() => {
   );
 });
 
-export default CalendarEvents;
+export default CalendarEventsPage;

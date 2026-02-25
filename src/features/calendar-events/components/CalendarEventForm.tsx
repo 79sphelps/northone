@@ -6,9 +6,9 @@ import "react-clock/dist/Clock.css";
 import DatePicker from "react-date-picker";
 import { useForm, FieldError, SubmitHandler } from "react-hook-form";
 // import { Value } from "react-time-picker/dist/cjs/shared/types";
-import EventFormInput from "./EventFormInput.tsx";
-import FormInputValidationError from "./FormInputValidationError.tsx";
-import { IDefaultCalendarEventValues } from "./AddCalendarEvent.tsx";
+import EventFormInput from "../../../shared/EventFormInput.tsx";
+import FormInputValidationError from "../../../shared/FormInputValidationError.tsx";
+import { IDefaultCalendarEventValues } from "../pages/AddCalendarEventPage.tsx";
 
 interface IUseFormHandleSubmit {
   title: string;
