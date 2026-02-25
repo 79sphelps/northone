@@ -47,7 +47,7 @@ const CalendarEventForm: React.FC<Props> = memo(
     });
 
     return (
-      <form onSubmit={handleSubmit(onSubmit)} noValidate>
+      <form onSubmit={handleSubmit(onSubmit)} noValidate data-testid="event-form">
         <div className="form-group form-group-margin-top">
           <EventFormInput
             htmlFor="title"
