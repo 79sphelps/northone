@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useRef } from "react";
+import React, { memo } from "react";
 import { useAppDispatch } from "../../redux/store/index.ts";
 import { useAppSelector } from "../../redux/selectors/index.ts";
 import { faSearch, faRemove } from "@fortawesome/free-solid-svg-icons"; // faCancel, faTrash,
@@ -11,11 +11,11 @@ import {
 import { selectSearchTitle } from "../../redux/selectors/index.ts";
 
 const CalendarSearchBox: React.FC = memo(() => {
-  const dispatch = useAppDispatch();      // const dispatch = useDispatch();
+  const dispatch = useAppDispatch(); // const dispatch = useDispatch();
   const searchTitle: string = useAppSelector(selectSearchTitle);
 
   const onChangeSearchTitle: (
-    event: React.ChangeEvent<HTMLInputElement>
+    event: React.ChangeEvent<HTMLInputElement>,
   ) => void = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
     dispatch(setSearchTitle(event.target.value));
@@ -32,7 +32,11 @@ const CalendarSearchBox: React.FC = memo(() => {
   };
 
   return (
-    <div className="calendar-event-search-box col-md-8" style={{ margin: "0 auto" }} data-testid="search-box-id">
+    <div
+      className="calendar-event-search-box col-md-8"
+      style={{ margin: "0 auto" }}
+      data-testid="search-box-id"
+    >
       <div className="input-group mb-3">
         <input
           tabIndex={4}

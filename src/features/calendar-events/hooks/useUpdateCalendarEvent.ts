@@ -1,84 +1,82 @@
-import { useEffect } from "react";
-import { useAppDispatch } from "../../../redux/store/index.ts";
-import { useAppSelector } from "../../../redux/selectors/index.ts";
+import { useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../../../redux/store";
+import { useAppSelector } from "../../../redux/selectors";
 import {
   setCurrentCalendarEvent,
   setMessage,
   updateCalendarEvent,
   deleteCalendarEvent,
-} from "../../../redux/actions/index.ts";
-import { selectCurrentCalendarEvent } from "../../../redux/selectors/index.ts";
+} from "../../../redux/actions";
+import { selectCurrentCalendarEvent } from "../../../redux/selectors";
+import { ICalendarEvent } from "../../../redux/types";
 
-interface UseUpdateCalendarEventParams {
-  dateValue: string; // or Date, depending on your usage
-  timeValue: string; // or Date, depending on your usage
+interface Props {
+  dateValue: string;
+  timeValue: string;
 }
 
 export function useUpdateCalendarEvent({
   dateValue,
   timeValue,
-}: UseUpdateCalendarEventParams) {
-  const navigate = useNavigate();
+}: Props) {
   const dispatch = useAppDispatch();
-  const currentCalendarEvent = useAppSelector(selectCurrentCalendarEvent);
+  const navigate = useNavigate();
+  const currentCalendarEvent = useAppSelector(
+    selectCurrentCalendarEvent
+  );
 
   useEffect(() => {
-    clearMessage();
-    checkLocalStorage();
-    // eslint-disable-next-line
-  }, []);
+    dispatch(setMessage(""));
 
-  const clearMessage = () => dispatch(setMessage(""));
-
-  const checkLocalStorage: () => void = () => {
     if (!currentCalendarEvent) {
-      const calendarEvent = localStorage.getItem("currentCalendarEvent");
-      if (calendarEvent) {
-        dispatch(setCurrentCalendarEvent(JSON.parse(calendarEvent)));
+      const stored = localStorage.getItem("currentCalendarEvent");
+      if (stored) {
+        dispatch(setCurrentCalendarEvent(JSON.parse(stored)));
       }
     }
-  };
+  }, [dispatch, currentCalendarEvent]);
 
-  const updateCalendarEventStatusUnderEdit: (status: boolean) => void = (status: boolean) => {
-    if (!currentCalendarEvent || !currentCalendarEvent._id) return;
-    if (status !== null) {
-      currentCalendarEvent.status = status;
-    }
-    dispatch(
-      updateCalendarEvent({
-        _id: currentCalendarEvent._id,
-        ...currentCalendarEvent,
-      })
-    );
-  };
+  const updateStatus = useCallback(
+    (status: boolean) => {
+      if (!currentCalendarEvent?._id) return;
 
-  const updateCalendarEventUnderEdit: (event: any) => void = (event: any) => {
-    // event.preventDefault();
-    if (!currentCalendarEvent || !currentCalendarEvent._id) return;
-    const updatedEvent = {
-      ...event,
-      dueDate: dateValue,
-      start: timeValue,
-    };
-    dispatch(
-      updateCalendarEvent({
-        // id: currentCalendarEvent._id,
-        _id: currentCalendarEvent._id,
-        ...updatedEvent,
-      })
-    );
-  };
+      dispatch(
+        updateCalendarEvent({
+          ...currentCalendarEvent,
+          status,
+        })
+      );
+    },
+    [dispatch, currentCalendarEvent]
+  );
 
-  const deleteCalendarEventUnderEdit: () => void = () => {
-    if (!currentCalendarEvent || !currentCalendarEvent._id) return;
+  const updateEvent = useCallback(
+    (updatedFields: Partial<ICalendarEvent>) => {
+      if (!currentCalendarEvent?._id) return;
+
+      dispatch(
+        updateCalendarEvent({
+          ...currentCalendarEvent,
+          ...updatedFields,
+          dueDate: dateValue,
+          start: timeValue,
+        })
+      );
+    },
+    [dispatch, currentCalendarEvent, dateValue, timeValue]
+  );
+
+  const deleteEvent = useCallback(() => {
+    if (!currentCalendarEvent?._id) return;
+
     dispatch(deleteCalendarEvent(currentCalendarEvent._id));
-    navigate("/calendar-events"); // props.history.push("/calendar-events");
-  };
+    navigate("/calendar-events");
+  }, [dispatch, currentCalendarEvent, navigate]);
 
   return {
-    updateCalendarEventStatusUnderEdit,
-    updateCalendarEventUnderEdit,
-    deleteCalendarEventUnderEdit,
+    updateStatus,
+    updateEvent,
+    deleteEvent,
   };
 }

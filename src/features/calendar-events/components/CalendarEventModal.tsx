@@ -1,115 +1,78 @@
-import React, { useState, memo } from "react";
+import React, { memo } from "react";
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
 import DatePicker from "react-date-picker";
 import TimePicker from "react-time-picker";
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
-import "react-time-picker/dist/TimePicker.css";
-import "react-clock/dist/Clock.css";
-import { useCalendarEventModal } from "../hooks/useCalendarEventModal.ts";
-import { INewEvent } from "../hooks/useCalendarEventModal.ts";
+import { useCalendarEventModal } from "../hooks/useCalendarEventModal";
 
-interface ICalendarEventModalProps {
+interface Props {
   show: boolean;
   setShow: (show: boolean) => void;
 }
 
-const CalendarEventModal: React.FC<ICalendarEventModalProps> = memo(
-  ({ show, setShow }) => {
-    const {
-      handleClose,
-      saveNewEvent,
-      handleEventChange,
-      newEvent,
-    }: {
-      handleClose: () => void;
-      saveNewEvent: () => void;
-      handleEventChange: (v: React.ChangeEvent<HTMLInputElement>) => void;
-      newEvent: INewEvent;
-    } = useCalendarEventModal({ setShow });
-    // const [dateValue, onChange] = useState<any>(new Date());
-    const [dateValue, onChange] = useState<Date>(new Date());
-    // const [timeValue, onChangeTimeValue] = useState<any>(""); // useState('10:00');
-    const [timeValue, onChangeTimeValue] = useState<string>(""); // useState('10:00');
+const CalendarEventModal: React.FC<Props> = memo(({ show, setShow }) => {
+  const {
+    handleClose,
+    saveNewEvent,
+    handleEventChange,
+    newEvent,
+    dateValue,
+    setDateValue,
+    timeValue,
+    setTimeValue,
+  } = useCalendarEventModal({ setShow });
 
-    return (
-      <Modal
-        show={show}
-        onHide={handleClose}
-        // centered="true"
-        centered={true}
-        scrollable={true}
-        style={{
-          marginTop: "100px",
-          marginBottom: "75px",
-          height: "90%",
-          width: "90%",
-          marginLeft: "5%",
-        }}
-      >
-        <Modal.Header closeButton>
-          <Modal.Title style={{ color: "black" }}>Create New Event</Modal.Title>
-        </Modal.Header>
-        <Modal.Body style={{ color: "black" }}>
-          <div className="submit-form">
-            <div>
-              <div className="form-group">
-                <label htmlFor="title">Title: </label>{" "}
-                <input
-                  type="text"
-                  className="form-control"
-                  id="title"
-                  required
-                  value={newEvent && newEvent.title ? newEvent.title : ""}
-                  onChange={handleEventChange}
-                  name="title"
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="description">Description: </label>{" "}
-                <input
-                  type="text"
-                  className="form-control"
-                  id="description"
-                  required
-                  value={newEvent.description ? newEvent.description : ""}
-                  onChange={handleEventChange}
-                  name="description"
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="dueDate">Due Date:</label>{" "}
-                <DatePicker
-                  onChange={onChange as (date: any) => void}
-                  value={dateValue}
-                />
-              </div>
-              <div>
-                <label htmlFor="dueDate">Time Start:</label>{" "}
-                <TimePicker
-                  onChange={onChangeTimeValue as (value: any) => void}
-                  value={timeValue}
-                />
-              </div>
-              <div>
-                <button
-                  onClick={() => saveNewEvent()}
-                  className="btn btn-success"
-                  style={{ marginTop: "20px" }}
-                >
-                  Submit
-                </button>
-              </div>
-            </div>
-          </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-        </Modal.Footer>
-      </Modal>
-    );
-  }
-);
+  return (
+    <Modal show={show} onHide={handleClose} centered scrollable>
+      <Modal.Header closeButton>
+        <Modal.Title>Create New Event</Modal.Title>
+      </Modal.Header>
+
+      <Modal.Body>
+        <div className="form-group mb-3">
+          <label>Title</label>
+          <input
+            name="title"
+            className="form-control"
+            value={newEvent.title}
+            onChange={handleEventChange}
+            required
+          />
+        </div>
+
+        <div className="form-group mb-3">
+          <label>Description</label>
+          <input
+            name="description"
+            className="form-control"
+            value={newEvent.description}
+            onChange={handleEventChange}
+            required
+          />
+        </div>
+
+        <div className="form-group mb-3">
+          <label>Due Date</label>
+          <DatePicker onChange={setDateValue} value={new Date(dateValue)} />
+        </div>
+
+        <div className="form-group mb-3">
+          <label>Start Time</label>
+          <TimePicker onChange={setTimeValue} value={timeValue} />
+        </div>
+
+        <button className="btn btn-success" onClick={saveNewEvent}>
+          Submit
+        </button>
+      </Modal.Body>
+
+      <Modal.Footer>
+        <Button variant="secondary" onClick={handleClose}>
+          Close
+        </Button>
+      </Modal.Footer>
+    </Modal>
+  );
+});
 
 export default CalendarEventModal;

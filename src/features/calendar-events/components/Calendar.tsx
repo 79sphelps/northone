@@ -1,104 +1,77 @@
-import React, { memo } from "react";
+import React, { memo, useMemo, useCallback } from "react";
 import FullCalendar from "@fullcalendar/react";
+import DateSelectArg from "@fullcalendar/react";
+import EventClickArg from "@fullcalendar/react";
+import EventContentArg from "@fullcalendar/react";
+import EventInput from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
-import { formatDate } from "../../../redux/utils/index.ts";
-import { ICalendarEvent } from "../../../redux/types.ts";
+import { formatDate } from "../../../redux/utils";
+import { ICalendarEvent } from "../../../redux/types";
 
-interface ICalendarProps {
-  calendarEvents: Array<ICalendarEvent>;       // calendarEvents: Array<EventObj>;
-  handleDateSelect: (selectInfo: any) => void;
-  handleEventClick: (clickInfo: any) => void;
+interface CalendarProps {
+  calendarEvents: ICalendarEvent[];
+  handleDateSelect: (selectInfo: DateSelectArg) => void;
+  handleEventClick: (clickInfo: EventClickArg) => void;
 }
 
-type EventObj = {
-  title: string | undefined;
-  date: string | undefined;
-  start: string | undefined;
-  id?: string | undefined;  // ONLY FOR CALENDAR EVENT
-  _id: string | undefined;
-  createdAt: string | undefined;
-  description: string | undefined;
-  dueDate: string;
-  status: boolean | undefined;
-  updatedAt: string | undefined;
-  start2: string | undefined;
-};
-
-const Calendar: React.FC<ICalendarProps> = memo(
+const Calendar: React.FC<CalendarProps> = memo(
   ({ calendarEvents, handleDateSelect, handleEventClick }) => {
-    const mapCalendarEventEventsToCalendar: (arr?: EventObj[]) => EventObj[] = (arr: Array<EventObj> = []) => {
-    // const mapCalendarEventEventsToCalendar = (arr: Array<ICalendarEvent> = []) => {
-      const result = arr.map((obj) => {
-        const res: EventObj = {
-          title: undefined,
-          date: undefined,
-          start: undefined,
-          id: undefined,
-          _id: undefined,
-          createdAt: undefined,
-          description: undefined,
-          dueDate: "",
-          status: undefined,
-          updatedAt: undefined,
-          start2: undefined,
-        };
-        res["title"] = obj["title"];
-        res["date"] = formatDate(obj["dueDate"]);
-        res["start"] = obj["start"]
-          ? res["date"] + "T" + obj["start"] + ":00"
-          : res["date"] + "T12:00:00";
-        res["id"] = obj["_id"];
-        // res["_id"] = obj["_id"]; // UNUSED
-        res["createdAt"] = obj["createdAt"];
-        res["description"] = obj["description"];
-        res["dueDate"] = obj["dueDate"];
-        res["status"] = obj["status"];
-        res["updatedAt"] = obj["updatedAt"];
-        res["start2"] = obj["start"];
-        return res;
-      });
-      return result;
-    };
+    const events: EventInput[] = useMemo(() => {
+      return calendarEvents.map((event) => {
+        const date = formatDate(event.dueDate as string);
+        const startTime = event.start
+          ? `${date}T${event.start}:00`
+          : `${date}T12:00:00`;
 
-    const renderEventContent: (eventInfo: any) => React.JSX.Element = (eventInfo: any) => {
-      return (
+        return {
+          id: event._id,
+          title: event.title,
+          start: startTime,
+          extendedProps: {
+            description: event.description,
+            dueDate: event.dueDate,
+            status: event.status,
+            start: event.start,
+          },
+        };
+      });
+    }, [calendarEvents]);
+
+    const renderEventContent = useCallback(
+      (eventInfo: EventContentArg) => (
         <>
-          <b>{eventInfo.timeText}</b>
-          <i>{eventInfo.event.title}</i>
+          <b>{eventInfo.timeText}</b> <i>{eventInfo.event.title}</i>
         </>
-      );
-    };
+      ),
+      []
+    );
+
+    if (!calendarEvents.length) {
+      return <div className="col-md-12 mb-5">No Calendar Events to Show</div>;
+    }
 
     return (
       <div className="col-md-12 mb-5" id="calendar">
-        {calendarEvents ? (
-          <FullCalendar
-            plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-            // plugins={[dayGridPlugin]}
-            initialView="dayGridMonth"
-            weekends={true}
-            // events={mapCalendarEventEventsToCalendar(calendarEvents)}
-            events={mapCalendarEventEventsToCalendar(calendarEvents as Array<EventObj>)}
-            // events={INITIAL_EVENTS}
-            headerToolbar={{
-              left: "prev,next today",
-              center: "title",
-              right: "dayGridMonth,timeGridWeek,timeGridDay",
-            }}
-            editable={true}
-            selectable={true}
-            selectMirror={true}
-            dayMaxEvents={true}
-            select={handleDateSelect}
-            eventContent={renderEventContent} // custom render function
-            eventClick={handleEventClick}
-            // eventsSet={handleEvents} // called after events are initialized/added/changed/removed
-          />
-        ) : (
-          <div>No Calendar Events to Show</div>
-        )}
+        <FullCalendar
+          plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+          initialView="dayGridMonth"
+          headerToolbar={{
+            left: "prev,next today",
+            center: "title",
+            right: "dayGridMonth,timeGridWeek,timeGridDay",
+          }}
+          weekends
+          editable
+          selectable
+          selectMirror
+          dayMaxEvents
+          events={events}
+          select={handleDateSelect}
+          eventClick={handleEventClick}
+          eventContent={renderEventContent}
+        />
       </div>
     );
   }

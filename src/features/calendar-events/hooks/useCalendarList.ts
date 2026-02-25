@@ -1,30 +1,29 @@
-import { useAppDispatch } from "../../../redux/store/index.ts";
+import { useCallback } from "react";
+import { useAppDispatch } from "../../../redux/store";
 import {
   getCalendarEvents,
   deleteCalendarEvents,
   setCurrentIndex,
   setCurrentCalendarEvent,
-} from "../../../redux/actions/index.ts";
-
-type VoidReturn = () => void;
+} from "../../../redux/actions";
 
 export function useCalendarList() {
   const dispatch = useAppDispatch();
 
-  const retrieveCalendarEvents: VoidReturn = () => {
+  const retrieveCalendarEvents = useCallback(() => {
     dispatch(getCalendarEvents());
-  };
+  }, [dispatch]);
 
-  const refreshList: VoidReturn = () => {
-    retrieveCalendarEvents();
+  const refreshList = useCallback(() => {
+    dispatch(getCalendarEvents());
     dispatch(setCurrentCalendarEvent(null));
     dispatch(setCurrentIndex(-1));
-  };
+  }, [dispatch]);
 
-  const removeAllCalendarEvents: VoidReturn= () => {
+  const removeAllCalendarEvents = useCallback(() => {
     dispatch(deleteCalendarEvents());
     refreshList();
-  };
+  }, [dispatch, refreshList]);
 
   return {
     retrieveCalendarEvents,

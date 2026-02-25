@@ -9,7 +9,7 @@ interface INavBar {
 
 const NavBar: React.FC<INavBar> = ({ initializeCalendarEventToAdd }) => {
   return (
-    <nav className="navbar navbar-expand navbar-dark bg-dark">
+    <nav className="navbar bg-dark">
       <div className="nav-left">
         <Link
           tabIndex={1}
@@ -19,7 +19,7 @@ const NavBar: React.FC<INavBar> = ({ initializeCalendarEventToAdd }) => {
           style={{ marginLeft: "10px" }}
           data-testid="navbar-home-link-id"
         >
-          <FontAwesomeIcon icon={faHome} />
+          <FontAwesomeIcon icon={faHome} style={{ color: "white" }} />
         </Link>
       </div>
       <div className="nav-center">

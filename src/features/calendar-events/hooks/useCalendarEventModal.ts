@@ -1,10 +1,9 @@
-import { useState } from "react";
-import { useAppDispatch } from "../../../redux/store/index.ts";
-import { addCalendarEvent } from "../../../redux/actions/index.ts";
-import { formatDate } from "../../../redux/utils/index.ts";
+import { useState, useCallback } from "react";
+import { useAppDispatch } from "../../../redux/store";
+import { addCalendarEvent } from "../../../redux/actions";
+import { formatDate } from "../../../redux/utils";
 
 export interface INewEvent {
-  // id: string | null;
   title: string;
   description: string;
   status: boolean;
@@ -18,49 +17,59 @@ export function useCalendarEventModal({
   setShow: (show: boolean) => void;
 }) {
   const dispatch = useAppDispatch();
+
   const [dateValue, setDateValue] = useState<string>(
-    new Date() as unknown as string
-  ); // to satisfy type requirement
-  const [timeValue, setTimeValue] = useState<string>(""); // useState('10:00');
+    formatDate(new Date())
+  );
+  const [timeValue, setTimeValue] = useState<string>("");
 
-  const handleClose: () => void = () => setShow(false);
-
-  let initialEvent: INewEvent = {
-    // id: null,
+  const initialEvent: INewEvent = {
     title: "",
     description: "",
     status: false,
-    dueDate: formatDate(new Date()) as unknown as string, // to satisfy type requirement
+    dueDate: dateValue,
     start: "",
   };
-  const [newEvent, setNewEvent] = useState<INewEvent>(initialEvent);
 
-  const saveNewEvent = () => {
-    var data: INewEvent = {
-      // id: newEvent.id, // or generate a new id if needed
-      title: newEvent.title,
-      description: newEvent.description,
-      status: false,
-      dueDate: dateValue,
-      start: timeValue,
-    };
-    dispatch(addCalendarEvent(data));
+  const [newEvent, setNewEvent] =
+    useState<INewEvent>(initialEvent);
+
+  const handleClose = useCallback(() => {
+    setShow(false);
+  }, [setShow]);
+
+  const saveNewEvent = useCallback(() => {
+    dispatch(
+      addCalendarEvent({
+        ...newEvent,
+        dueDate: dateValue,
+        start: timeValue,
+      })
+    );
+
     setShow(false);
     setNewEvent(initialEvent);
-  };
+  }, [dispatch, newEvent, dateValue, timeValue, setShow]);
 
-  const handleEventChange: (v: React.ChangeEvent<HTMLInputElement>) => void = (
-    v: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    v.preventDefault();
-    const { name, value } = v.target;
-    setNewEvent({ ...newEvent, [name]: value });
-  };
+  const handleEventChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const { name, value } = e.target;
+      setNewEvent((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    },
+    []
+  );
 
   return {
     handleClose,
     saveNewEvent,
     handleEventChange,
     newEvent,
+    dateValue,
+    setDateValue,
+    timeValue,
+    setTimeValue,
   };
 }

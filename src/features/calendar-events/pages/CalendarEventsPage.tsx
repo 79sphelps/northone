@@ -14,7 +14,7 @@ import {
   selectCurrentIndex,
   selectIsLoading,
 } from "../../../redux/selectors/index.ts";
-import { ICalendarEvent } from "../../../redux/actions/index.ts";
+import { ICalendarEvent } from "../../../redux/types.ts";
 import { IClickInfo } from "../hooks/useCalendarEvents.ts";
 
 const CalendarEventsPage: React.FC = memo(() => {

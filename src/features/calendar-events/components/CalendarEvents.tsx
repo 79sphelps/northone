@@ -1,60 +1,45 @@
-import React, { useState, memo } from "react";
+import React, { memo, useState } from "react";
 import { useAppSelector } from "../../../redux/selectors";
-import "react-time-picker/dist/TimePicker.css";
-import "react-clock/dist/Clock.css";
-import CalendarList from "./CalendarList.tsx";
-import CalendarListDetail from "./CalendarListDetail.tsx";
-import CalendarEventModal from "./CalendarEventModal.tsx";
-import Calendar from "./Calendar.tsx";
-import CalendarSearchBox from "../../../components/layout/CalendarSearchBox.tsx";
-import { useCalendarEvents } from "../hooks/useCalendarEvents.ts";
-import { useCalendarEventData } from "../hooks/useCalendarEventData.ts";
+import CalendarList from "./CalendarList";
+import CalendarListDetail from "./CalendarListDetail";
+import CalendarEventModal from "./CalendarEventModal";
+import Calendar from "./Calendar";
+import CalendarSearchBox from "../../../components/layout/CalendarSearchBox";
+import { useCalendarEvents } from "../hooks/useCalendarEvents";
+import { useCalendarEventData } from "../hooks/useCalendarEventData";
 import {
   selectCalendarEvents,
   selectCurrentIndex,
   selectIsLoading,
-} from "../../../redux/selectors/index.ts";
-import { ICalendarEvent } from "../../../redux/types.ts";
-import { IClickInfo } from "../hooks/useCalendarEvents.ts";
+} from "../../../redux/selectors";
 
 const CalendarEvents: React.FC = memo(() => {
-  const [show, setShow] = useState<boolean>(false);
-  // const datePicker = useRef({ isOpen: false });
-  const calendarEvents: ICalendarEvent[] = useAppSelector(selectCalendarEvents);
-  const currentIndex: number = useAppSelector(selectCurrentIndex);
-  const isLoading: boolean = useAppSelector(selectIsLoading);
+  const [show, setShow] = useState(false);
+
+  const calendarEvents = useAppSelector(selectCalendarEvents);
+  const currentIndex = useAppSelector(selectCurrentIndex);
+  const isLoading = useAppSelector(selectIsLoading);
 
   useCalendarEventData();
-  const {
-    setActiveCalendarEvent,
-    handleDateSelect,
-    handleEventClick,
-  }: {
-    setActiveCalendarEvent: (
-      calendarEvent: ICalendarEvent,
-      index: number
-    ) => void;
-    handleDateSelect: () => void;
-    handleEventClick: (clickInfo: IClickInfo) => void;
-  } = useCalendarEvents({ setShow });
+
+  const { setActiveCalendarEvent, handleDateSelect, handleEventClick } =
+    useCalendarEvents({ setShow });
 
   return (
     <div className="list row">
       <CalendarSearchBox />
 
-      <div className='calendar-events-container'>
+      <div className="calendar-events-container">
         <CalendarList
           calendarEvents={calendarEvents}
           setActiveCalendarEvent={setActiveCalendarEvent}
           currentIndex={currentIndex}
         />
-        {!isLoading && <CalendarListDetail /> }
+        {!isLoading && <CalendarListDetail />}
       </div>
 
-      {/* <CalendarListDetail datePicker={datePicker} /> */}
       {!isLoading && (
         <>
-          {/* <CalendarListDetail /> */}
           <Calendar
             calendarEvents={calendarEvents}
             handleDateSelect={handleDateSelect}

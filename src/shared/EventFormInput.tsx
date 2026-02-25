@@ -3,7 +3,7 @@ import React, { memo } from "react";
 interface IFormProps {
   htmlFor: string;
   name: string;
-  className: string;
+  className?: string;
   id: string;
   placeholder?: string;
   requiredMsg?: string;
