@@ -32,14 +32,13 @@ exports.findAll = (req, res) => {
     ? { title: { $regex: new RegExp(title), $options: "i" } }
     : {};
 
-    CalendarEvent.find(condition)
+  CalendarEvent.find(condition)
     .then((data) => res.status(200).send(data))
     .catch((err) => {
-      res
-        .status(500)
-        .send({
-          message: err.message || "Some error occurred while fetching calendarEvents.",
-        });
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while fetching calendarEvents.",
+      });
     });
 };
 
@@ -55,7 +54,10 @@ exports.findOne = (req, res) => {
     .catch((err) =>
       res
         .status(500)
-        .send({ message: err.message || "Error retrieving calendarEvent with id " + id })
+        .send({
+          message:
+            err.message || "Error retrieving calendarEvent with id " + id,
+        }),
     );
 };
 
@@ -63,11 +65,9 @@ exports.findAllDone = (req, res) => {
   CalendarEvent.find({ status: true })
     .then((data) => res.status(200).send(data))
     .catch((err) =>
-      res
-        .status(500)
-        .send({
-          message: err.message || "Some error occurred during retrieval",
-        })
+      res.status(500).send({
+        message: err.message || "Some error occurred during retrieval",
+      }),
     );
 };
 
@@ -120,15 +120,16 @@ exports.delete = (req, res) => {
 exports.deleteAll = (req, res) => {
   CalendarEvent.deleteMany({})
     .then((data) =>
-      res
-        .status(200)
-        .send({
-          message: `${data.deletedCount} Todos were deleted successfully`,
-        })
+      res.status(200).send({
+        message: `${data.deletedCount} Todos were deleted successfully`,
+      }),
     )
     .catch((err) =>
       res
         .status(500)
-        .send({ message: err.message || "Error occurred while deleting calendarEvents" })
+        .send({
+          message:
+            err.message || "Error occurred while deleting calendarEvents",
+        }),
     );
 };

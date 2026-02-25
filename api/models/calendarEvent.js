@@ -9,8 +9,8 @@ module.exports = (mongoose) => {
         dueDate: String,
         start: String,
       },
-      { timestamps: true }
-    )
+      { timestamps: true },
+    ),
   );
 
   return Todo;
